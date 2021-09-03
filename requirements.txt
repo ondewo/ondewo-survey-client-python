@@ -1,0 +1,2 @@
+# -*- coding: utf-8 -*-
+ondewo-client-utils==0.1.0
