@@ -23,7 +23,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x1aondewo/survey/survey.proto\x12\rondewo.survey\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a google/protobuf/field_mask.proto\"\xd6\x01\n\x06Survey\x12\x11\n\tsurvey_id\x18\x01 \x01(\t\x12\x14\n\x0c\x64isplay_name\x18\x02 \x01(\t\x12\x15\n\rlanguage_code\x18\x03 \x01(\t\x12*\n\tquestions\x18\x07 \x03(\x0b\x32\x17.ondewo.survey.Question\x12.\n\x0bsurvey_info\x18\x08 \x01(\x0b\x32\x19.ondewo.survey.SurveyInfo\x12\x30\n\x10\x65xclude_subflows\x18\t \x03(\x0e\x32\x16.ondewo.survey.SubFlow\"\xd1\x01\n\nSurveyInfo\x12\x14\n\x0clegal_entity\x18\x01 \x01(\t\x12\x16\n\x0epostal_address\x18\x02 \x01(\t\x12\x15\n\remail_address\x18\x03 \x01(\t\x12\x14\n\x0cphone_number\x18\x04 \x01(\t\x12\x13\n\x0bphone_hours\x18\x05 \x01(\t\x12\x19\n\x11\x65xpected_duration\x18\x06 \x01(\t\x12\x0f\n\x07purpose\x18\x07 \x01(\t\x12\r\n\x05topic\x18\x08 \x01(\t\x12\x18\n\x10legal_disclaimer\x18\t \x01(\t\"\xb4\x03\n\x08Question\x12\x34\n\ropen_question\x18\x01 \x01(\x0b\x32\x1b.ondewo.survey.OpenQuestionH\x00\x12\x45\n\x16single_choice_question\x18\x02 \x01(\x0b\x32#.ondewo.survey.SingleChoiceQuestionH\x00\x12I\n\x18multiple_choice_question\x18\x03 \x01(\x0b\x32%.ondewo.survey.MultipleChoiceQuestionH\x00\x12\x36\n\x0escale_question\x18\x04 \x01(\x0b\x32\x1c.ondewo.survey.ScaleQuestionH\x00\x12K\n\x19single_parameter_question\x18\x05 \x01(\x0b\x32&.ondewo.survey.SingleParameterQuestionH\x00\x12O\n\x1bmultiple_parameter_question\x18\x06 \x01(\x0b\x32(.ondewo.survey.MultipleParameterQuestionH\x00\x42\n\n\x08question\"%\n\x0cOpenQuestion\x12\x15\n\rquestion_text\x18\x01 \x01(\t\"U\n\x14SingleChoiceQuestion\x12\x15\n\rquestion_text\x18\x01 \x01(\t\x12&\n\x07\x63hoices\x18\x02 \x03(\x0b\x32\x15.ondewo.survey.Choice\"W\n\x16MultipleChoiceQuestion\x12\x15\n\rquestion_text\x18\x01 \x01(\t\x12&\n\x07\x63hoices\x18\x02 \x03(\x0b\x32\x15.ondewo.survey.Choice\"\xca\x01\n\rScaleQuestion\x12\x15\n\rquestion_text\x18\x01 \x01(\t\x12:\n\tmin_value\x18\x02 \x01(\x0b\x32\'.ondewo.survey.ScaleQuestion.ScaleValue\x12:\n\tmax_value\x18\x03 \x01(\x0b\x32\'.ondewo.survey.ScaleQuestion.ScaleValue\x1a*\n\nScaleValue\x12\r\n\x05value\x18\x01 \x01(\x05\x12\r\n\x05label\x18\x02 \x01(\t\"H\n\x17SingleParameterQuestion\x12\x15\n\rquestion_text\x18\x01 \x01(\t\x12\x16\n\x0eparameter_type\x18\x02 \x01(\t\"J\n\x19MultipleParameterQuestion\x12\x15\n\rquestion_text\x18\x01 \x01(\t\x12\x16\n\x0eparameter_type\x18\x02 \x01(\t\"^\n\x06\x43hoice\x12\x10\n\x08synonyms\x18\x01 \x03(\t\x12\x33\n\x12\x66ollow_up_question\x18\x02 \x01(\x0b\x32\x17.ondewo.survey.Question\x12\r\n\x05value\x18\x03 \x01(\t\"\x83\x01\n\x06\x41nswer\x12\x13\n\x0bquestion_nr\x18\x01 \x01(\x03\x12\x12\n\nsession_id\x18\x02 \x01(\t\x12\x13\n\x0b\x61nswer_text\x18\x03 \x01(\t\x12\x18\n\x10\x61nswer_parameter\x18\x04 \x01(\t\x12!\n\x19\x61nswer_parameter_original\x18\x05 \x01(\t\"<\n\x13\x43reateSurveyRequest\x12%\n\x06survey\x18\x01 \x01(\x0b\x32\x15.ondewo.survey.Survey\"%\n\x10GetSurveyRequest\x12\x11\n\tsurvey_id\x18\x01 \x01(\t\"m\n\x13UpdateSurveyRequest\x12%\n\x06survey\x18\x01 \x01(\x0b\x32\x15.ondewo.survey.Survey\x12/\n\x0bupdate_mask\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.FieldMask\"(\n\x13\x44\x65leteSurveyRequest\x12\x11\n\tsurvey_id\x18\x01 \x01(\t\"-\n\x17GetSurveyAnswersRequest\x12\x12\n\nsession_id\x18\x01 \x01(\t\"/\n\x1aGetAllSurveyAnswersRequest\x12\x11\n\tsurvey_id\x18\x01 \x01(\t\"R\n\x15SurveyAnswersResponse\x12\x11\n\tsurvey_id\x18\x01 \x01(\t\x12&\n\x07\x61nswers\x18\x02 \x03(\x0b\x32\x15.ondewo.survey.Answer\"(\n\x12ListSurveysRequest\x12\x12\n\npage_token\x18\x01 \x01(\t\"V\n\x13ListSurveysResponse\x12&\n\x07surveys\x18\x01 \x03(\x0b\x32\x15.ondewo.survey.Survey\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\t\"\'\n\x12\x41gentSurveyRequest\x12\x11\n\tsurvey_id\x18\x01 \x01(\t\"%\n\x13\x41gentSurveyResponse\x12\x0e\n\x06parent\x18\x01 \x01(\t*\xab\x01\n\x07SubFlow\x12\x17\n\x13SUBFLOW_UNSPECIFIED\x10\x00\x12\x07\n\x03\x42OT\x10\x01\x12\x10\n\x0cLEGAL_ENTITY\x10\x02\x12\x12\n\x0ePOSTAL_ADDRESS\x10\x03\x12\x11\n\rEMAIL_ADDRESS\x10\x04\x12\x10\n\x0cPHONE_NUMBER\x10\x05\x12\x0f\n\x0bPHONE_HOURS\x10\x06\x12\x15\n\x11\x45XPECTED_DURATION\x10\x07\x12\x0b\n\x07PURPOSE\x10\x08\x32\xbb\t\n\x07Surveys\x12]\n\x0c\x43reateSurvey\x12\".ondewo.survey.CreateSurveyRequest\x1a\x15.ondewo.survey.Survey\"\x12\x82\xd3\xe4\x93\x02\x0c\"\x07/survey:\x01*\x12\x62\n\tGetSurvey\x12\x1f.ondewo.survey.GetSurveyRequest\x1a\x15.ondewo.survey.Survey\"\x1d\x82\xd3\xe4\x93\x02\x17\x12\x15/survey/{survey_id=*}\x12k\n\x0cUpdateSurvey\x12\".ondewo.survey.UpdateSurveyRequest\x1a\x15.ondewo.survey.Survey\" \x82\xd3\xe4\x93\x02\x1a\x32\x15/survey/{survey_id=*}:\x01*\x12i\n\x0c\x44\x65leteSurvey\x12\".ondewo.survey.DeleteSurveyRequest\x1a\x16.google.protobuf.Empty\"\x1d\x82\xd3\xe4\x93\x02\x17*\x15/survey/{survey_id=*}\x12\x66\n\x0bListSurveys\x12!.ondewo.survey.ListSurveysRequest\x1a\".ondewo.survey.ListSurveysResponse\"\x10\x82\xd3\xe4\x93\x02\n\x12\x08/surveys\x12\x96\x01\n\x10GetSurveyAnswers\x12&.ondewo.survey.GetSurveyAnswersRequest\x1a$.ondewo.survey.SurveyAnswersResponse\"4\x82\xd3\xe4\x93\x02.\x12,/survey/{survey_id=*}/answers/{session_id=*}\x12\x8d\x01\n\x13GetAllSurveyAnswers\x12).ondewo.survey.GetAllSurveyAnswersRequest\x1a$.ondewo.survey.SurveyAnswersResponse\"%\x82\xd3\xe4\x93\x02\x1f\x12\x1d/survey/{survey_id=*}/answers\x12\x82\x01\n\x11\x43reateAgentSurvey\x12!.ondewo.survey.AgentSurveyRequest\x1a\".ondewo.survey.AgentSurveyResponse\"&\x82\xd3\xe4\x93\x02 \"\x1b/survey/{survey_id=*}/agent:\x01*\x12\x82\x01\n\x11UpdateAgentSurvey\x12!.ondewo.survey.AgentSurveyRequest\x1a\".ondewo.survey.AgentSurveyResponse\"&\x82\xd3\xe4\x93\x02 2\x1b/survey/{survey_id=*}/agent:\x01*\x12z\n\x11\x44\x65leteAgentSurvey\x12!.ondewo.survey.AgentSurveyRequest\x1a\x16.google.protobuf.Empty\"*\x82\xd3\xe4\x93\x02$*\"/survey/{survey_id=*}/agent/deleteb\x06proto3'
+  serialized_pb=b'\n\x1aondewo/survey/survey.proto\x12\rondewo.survey\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a google/protobuf/field_mask.proto\"\xda\x02\n\x06Survey\x12\x11\n\tsurvey_id\x18\x01 \x01(\t\x12\x14\n\x0c\x64isplay_name\x18\x02 \x01(\t\x12\x15\n\rlanguage_code\x18\x03 \x01(\t\x12*\n\tquestions\x18\x07 \x03(\x0b\x32\x17.ondewo.survey.Question\x12.\n\x0bsurvey_info\x18\x08 \x01(\x0b\x32\x19.ondewo.survey.SurveyInfo\x12\x30\n\x10\x65xclude_subflows\x18\t \x03(\x0e\x32\x16.ondewo.survey.SubFlow\x12\x32\n\x06status\x18\n \x01(\x0e\x32\".ondewo.survey.Survey.SurveyStatus\"N\n\x0cSurveyStatus\x12\x15\n\x11TO_BE_INITIALIZED\x10\x00\x12\x0b\n\x07UPDATED\x10\x01\x12\x0c\n\x08UPDATING\x10\x02\x12\x0c\n\x08OUTDATED\x10\x03\"\xe4\x01\n\nSurveyInfo\x12\x14\n\x0clegal_entity\x18\x01 \x01(\t\x12\x16\n\x0epostal_address\x18\x02 \x01(\t\x12\x15\n\remail_address\x18\x03 \x01(\t\x12\x14\n\x0cphone_number\x18\x04 \x01(\t\x12\x13\n\x0bphone_hours\x18\x05 \x01(\t\x12\x19\n\x11\x65xpected_duration\x18\x06 \x01(\t\x12\x0f\n\x07purpose\x18\x07 \x01(\t\x12\r\n\x05topic\x18\x08 \x01(\t\x12\x18\n\x10legal_disclaimer\x18\t \x01(\t\x12\x11\n\tanonymous\x18\n \x01(\x08\"\xb4\x03\n\x08Question\x12\x34\n\ropen_question\x18\x01 \x01(\x0b\x32\x1b.ondewo.survey.OpenQuestionH\x00\x12\x45\n\x16single_choice_question\x18\x02 \x01(\x0b\x32#.ondewo.survey.SingleChoiceQuestionH\x00\x12I\n\x18multiple_choice_question\x18\x03 \x01(\x0b\x32%.ondewo.survey.MultipleChoiceQuestionH\x00\x12\x36\n\x0escale_question\x18\x04 \x01(\x0b\x32\x1c.ondewo.survey.ScaleQuestionH\x00\x12K\n\x19single_parameter_question\x18\x05 \x01(\x0b\x32&.ondewo.survey.SingleParameterQuestionH\x00\x12O\n\x1bmultiple_parameter_question\x18\x06 \x01(\x0b\x32(.ondewo.survey.MultipleParameterQuestionH\x00\x42\n\n\x08question\"%\n\x0cOpenQuestion\x12\x15\n\rquestion_text\x18\x01 \x01(\t\"U\n\x14SingleChoiceQuestion\x12\x15\n\rquestion_text\x18\x01 \x01(\t\x12&\n\x07\x63hoices\x18\x02 \x03(\x0b\x32\x15.ondewo.survey.Choice\"W\n\x16MultipleChoiceQuestion\x12\x15\n\rquestion_text\x18\x01 \x01(\t\x12&\n\x07\x63hoices\x18\x02 \x03(\x0b\x32\x15.ondewo.survey.Choice\"\xca\x01\n\rScaleQuestion\x12\x15\n\rquestion_text\x18\x01 \x01(\t\x12:\n\tmin_value\x18\x02 \x01(\x0b\x32\'.ondewo.survey.ScaleQuestion.ScaleValue\x12:\n\tmax_value\x18\x03 \x01(\x0b\x32\'.ondewo.survey.ScaleQuestion.ScaleValue\x1a*\n\nScaleValue\x12\r\n\x05value\x18\x01 \x01(\x05\x12\r\n\x05label\x18\x02 \x01(\t\"H\n\x17SingleParameterQuestion\x12\x15\n\rquestion_text\x18\x01 \x01(\t\x12\x16\n\x0eparameter_type\x18\x02 \x01(\t\"J\n\x19MultipleParameterQuestion\x12\x15\n\rquestion_text\x18\x01 \x01(\t\x12\x16\n\x0eparameter_type\x18\x02 \x01(\t\"^\n\x06\x43hoice\x12\x10\n\x08synonyms\x18\x01 \x03(\t\x12\x33\n\x12\x66ollow_up_question\x18\x02 \x01(\x0b\x32\x17.ondewo.survey.Question\x12\r\n\x05value\x18\x03 \x01(\t\"\xc1\x02\n\x06\x41nswer\x12\x13\n\x0bquestion_nr\x18\x01 \x01(\x03\x12\x12\n\nsession_id\x18\x02 \x01(\t\x12\x13\n\x0b\x61nswer_text\x18\x03 \x01(\t\x12\x18\n\x10\x61nswer_parameter\x18\x04 \x01(\t\x12!\n\x19\x61nswer_parameter_original\x18\x05 \x01(\t\x12\x13\n\tanonymous\x18\x07 \x01(\x08H\x00\x12:\n\x10user_information\x18\x06 \x01(\x0b\x32\x1e.ondewo.survey.Answer.UserInfoH\x00\x1a[\n\x08UserInfo\x12\x12\n\nfirst_name\x18\x01 \x01(\t\x12\x11\n\tlast_name\x18\x02 \x01(\t\x12\x14\n\x0cphone_number\x18\x03 \x01(\t\x12\x12\n\nsession_id\x18\x04 \x01(\tB\x0e\n\x0cis_anonymous\"<\n\x13\x43reateSurveyRequest\x12%\n\x06survey\x18\x01 \x01(\x0b\x32\x15.ondewo.survey.Survey\"%\n\x10GetSurveyRequest\x12\x11\n\tsurvey_id\x18\x01 \x01(\t\"m\n\x13UpdateSurveyRequest\x12%\n\x06survey\x18\x01 \x01(\x0b\x32\x15.ondewo.survey.Survey\x12/\n\x0bupdate_mask\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.FieldMask\"(\n\x13\x44\x65leteSurveyRequest\x12\x11\n\tsurvey_id\x18\x01 \x01(\t\"-\n\x17GetSurveyAnswersRequest\x12\x12\n\nsession_id\x18\x01 \x01(\t\"/\n\x1aGetAllSurveyAnswersRequest\x12\x11\n\tsurvey_id\x18\x01 \x01(\t\"R\n\x15SurveyAnswersResponse\x12\x11\n\tsurvey_id\x18\x01 \x01(\t\x12&\n\x07\x61nswers\x18\x02 \x03(\x0b\x32\x15.ondewo.survey.Answer\"(\n\x12ListSurveysRequest\x12\x12\n\npage_token\x18\x01 \x01(\t\"V\n\x13ListSurveysResponse\x12&\n\x07surveys\x18\x01 \x03(\x0b\x32\x15.ondewo.survey.Survey\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\t\"\'\n\x12\x41gentSurveyRequest\x12\x11\n\tsurvey_id\x18\x01 \x01(\t\"%\n\x13\x41gentSurveyResponse\x12\x0e\n\x06parent\x18\x01 \x01(\t*\xab\x01\n\x07SubFlow\x12\x17\n\x13SUBFLOW_UNSPECIFIED\x10\x00\x12\x07\n\x03\x42OT\x10\x01\x12\x10\n\x0cLEGAL_ENTITY\x10\x02\x12\x12\n\x0ePOSTAL_ADDRESS\x10\x03\x12\x11\n\rEMAIL_ADDRESS\x10\x04\x12\x10\n\x0cPHONE_NUMBER\x10\x05\x12\x0f\n\x0bPHONE_HOURS\x10\x06\x12\x15\n\x11\x45XPECTED_DURATION\x10\x07\x12\x0b\n\x07PURPOSE\x10\x08\x32\xbb\t\n\x07Surveys\x12]\n\x0c\x43reateSurvey\x12\".ondewo.survey.CreateSurveyRequest\x1a\x15.ondewo.survey.Survey\"\x12\x82\xd3\xe4\x93\x02\x0c\"\x07/survey:\x01*\x12\x62\n\tGetSurvey\x12\x1f.ondewo.survey.GetSurveyRequest\x1a\x15.ondewo.survey.Survey\"\x1d\x82\xd3\xe4\x93\x02\x17\x12\x15/survey/{survey_id=*}\x12k\n\x0cUpdateSurvey\x12\".ondewo.survey.UpdateSurveyRequest\x1a\x15.ondewo.survey.Survey\" \x82\xd3\xe4\x93\x02\x1a\x32\x15/survey/{survey_id=*}:\x01*\x12i\n\x0c\x44\x65leteSurvey\x12\".ondewo.survey.DeleteSurveyRequest\x1a\x16.google.protobuf.Empty\"\x1d\x82\xd3\xe4\x93\x02\x17*\x15/survey/{survey_id=*}\x12\x66\n\x0bListSurveys\x12!.ondewo.survey.ListSurveysRequest\x1a\".ondewo.survey.ListSurveysResponse\"\x10\x82\xd3\xe4\x93\x02\n\x12\x08/surveys\x12\x96\x01\n\x10GetSurveyAnswers\x12&.ondewo.survey.GetSurveyAnswersRequest\x1a$.ondewo.survey.SurveyAnswersResponse\"4\x82\xd3\xe4\x93\x02.\x12,/survey/{survey_id=*}/answers/{session_id=*}\x12\x8d\x01\n\x13GetAllSurveyAnswers\x12).ondewo.survey.GetAllSurveyAnswersRequest\x1a$.ondewo.survey.SurveyAnswersResponse\"%\x82\xd3\xe4\x93\x02\x1f\x12\x1d/survey/{survey_id=*}/answers\x12\x82\x01\n\x11\x43reateAgentSurvey\x12!.ondewo.survey.AgentSurveyRequest\x1a\".ondewo.survey.AgentSurveyResponse\"&\x82\xd3\xe4\x93\x02 \"\x1b/survey/{survey_id=*}/agent:\x01*\x12\x82\x01\n\x11UpdateAgentSurvey\x12!.ondewo.survey.AgentSurveyRequest\x1a\".ondewo.survey.AgentSurveyResponse\"&\x82\xd3\xe4\x93\x02 2\x1b/survey/{survey_id=*}/agent:\x01*\x12z\n\x11\x44\x65leteAgentSurvey\x12!.ondewo.survey.AgentSurveyRequest\x1a\x16.google.protobuf.Empty\"*\x82\xd3\xe4\x93\x02$*\"/survey/{survey_id=*}/agent/deleteb\x06proto3'
   ,
   dependencies=[google_dot_api_dot_annotations__pb2.DESCRIPTOR,google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,google_dot_protobuf_dot_field__mask__pb2.DESCRIPTOR,])
 
@@ -82,8 +82,8 @@ _SUBFLOW = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=2451,
-  serialized_end=2622,
+  serialized_start=2792,
+  serialized_end=2963,
 )
 _sym_db.RegisterEnumDescriptor(_SUBFLOW)
 
@@ -98,6 +98,41 @@ PHONE_HOURS = 6
 EXPECTED_DURATION = 7
 PURPOSE = 8
 
+
+_SURVEY_SURVEYSTATUS = _descriptor.EnumDescriptor(
+  name='SurveyStatus',
+  full_name='ondewo.survey.Survey.SurveyStatus',
+  filename=None,
+  file=DESCRIPTOR,
+  create_key=_descriptor._internal_create_key,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='TO_BE_INITIALIZED', index=0, number=0,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='UPDATED', index=1, number=1,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='UPDATING', index=2, number=2,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='OUTDATED', index=3, number=3,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=407,
+  serialized_end=485,
+)
+_sym_db.RegisterEnumDescriptor(_SURVEY_SURVEYSTATUS)
 
 
 _SURVEY = _descriptor.Descriptor(
@@ -150,11 +185,19 @@ _SURVEY = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='status', full_name='ondewo.survey.Survey.status', index=6,
+      number=10, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
+    _SURVEY_SURVEYSTATUS,
   ],
   serialized_options=None,
   is_extendable=False,
@@ -163,7 +206,7 @@ _SURVEY = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=139,
-  serialized_end=353,
+  serialized_end=485,
 )
 
 
@@ -238,6 +281,13 @@ _SURVEYINFO = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='anonymous', full_name='ondewo.survey.SurveyInfo.anonymous', index=9,
+      number=10, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -250,8 +300,8 @@ _SURVEYINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=356,
-  serialized_end=565,
+  serialized_start=488,
+  serialized_end=716,
 )
 
 
@@ -322,8 +372,8 @@ _QUESTION = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=568,
-  serialized_end=1004,
+  serialized_start=719,
+  serialized_end=1155,
 )
 
 
@@ -354,8 +404,8 @@ _OPENQUESTION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1006,
-  serialized_end=1043,
+  serialized_start=1157,
+  serialized_end=1194,
 )
 
 
@@ -393,8 +443,8 @@ _SINGLECHOICEQUESTION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1045,
-  serialized_end=1130,
+  serialized_start=1196,
+  serialized_end=1281,
 )
 
 
@@ -432,8 +482,8 @@ _MULTIPLECHOICEQUESTION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1132,
-  serialized_end=1219,
+  serialized_start=1283,
+  serialized_end=1370,
 )
 
 
@@ -471,8 +521,8 @@ _SCALEQUESTION_SCALEVALUE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1382,
-  serialized_end=1424,
+  serialized_start=1533,
+  serialized_end=1575,
 )
 
 _SCALEQUESTION = _descriptor.Descriptor(
@@ -516,8 +566,8 @@ _SCALEQUESTION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1222,
-  serialized_end=1424,
+  serialized_start=1373,
+  serialized_end=1575,
 )
 
 
@@ -555,8 +605,8 @@ _SINGLEPARAMETERQUESTION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1426,
-  serialized_end=1498,
+  serialized_start=1577,
+  serialized_end=1649,
 )
 
 
@@ -594,8 +644,8 @@ _MULTIPLEPARAMETERQUESTION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1500,
-  serialized_end=1574,
+  serialized_start=1651,
+  serialized_end=1725,
 )
 
 
@@ -640,10 +690,62 @@ _CHOICE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1576,
-  serialized_end=1670,
+  serialized_start=1727,
+  serialized_end=1821,
 )
 
+
+_ANSWER_USERINFO = _descriptor.Descriptor(
+  name='UserInfo',
+  full_name='ondewo.survey.Answer.UserInfo',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='first_name', full_name='ondewo.survey.Answer.UserInfo.first_name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='last_name', full_name='ondewo.survey.Answer.UserInfo.last_name', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='phone_number', full_name='ondewo.survey.Answer.UserInfo.phone_number', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='session_id', full_name='ondewo.survey.Answer.UserInfo.session_id', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2038,
+  serialized_end=2129,
+)
 
 _ANSWER = _descriptor.Descriptor(
   name='Answer',
@@ -688,10 +790,24 @@ _ANSWER = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='anonymous', full_name='ondewo.survey.Answer.anonymous', index=5,
+      number=7, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='user_information', full_name='ondewo.survey.Answer.user_information', index=6,
+      number=6, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
-  nested_types=[],
+  nested_types=[_ANSWER_USERINFO, ],
   enum_types=[
   ],
   serialized_options=None,
@@ -699,9 +815,14 @@ _ANSWER = _descriptor.Descriptor(
   syntax='proto3',
   extension_ranges=[],
   oneofs=[
+    _descriptor.OneofDescriptor(
+      name='is_anonymous', full_name='ondewo.survey.Answer.is_anonymous',
+      index=0, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
   ],
-  serialized_start=1673,
-  serialized_end=1804,
+  serialized_start=1824,
+  serialized_end=2145,
 )
 
 
@@ -732,8 +853,8 @@ _CREATESURVEYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1806,
-  serialized_end=1866,
+  serialized_start=2147,
+  serialized_end=2207,
 )
 
 
@@ -764,8 +885,8 @@ _GETSURVEYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1868,
-  serialized_end=1905,
+  serialized_start=2209,
+  serialized_end=2246,
 )
 
 
@@ -803,8 +924,8 @@ _UPDATESURVEYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1907,
-  serialized_end=2016,
+  serialized_start=2248,
+  serialized_end=2357,
 )
 
 
@@ -835,8 +956,8 @@ _DELETESURVEYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2018,
-  serialized_end=2058,
+  serialized_start=2359,
+  serialized_end=2399,
 )
 
 
@@ -867,8 +988,8 @@ _GETSURVEYANSWERSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2060,
-  serialized_end=2105,
+  serialized_start=2401,
+  serialized_end=2446,
 )
 
 
@@ -899,8 +1020,8 @@ _GETALLSURVEYANSWERSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2107,
-  serialized_end=2154,
+  serialized_start=2448,
+  serialized_end=2495,
 )
 
 
@@ -938,8 +1059,8 @@ _SURVEYANSWERSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2156,
-  serialized_end=2238,
+  serialized_start=2497,
+  serialized_end=2579,
 )
 
 
@@ -970,8 +1091,8 @@ _LISTSURVEYSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2240,
-  serialized_end=2280,
+  serialized_start=2581,
+  serialized_end=2621,
 )
 
 
@@ -1009,8 +1130,8 @@ _LISTSURVEYSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2282,
-  serialized_end=2368,
+  serialized_start=2623,
+  serialized_end=2709,
 )
 
 
@@ -1041,8 +1162,8 @@ _AGENTSURVEYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2370,
-  serialized_end=2409,
+  serialized_start=2711,
+  serialized_end=2750,
 )
 
 
@@ -1073,13 +1194,15 @@ _AGENTSURVEYRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2411,
-  serialized_end=2448,
+  serialized_start=2752,
+  serialized_end=2789,
 )
 
 _SURVEY.fields_by_name['questions'].message_type = _QUESTION
 _SURVEY.fields_by_name['survey_info'].message_type = _SURVEYINFO
 _SURVEY.fields_by_name['exclude_subflows'].enum_type = _SUBFLOW
+_SURVEY.fields_by_name['status'].enum_type = _SURVEY_SURVEYSTATUS
+_SURVEY_SURVEYSTATUS.containing_type = _SURVEY
 _QUESTION.fields_by_name['open_question'].message_type = _OPENQUESTION
 _QUESTION.fields_by_name['single_choice_question'].message_type = _SINGLECHOICEQUESTION
 _QUESTION.fields_by_name['multiple_choice_question'].message_type = _MULTIPLECHOICEQUESTION
@@ -1110,6 +1233,14 @@ _SCALEQUESTION_SCALEVALUE.containing_type = _SCALEQUESTION
 _SCALEQUESTION.fields_by_name['min_value'].message_type = _SCALEQUESTION_SCALEVALUE
 _SCALEQUESTION.fields_by_name['max_value'].message_type = _SCALEQUESTION_SCALEVALUE
 _CHOICE.fields_by_name['follow_up_question'].message_type = _QUESTION
+_ANSWER_USERINFO.containing_type = _ANSWER
+_ANSWER.fields_by_name['user_information'].message_type = _ANSWER_USERINFO
+_ANSWER.oneofs_by_name['is_anonymous'].fields.append(
+  _ANSWER.fields_by_name['anonymous'])
+_ANSWER.fields_by_name['anonymous'].containing_oneof = _ANSWER.oneofs_by_name['is_anonymous']
+_ANSWER.oneofs_by_name['is_anonymous'].fields.append(
+  _ANSWER.fields_by_name['user_information'])
+_ANSWER.fields_by_name['user_information'].containing_oneof = _ANSWER.oneofs_by_name['is_anonymous']
 _CREATESURVEYREQUEST.fields_by_name['survey'].message_type = _SURVEY
 _UPDATESURVEYREQUEST.fields_by_name['survey'].message_type = _SURVEY
 _UPDATESURVEYREQUEST.fields_by_name['update_mask'].message_type = google_dot_protobuf_dot_field__mask__pb2._FIELDMASK
@@ -1219,11 +1350,19 @@ Choice = _reflection.GeneratedProtocolMessageType('Choice', (_message.Message,),
 _sym_db.RegisterMessage(Choice)
 
 Answer = _reflection.GeneratedProtocolMessageType('Answer', (_message.Message,), {
+
+  'UserInfo' : _reflection.GeneratedProtocolMessageType('UserInfo', (_message.Message,), {
+    'DESCRIPTOR' : _ANSWER_USERINFO,
+    '__module__' : 'ondewo.survey.survey_pb2'
+    # @@protoc_insertion_point(class_scope:ondewo.survey.Answer.UserInfo)
+    })
+  ,
   'DESCRIPTOR' : _ANSWER,
   '__module__' : 'ondewo.survey.survey_pb2'
   # @@protoc_insertion_point(class_scope:ondewo.survey.Answer)
   })
 _sym_db.RegisterMessage(Answer)
+_sym_db.RegisterMessage(Answer.UserInfo)
 
 CreateSurveyRequest = _reflection.GeneratedProtocolMessageType('CreateSurveyRequest', (_message.Message,), {
   'DESCRIPTOR' : _CREATESURVEYREQUEST,
@@ -1311,8 +1450,8 @@ _SURVEYS = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=2625,
-  serialized_end=3836,
+  serialized_start=2966,
+  serialized_end=4177,
   methods=[
   _descriptor.MethodDescriptor(
     name='CreateSurvey',
