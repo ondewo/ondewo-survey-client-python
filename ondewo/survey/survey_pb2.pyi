@@ -77,10 +77,33 @@ global___SubFlow = SubFlow
 
 class Survey(google___protobuf___message___Message):
     DESCRIPTOR: google___protobuf___descriptor___Descriptor = ...
+    class AgentStatus(builtin___int):
+        DESCRIPTOR: google___protobuf___descriptor___EnumDescriptor = ...
+        @classmethod
+        def Name(cls, number: builtin___int) -> builtin___str: ...
+        @classmethod
+        def Value(cls, name: builtin___str) -> 'Survey.AgentStatus': ...
+        @classmethod
+        def keys(cls) -> typing___List[builtin___str]: ...
+        @classmethod
+        def values(cls) -> typing___List['Survey.AgentStatus']: ...
+        @classmethod
+        def items(cls) -> typing___List[typing___Tuple[builtin___str, 'Survey.AgentStatus']]: ...
+        TO_BE_INITIALIZED = typing___cast('Survey.AgentStatus', 0)
+        UPDATED = typing___cast('Survey.AgentStatus', 1)
+        UPDATING = typing___cast('Survey.AgentStatus', 2)
+        OUTDATED = typing___cast('Survey.AgentStatus', 3)
+    TO_BE_INITIALIZED = typing___cast('Survey.AgentStatus', 0)
+    UPDATED = typing___cast('Survey.AgentStatus', 1)
+    UPDATING = typing___cast('Survey.AgentStatus', 2)
+    OUTDATED = typing___cast('Survey.AgentStatus', 3)
+    global___AgentStatus = AgentStatus
+
     survey_id = ... # type: typing___Text
     display_name = ... # type: typing___Text
     language_code = ... # type: typing___Text
     exclude_subflows = ... # type: google___protobuf___internal___containers___RepeatedScalarFieldContainer[global___SubFlow]
+    status = ... # type: global___Survey.AgentStatus
 
     @property
     def questions(self) -> google___protobuf___internal___containers___RepeatedCompositeFieldContainer[global___Question]: ...
@@ -96,6 +119,7 @@ class Survey(google___protobuf___message___Message):
         questions : typing___Optional[typing___Iterable[global___Question]] = None,
         survey_info : typing___Optional[global___SurveyInfo] = None,
         exclude_subflows : typing___Optional[typing___Iterable[global___SubFlow]] = None,
+        status : typing___Optional[global___Survey.AgentStatus] = None,
         ) -> None: ...
     if sys.version_info >= (3,):
         @classmethod
@@ -106,7 +130,7 @@ class Survey(google___protobuf___message___Message):
     def MergeFrom(self, other_msg: google___protobuf___message___Message) -> None: ...
     def CopyFrom(self, other_msg: google___protobuf___message___Message) -> None: ...
     def HasField(self, field_name: typing_extensions___Literal[u"survey_info",b"survey_info"]) -> builtin___bool: ...
-    def ClearField(self, field_name: typing_extensions___Literal[u"display_name",b"display_name",u"exclude_subflows",b"exclude_subflows",u"language_code",b"language_code",u"questions",b"questions",u"survey_id",b"survey_id",u"survey_info",b"survey_info"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions___Literal[u"display_name",b"display_name",u"exclude_subflows",b"exclude_subflows",u"language_code",b"language_code",u"questions",b"questions",u"status",b"status",u"survey_id",b"survey_id",u"survey_info",b"survey_info"]) -> None: ...
 global___Survey = Survey
 
 class SurveyInfo(google___protobuf___message___Message):
@@ -120,6 +144,7 @@ class SurveyInfo(google___protobuf___message___Message):
     purpose = ... # type: typing___Text
     topic = ... # type: typing___Text
     legal_disclaimer = ... # type: typing___Text
+    anonymous = ... # type: builtin___bool
 
     def __init__(self,
         *,
@@ -132,6 +157,7 @@ class SurveyInfo(google___protobuf___message___Message):
         purpose : typing___Optional[typing___Text] = None,
         topic : typing___Optional[typing___Text] = None,
         legal_disclaimer : typing___Optional[typing___Text] = None,
+        anonymous : typing___Optional[builtin___bool] = None,
         ) -> None: ...
     if sys.version_info >= (3,):
         @classmethod
@@ -141,7 +167,7 @@ class SurveyInfo(google___protobuf___message___Message):
         def FromString(cls, s: typing___Union[builtin___bytes, builtin___buffer, builtin___unicode]) -> SurveyInfo: ...
     def MergeFrom(self, other_msg: google___protobuf___message___Message) -> None: ...
     def CopyFrom(self, other_msg: google___protobuf___message___Message) -> None: ...
-    def ClearField(self, field_name: typing_extensions___Literal[u"email_address",b"email_address",u"expected_duration",b"expected_duration",u"legal_disclaimer",b"legal_disclaimer",u"legal_entity",b"legal_entity",u"phone_hours",b"phone_hours",u"phone_number",b"phone_number",u"postal_address",b"postal_address",u"purpose",b"purpose",u"topic",b"topic"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions___Literal[u"anonymous",b"anonymous",u"email_address",b"email_address",u"expected_duration",b"expected_duration",u"legal_disclaimer",b"legal_disclaimer",u"legal_entity",b"legal_entity",u"phone_hours",b"phone_hours",u"phone_number",b"phone_number",u"postal_address",b"postal_address",u"purpose",b"purpose",u"topic",b"topic"]) -> None: ...
 global___SurveyInfo = SurveyInfo
 
 class Question(google___protobuf___message___Message):
@@ -371,11 +397,40 @@ global___Choice = Choice
 
 class Answer(google___protobuf___message___Message):
     DESCRIPTOR: google___protobuf___descriptor___Descriptor = ...
+    class UserInfo(google___protobuf___message___Message):
+        DESCRIPTOR: google___protobuf___descriptor___Descriptor = ...
+        first_name = ... # type: typing___Text
+        last_name = ... # type: typing___Text
+        phone_number = ... # type: typing___Text
+        session_id = ... # type: typing___Text
+
+        def __init__(self,
+            *,
+            first_name : typing___Optional[typing___Text] = None,
+            last_name : typing___Optional[typing___Text] = None,
+            phone_number : typing___Optional[typing___Text] = None,
+            session_id : typing___Optional[typing___Text] = None,
+            ) -> None: ...
+        if sys.version_info >= (3,):
+            @classmethod
+            def FromString(cls, s: builtin___bytes) -> Answer.UserInfo: ...
+        else:
+            @classmethod
+            def FromString(cls, s: typing___Union[builtin___bytes, builtin___buffer, builtin___unicode]) -> Answer.UserInfo: ...
+        def MergeFrom(self, other_msg: google___protobuf___message___Message) -> None: ...
+        def CopyFrom(self, other_msg: google___protobuf___message___Message) -> None: ...
+        def ClearField(self, field_name: typing_extensions___Literal[u"first_name",b"first_name",u"last_name",b"last_name",u"phone_number",b"phone_number",u"session_id",b"session_id"]) -> None: ...
+    global___UserInfo = UserInfo
+
     question_nr = ... # type: builtin___int
     session_id = ... # type: typing___Text
     answer_text = ... # type: typing___Text
     answer_parameter = ... # type: typing___Text
     answer_parameter_original = ... # type: typing___Text
+    anonymous = ... # type: builtin___bool
+
+    @property
+    def user_information(self) -> global___Answer.UserInfo: ...
 
     def __init__(self,
         *,
@@ -384,6 +439,8 @@ class Answer(google___protobuf___message___Message):
         answer_text : typing___Optional[typing___Text] = None,
         answer_parameter : typing___Optional[typing___Text] = None,
         answer_parameter_original : typing___Optional[typing___Text] = None,
+        anonymous : typing___Optional[builtin___bool] = None,
+        user_information : typing___Optional[global___Answer.UserInfo] = None,
         ) -> None: ...
     if sys.version_info >= (3,):
         @classmethod
@@ -393,7 +450,9 @@ class Answer(google___protobuf___message___Message):
         def FromString(cls, s: typing___Union[builtin___bytes, builtin___buffer, builtin___unicode]) -> Answer: ...
     def MergeFrom(self, other_msg: google___protobuf___message___Message) -> None: ...
     def CopyFrom(self, other_msg: google___protobuf___message___Message) -> None: ...
-    def ClearField(self, field_name: typing_extensions___Literal[u"answer_parameter",b"answer_parameter",u"answer_parameter_original",b"answer_parameter_original",u"answer_text",b"answer_text",u"question_nr",b"question_nr",u"session_id",b"session_id"]) -> None: ...
+    def HasField(self, field_name: typing_extensions___Literal[u"anonymous",b"anonymous",u"is_anonymous",b"is_anonymous",u"user_information",b"user_information"]) -> builtin___bool: ...
+    def ClearField(self, field_name: typing_extensions___Literal[u"anonymous",b"anonymous",u"answer_parameter",b"answer_parameter",u"answer_parameter_original",b"answer_parameter_original",u"answer_text",b"answer_text",u"is_anonymous",b"is_anonymous",u"question_nr",b"question_nr",u"session_id",b"session_id",u"user_information",b"user_information"]) -> None: ...
+    def WhichOneof(self, oneof_group: typing_extensions___Literal[u"is_anonymous",b"is_anonymous"]) -> typing_extensions___Literal["anonymous","user_information"]: ...
 global___Answer = Answer
 
 class CreateSurveyRequest(google___protobuf___message___Message):
