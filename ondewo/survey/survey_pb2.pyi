@@ -77,33 +77,33 @@ global___SubFlow = SubFlow
 
 class Survey(google___protobuf___message___Message):
     DESCRIPTOR: google___protobuf___descriptor___Descriptor = ...
-    class SurveyStatus(builtin___int):
+    class AgentStatus(builtin___int):
         DESCRIPTOR: google___protobuf___descriptor___EnumDescriptor = ...
         @classmethod
         def Name(cls, number: builtin___int) -> builtin___str: ...
         @classmethod
-        def Value(cls, name: builtin___str) -> 'Survey.SurveyStatus': ...
+        def Value(cls, name: builtin___str) -> 'Survey.AgentStatus': ...
         @classmethod
         def keys(cls) -> typing___List[builtin___str]: ...
         @classmethod
-        def values(cls) -> typing___List['Survey.SurveyStatus']: ...
+        def values(cls) -> typing___List['Survey.AgentStatus']: ...
         @classmethod
-        def items(cls) -> typing___List[typing___Tuple[builtin___str, 'Survey.SurveyStatus']]: ...
-        TO_BE_INITIALIZED = typing___cast('Survey.SurveyStatus', 0)
-        UPDATED = typing___cast('Survey.SurveyStatus', 1)
-        UPDATING = typing___cast('Survey.SurveyStatus', 2)
-        OUTDATED = typing___cast('Survey.SurveyStatus', 3)
-    TO_BE_INITIALIZED = typing___cast('Survey.SurveyStatus', 0)
-    UPDATED = typing___cast('Survey.SurveyStatus', 1)
-    UPDATING = typing___cast('Survey.SurveyStatus', 2)
-    OUTDATED = typing___cast('Survey.SurveyStatus', 3)
-    global___SurveyStatus = SurveyStatus
+        def items(cls) -> typing___List[typing___Tuple[builtin___str, 'Survey.AgentStatus']]: ...
+        TO_BE_INITIALIZED = typing___cast('Survey.AgentStatus', 0)
+        UPDATED = typing___cast('Survey.AgentStatus', 1)
+        UPDATING = typing___cast('Survey.AgentStatus', 2)
+        OUTDATED = typing___cast('Survey.AgentStatus', 3)
+    TO_BE_INITIALIZED = typing___cast('Survey.AgentStatus', 0)
+    UPDATED = typing___cast('Survey.AgentStatus', 1)
+    UPDATING = typing___cast('Survey.AgentStatus', 2)
+    OUTDATED = typing___cast('Survey.AgentStatus', 3)
+    global___AgentStatus = AgentStatus
 
     survey_id = ... # type: typing___Text
     display_name = ... # type: typing___Text
     language_code = ... # type: typing___Text
     exclude_subflows = ... # type: google___protobuf___internal___containers___RepeatedScalarFieldContainer[global___SubFlow]
-    status = ... # type: global___Survey.SurveyStatus
+    status = ... # type: global___Survey.AgentStatus
 
     @property
     def questions(self) -> google___protobuf___internal___containers___RepeatedCompositeFieldContainer[global___Question]: ...
@@ -119,7 +119,7 @@ class Survey(google___protobuf___message___Message):
         questions : typing___Optional[typing___Iterable[global___Question]] = None,
         survey_info : typing___Optional[global___SurveyInfo] = None,
         exclude_subflows : typing___Optional[typing___Iterable[global___SubFlow]] = None,
-        status : typing___Optional[global___Survey.SurveyStatus] = None,
+        status : typing___Optional[global___Survey.AgentStatus] = None,
         ) -> None: ...
     if sys.version_info >= (3,):
         @classmethod
