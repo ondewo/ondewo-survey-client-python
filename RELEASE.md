@@ -7,7 +7,6 @@
  * Addition of a missing init file that prevented the installation through PyPi
 
 *****************
-
 ## Release ONDEWO Survey Python Client 0.5.0
 ### New Features
  * Adapted to support the Survey API 0.5.0
