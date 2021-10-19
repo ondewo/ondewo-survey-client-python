@@ -2,6 +2,11 @@
 # Release History
 *****************
 
+## Release ONDEWO Survey Python Client 0.6.0
+### New Features
+ * Extension of the API to support the FHIR format
+
+*****************
 ## Release ONDEWO Survey Python Client 0.5.1
 ### Bug Fixes
  * Addition of a missing init file that prevented the installation through PyPi
