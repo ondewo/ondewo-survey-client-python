@@ -12,7 +12,7 @@ clean_python_api:
 build_compiler:
 	make -C ondewo-proto-compiler/python build
 
-compile_protos:;
+compile_protos:
 	make -f ondewo-proto-compiler/python/Makefile run \
 		PROTO_DIR=${ONDEWO_PROTOS_DIR} \
 		EXTRA_PROTO_DIR=${GOOGLE_PROTOS_DIR} \
