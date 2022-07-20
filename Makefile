@@ -5,8 +5,8 @@ export GH_TOKEN=
 # Release Process Steps:
 # 1 - Create Release Branch and push
 # 2 - Create Release Tag and push
-# 2 - GitHub Release
-# 3 - PyPI Release
+# 3 - GitHub Release
+# 4 - PyPI Release
 ONDEWO_SURVEY_API_DIR=ondewo-survey-api
 GOOGLE_APIS_DIR=${ONDEWO_SURVEY_API_DIR}/googleapis
 ONDEWO_PROTOS_DIR=${ONDEWO_SURVEY_API_DIR}/ondewo
@@ -26,7 +26,7 @@ help:  ## Print usage info about help targets
 
 # BEFORE "release"
 update_setup: ## Update SURVEY Version in setup.py
-	@sed -i "s/version='[0-9]*.[0-9]*.[0-9]*'/version='${ONDEWO_NLU_VERSION}'/g" setup.py
+	@sed -i "s/version='[0-9]*.[0-9]*.[0-9]*'/version='${ONDEWO_SURVEY_VERSION}'/g" setup.py
 
 
 release: ## Automate the entire release process
@@ -38,12 +38,12 @@ release: ## Automate the entire release process
 	@echo "Release Finished"
 
 create_release_branch: ## Create Release Branch and push it to origin
-	git checkout -b "release/${ONDEWO_NLU_VERSION}"
-	git push -u origin "release/${ONDEWO_NLU_VERSION}"
+	git checkout -b "release/${ONDEWO_SURVEY_VERSION}"
+	git push -u origin "release/${ONDEWO_SURVEY_VERSION}"
 
 create_release_tag: ## Create Release Tag and push it to origin
-	git tag -a ${ONDEWO_NLU_VERSION} -m "release/${ONDEWO_NLU_VERSION}"
-	git push origin ${ONDEWO_NLU_VERSION}
+	git tag -a ${ONDEWO_SURVEY_VERSION} -m "release/${ONDEWO_SURVEY_VERSION}"
+	git push origin ${ONDEWO_SURVEY_VERSION}
 
 build_and_push_to_pypi_via_docker: build build_utils_docker_image push_to_pypi_via_docker_image  ## Release automation for building and pushing to pypi via a docker image
 
@@ -53,7 +53,7 @@ login_to_gh: ## Login to Github CLI with Access Token
 	echo $(GITHUB_GH_TOKEN) | gh auth login -p ssh --with-token
 
 build_gh_release: ## Generate Github Release with CLI
-	gh release create --repo $(GH_REPO) "$(ONDEWO_NLU_VERSION)" -n "$(CURRENT_RELEASE_NOTES)" -t "Release ${ONDEWO_NLU_VERSION}"
+	gh release create --repo $(GH_REPO) "$(ONDEWO_SURVEY_VERSION)" -n "$(CURRENT_RELEASE_NOTES)" -t "Release ${ONDEWO_SURVEY_VERSION}"
 
 clean_python_api:  ## Clear generated python files
 	rm ondewo/nlu/*pb2_grpc.py
@@ -104,8 +104,6 @@ git_status_recursively:
 	git submodule foreach --recursive "git status"
 	git submodule status --recursive
 
-push_to_pypi: build_package upload_package clear_package_data
-	echo 'pushed to pypi : )'
 
 build: clear_package_data init_submodules checkout_defined_submodule_versions build_compiler generate_ondewo_protos  ## Build source code
 
