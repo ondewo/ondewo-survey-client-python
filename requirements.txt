@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-ondewo-client-utils==0.1.0
+ondewo-client-utils>=0.1.0
 protobuf>=3.13.0
 google-api-core>=1.13.0
 googleapis-common-protos>=1.5.10
