@@ -1,7 +1,12 @@
 *****************
 # Release History
 *****************
+## Release ONDEWO Survey Python Client 1.0.0
+### New Features
 
+ * [[OND211-2039]](https://ondewo.atlassian.net/browse/OND211-2039) - Automated Release Process
+
+*****************
 ## Release ONDEWO Survey Python Client 0.6.0
 ### New Features
  * Extension of the API to support the FHIR format
