@@ -16,7 +16,7 @@ export
 # example: API 2.9.0 --> Client 2.9.X
 ONDEWO_SURVEY_VERSION=1.0.0
 
-# Choose the submodule version to build ondewo-nlu-client-python
+# Choose the submodule version to build ondewo-survey-client-python
 ONDEWO_SURVEY_API_GIT_BRANCH=tags/1.0.0
 ONDEWO_PROTO_COMPILER_GIT_BRANCH=tags/2.0.0
 PYPI_USERNAME?=ENTER_HERE_YOUR_PYPI_USERNAME
