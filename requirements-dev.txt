@@ -1,0 +1,3 @@
+mypy
+mypy-protobuf
+pre-commit

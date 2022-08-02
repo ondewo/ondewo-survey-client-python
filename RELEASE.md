@@ -1,6 +1,12 @@
 *****************
 # Release History
 *****************
+## Release ONDEWO Survey Python Client 1.1.0
+### New Features
+
+ * [[OND211-2039]](https://ondewo.atlassian.net/browse/OND211-2039) - added precommit hooks and adjusted files to them
+
+*****************
 ## Release ONDEWO Survey Python Client 1.0.0
 ### New Features
 

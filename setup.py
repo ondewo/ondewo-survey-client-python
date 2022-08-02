@@ -8,7 +8,7 @@ with open('requirements.txt') as f:
 
 setuptools.setup(
     name='ondewo-survey-client',
-    version='1.0.0',
+    version='1.1.0',
     author='Ondewo GmbH',
     author_email='info@ondewo.com',
     description='This library facilitates the interaction between a user and his/her Survey server.',
