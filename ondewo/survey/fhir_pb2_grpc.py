@@ -53,14 +53,14 @@ class FHIRServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def GetFHIRSurveyAnswers(self, request, context):
-        """Create a Survey from FHIR format and an empty NLU Agent for it
+        """Get Survey Answers on FHIR format
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def GetAllFHIRSurveyAnswers(self, request, context):
-        """Create a Survey from FHIR format and an empty NLU Agent for it
+        """Get all Survey Answers on FHIR format
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
