@@ -1,0 +1,4 @@
+mypy
+mypy-protobuf
+pre-commit
+flake8
