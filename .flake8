@@ -1,2 +1,14 @@
 [flake8]
-max-line-length = 110
+ignore = C901
+max-complexity = 10
+max-line-length = 120
+exclude =
+    # No need to traverse our git directory
+    .git,
+    ondewo/survey/fhir_pb2.py
+    ondewo/survey/fhir_pb2.pyi
+    ondewo/survey/fhir_pb2_grpc.py
+    ondewo/survey/py.typed
+    ondewo/survey/survey_pb2.py
+    ondewo/survey/survey_pb2.pyi
+    ondewo/survey/survey_pb2_grpc.py
