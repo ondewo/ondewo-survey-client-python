@@ -1,4 +1,4 @@
-import setuptools
+from setuptools import setup, find_packages
 
 with open('README.md', 'r') as f:
     long_description = f.read()
@@ -6,7 +6,7 @@ with open('README.md', 'r') as f:
 with open('requirements.txt') as f:
     requires = f.read().splitlines()
 
-setuptools.setup(
+setup(
     name='ondewo-survey-client',
     version='2.0.0',
     author='Ondewo GmbH',
@@ -19,11 +19,13 @@ setuptools.setup(
         np
         for np in filter(
             lambda n: n.startswith('ondewo.') or n == 'ondewo',
-            setuptools.find_packages()
+            find_packages()
         )
     ],
+    include_package_data=True,
     package_data={
-        'ondewo.nlu': ['py.typed']
+        'ondewo.nlu': ['py.typed', '*.pyi'],
+        'ondewo.survey': ['py.typed', '*.pyi'],
     },
     classifiers=[
         'Programming Language :: Python :: 3',
