@@ -1,4 +1,7 @@
-from setuptools import setup, find_packages
+from setuptools import (
+    find_packages,
+    setup,
+)
 
 with open('README.md', 'r') as f:
     long_description = f.read()
@@ -8,10 +11,10 @@ with open('requirements.txt') as f:
 
 setup(
     name='ondewo-survey-client',
-    version='2.0.0',
-    author='Ondewo GmbH',
-    author_email='info@ondewo.com',
-    description='This library facilitates the interaction between a user and his/her Survey server.',
+    version='2.0.1',
+    author='ONDEWO GmbH',
+    author_email='office@ondewo.com',
+    description='ONDEWO Survey (SURVEY) Client library for Python',
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/ondewo/ondewo-survey-client-python',
@@ -28,9 +31,15 @@ setup(
         'ondewo.survey': ['py.typed', '*.pyi'],
     },
     classifiers=[
-        'Programming Language :: Python :: 3',
+        'Development Status :: 5 - Production/Stable',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: Apache Software License',
         'Operating System :: OS Independent',
-        'Development Status :: 3 - Alpha',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
         'Topic :: Software Development :: Libraries',
     ],
     python_requires='>=3',
