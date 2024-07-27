@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-ondewo-client-utils>=0.1.0
+google-api-core>=2.8.1
+googleapis-common-protos>=1.56.4
+grpcio-reflection>=1.47.0
+grpcio-tools>=1.47.0
+grpcio>=1.47.0
+ondewo-client-utils
 protobuf>=3.13.0
-google-api-core>=1.13.0
-googleapis-common-protos>=1.5.10
-grpcio>=1.31.0
-grpcio-reflection>=1.31.0
-grpcio-tools>=1.31.0
