@@ -1,5 +1,4 @@
 export
-
 # ---------------- BEFORE RELEASE ----------------
 # 1 - Update Version Number
 # 2 - Update RELEASE.md
@@ -20,7 +19,7 @@ export
 ONDEWO_SURVEY_VERSION = 2.0.1
 
 ONDEWO_SURVEY_API_GIT_BRANCH=tags/2.0.0
-ONDEWO_PROTO_COMPILER_GIT_BRANCH=master
+ONDEWO_PROTO_COMPILER_GIT_BRANCH=tags/5.0.0
 PYPI_USERNAME?=ENTER_HERE_YOUR_PYPI_USERNAME
 PYPI_PASSWORD?=ENTER_HERE_YOUR_PYPI_PASSWORD
 
@@ -29,7 +28,6 @@ GITHUB_GH_TOKEN?=ENTER_YOUR_TOKEN_HERE
 
 CURRENT_RELEASE_NOTES=`cat RELEASE.md \
 	| sed -n '/Release ONDEWO Survey Python Client ${ONDEWO_SURVEY_VERSION}/,/\*\*/p'`
-
 
 GH_REPO="https://github.com/ondewo/ondewo-survey-client-python"
 DEVOPS_ACCOUNT_GIT="ondewo-devops-accounts"
@@ -62,11 +60,19 @@ install_dependencies_locally: ## Install dependencies locally
 	pip install -r requirements-dev.txt
 	pip install -r requirements.txt
 
-flake8:
+flake8: ## Runs flake8
 	flake8 --config .flake8 .
 
 mypy: ## Run mypy static code checking
+	@echo "---------------------------------------------"
+	@echo "START: Run mypy in pre-commit hook ..."
 	pre-commit run mypy --all-files
+	@echo "DONE: Run mypy in pre-commit hook."
+	@echo "---------------------------------------------"
+	@echo "START: Run mypy directly ..."
+	mypy --config-file=mypy.ini .
+	@echo "DONE: Run mypy directly"
+	@echo "---------------------------------------------"
 
 help: ## Print usage info about help targets
 	# (first comment after target starting with double hashes ##)
@@ -100,7 +106,7 @@ check_build: ## Checks if all built proto-code is there
 ########################################################
 #		Build
 
-update_setup: ## Update Survey Version in setup.py
+update_setup: ## Update Version in setup.py
 	@sed -i "s/version='[0-9]*.[0-9]*.[0-9]*'/version='${ONDEWO_SURVEY_VERSION}'/g" setup.py
 	@sed -i "s/version=\"[0-9]*.[0-9]*.[0-9]*\"/version='${ONDEWO_SURVEY_VERSION}'/g" setup.py
 
@@ -138,7 +144,7 @@ setup_conda_env: ## Checks for CONDA Environment
 	&& make create_conda_env)
 
 create_conda_env: ##Creates CONDA Environment
-	conda create -y --name ondewo-survey-client-python python=3.8
+	conda create -y --name ondewo-survey-client-python python=3.9
 	/bin/bash -c 'source `conda info --base`/bin/activate ondewo-survey-client-python; make setup_developer_environment_locally && echo "\n PRECOMMIT INSTALLED \n"'
 	make release
 
@@ -220,7 +226,7 @@ push_to_pypi_via_docker_image:  ## Push source code to pypi via docker
 		${IMAGE_UTILS_NAME} make push_to_pypi
 	rm -rf dist
 
-push_to_pypi: build_package upload_package clear_package_data
+push_to_pypi: build_package upload_package clear_package_data ## Builds -> Uploads -> Clears PYPI Package
 	@echo 'YAY - Pushed to pypi : )'
 
 show_pypi: build_package
@@ -240,7 +246,7 @@ show_pypi_via_docker_image: build_utils_docker_image ## Push source code to pypi
 ########################################################
 #		GITHUB
 
-push_to_gh: login_to_gh build_gh_release
+push_to_gh: login_to_gh build_gh_release ## Logs into GitHub CLI and Releases
 	@echo 'Released to Github'
 
 release_to_github_via_docker_image:  ## Release to Github via docker
@@ -258,7 +264,7 @@ clone_devops_accounts: ## Clones devops-accounts repo
 	if [ -d $(DEVOPS_ACCOUNT_GIT) ]; then rm -Rf $(DEVOPS_ACCOUNT_GIT); fi
 	git clone git@bitbucket.org:ondewo/${DEVOPS_ACCOUNT_GIT}.git
 
-run_release_with_devops:
+run_release_with_devops: ## Gets Credentials from devops-repo and run release command with them
 	$(eval info:= $(shell cat ${DEVOPS_ACCOUNT_DIR}/account_github.env | grep GITHUB_GH & cat ${DEVOPS_ACCOUNT_DIR}/account_pypi.env | grep PYPI_USERNAME & cat ${DEVOPS_ACCOUNT_DIR}/account_pypi.env | grep PYPI_PASSWORD))
 	@echo ${CONDA_PREFIX} | grep -q survey-client-python && make release $(info) || (make setup_conda_env $(info))
 
@@ -268,4 +274,4 @@ spc: ## Checks if the Release Branch, Tag and Pypi version already exist
 	$(eval setuppy_version:= $(shell cat setup.py | grep "version"))
 	@if test "$(filtered_branches)" != ""; then echo "-- Test 1: Branch exists!!" & exit 1; else echo "-- Test 1: Branch is fine";fi
 	@if test "$(filtered_tags)" != ""; then echo "-- Test 2: Tag exists!!" & exit 1; else echo "-- Test 2: Tag is fine";fi
-#	@if test "$(setuppy_version)" != "version='${ONDEWO_SURVEY_VERSION}',"; then echo "-- Test 3: Setup.py not updated!!" & exit 1; else echo "-- Test 3: Setup.py is fine";fi
+	#	@if test "$(setuppy_version)" != "version='${ONDEWO_SURVEY_VERSION}',"; then echo "-- Test 3: Setup.py not updated!!" & exit 1; else echo "-- Test 3: Setup.py is fine";fi

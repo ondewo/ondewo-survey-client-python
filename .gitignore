@@ -1,12 +1,16 @@
 # release automation
 ondewo-devops-accounts
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
+**/__pycache__/**
+.vscode
+.idea
 *.py[cod]
 *$py.class
-.idea
 # C extensions
 *.so
+*.egg-info
 
 # Distribution / packaging
 .Python
