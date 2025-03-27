@@ -15,22 +15,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. (editesyntax = "proto3";
 """
+
 import builtins
 import collections.abc
 import google.protobuf.descriptor
 import google.protobuf.internal.containers
 import google.protobuf.message
 import google.protobuf.struct_pb2
-import sys
-
-if sys.version_info >= (3, 8):
-    import typing as typing_extensions
-else:
-    import typing_extensions
+import typing
 
 DESCRIPTOR: google.protobuf.descriptor.FileDescriptor
 
-@typing_extensions.final
+@typing.final
 class CreateFHIRSurveyRequest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -38,17 +34,18 @@ class CreateFHIRSurveyRequest(google.protobuf.message.Message):
     @property
     def fhir_questionnaire(self) -> google.protobuf.struct_pb2.Struct:
         """FHIR questionnaire on a gRPC Struct format"""
+
     def __init__(
         self,
         *,
         fhir_questionnaire: google.protobuf.struct_pb2.Struct | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["fhir_questionnaire", b"fhir_questionnaire"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["fhir_questionnaire", b"fhir_questionnaire"]) -> None: ...
+    def HasField(self, field_name: typing.Literal["fhir_questionnaire", b"fhir_questionnaire"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing.Literal["fhir_questionnaire", b"fhir_questionnaire"]) -> None: ...
 
 global___CreateFHIRSurveyRequest = CreateFHIRSurveyRequest
 
-@typing_extensions.final
+@typing.final
 class SurveyFHIRAnswersResponse(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -61,12 +58,13 @@ class SurveyFHIRAnswersResponse(google.protobuf.message.Message):
     @property
     def fhir_questionnaire_responses(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[google.protobuf.struct_pb2.Struct]:
         """all requested answers"""
+
     def __init__(
         self,
         *,
         survey_id: builtins.str = ...,
         fhir_questionnaire_responses: collections.abc.Iterable[google.protobuf.struct_pb2.Struct] | None = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["fhir_questionnaire_responses", b"fhir_questionnaire_responses", "survey_id", b"survey_id"]) -> None: ...
+    def ClearField(self, field_name: typing.Literal["fhir_questionnaire_responses", b"fhir_questionnaire_responses", "survey_id", b"survey_id"]) -> None: ...
 
 global___SurveyFHIRAnswersResponse = SurveyFHIRAnswersResponse

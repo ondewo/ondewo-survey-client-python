@@ -110,7 +110,7 @@ update_setup: ## Update Version in setup.py
 	@sed -i "s/version='[0-9]*.[0-9]*.[0-9]*'/version='${ONDEWO_SURVEY_VERSION}'/g" setup.py
 	@sed -i "s/version=\"[0-9]*.[0-9]*.[0-9]*\"/version='${ONDEWO_SURVEY_VERSION}'/g" setup.py
 
-build: clear_package_data init_submodules checkout_defined_submodule_versions build_compiler generate_ondewo_protos update_setup ## Build source code
+build: clear_package_data init_submodules checkout_defined_submodule_versions build_compiler generate_ondewo_protos create_async_services update_setup ## Build source code
 
 push_to_pypi_via_docker: push_to_pypi_via_docker_image  ## Release automation for building and pushing to pypi via a docker image
 
@@ -147,6 +147,28 @@ create_conda_env: ##Creates CONDA Environment
 	conda create -y --name ondewo-survey-client-python python=3.9
 	/bin/bash -c 'source `conda info --base`/bin/activate ondewo-survey-client-python; make setup_developer_environment_locally && echo "\n PRECOMMIT INSTALLED \n"'
 	make release
+
+create_async_services: ## Create async services for all synchronous services
+	@find ondewo -type d -name "services" ! -path "*/.*/*" | while read -r dir; do \
+	    for file in "$$dir"/*.py; do \
+	        filename=$$(basename -- "$$file"); \
+	        case "$$filename" in \
+	            "__init__.py"|async_*) continue ;; \
+	        esac; \
+	        cp "$$file" "$$dir/async_$$filename"; \
+	    done; \
+	    for file in "$$dir"/async_*.py; do \
+	        sed -i -E \
+	            -e '/def stub/b' -e 's/^([[:space:]]*)def /\1async def /g' \
+	            -e 's/self\.stub/await self.stub/g' \
+	            -e 's/\(BaseServicesInterface\)/\(AsyncBaseServicesInterface\)/g' \
+	            -e 's/base_services_interface/async_base_services_interface/g' \
+	            -e 's/import BaseServicesInterface/import AsyncBaseServicesInterface/g' \
+	            "$$file"; \
+	    done; \
+	done
+	-make precommit_hooks_run_all_files
+	make precommit_hooks_run_all_files
 
 ########################################################
 #		Release

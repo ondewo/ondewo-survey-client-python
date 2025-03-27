@@ -15,6 +15,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. (editesyntax = "proto3";
 """
+
 import builtins
 import collections.abc
 import google.protobuf.descriptor
@@ -86,7 +87,7 @@ PURPOSE: SubFlow.ValueType  # 8
 """The subflow allowing the user to inquire about the purpose of the survey"""
 global___SubFlow = SubFlow
 
-@typing_extensions.final
+@typing.final
 class Survey(google.protobuf.message.Message):
     """///// Core Messages ///////"""
 
@@ -132,17 +133,20 @@ class Survey(google.protobuf.message.Message):
     This is also the only supported language of the agent.
     ISO 639-1 language code
     """
+    status: global___Survey.AgentStatus.ValueType
+    """Current status of the NLU Agent respecting to the Survey"""
     @property
     def questions(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___Question]:
         """Required. List of questions to be asked during the survey."""
+
     @property
     def survey_info(self) -> global___SurveyInfo:
         """Required. Information about the entity behind the survey, the purpose of the survey, legal stuff, etc."""
+
     @property
     def exclude_subflows(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[global___SubFlow.ValueType]:
         """Optional. List of subflows excluded for this survey."""
-    status: global___Survey.AgentStatus.ValueType
-    """Current status of the NLU Agent respecting to the Survey"""
+
     def __init__(
         self,
         *,
@@ -154,12 +158,12 @@ class Survey(google.protobuf.message.Message):
         exclude_subflows: collections.abc.Iterable[global___SubFlow.ValueType] | None = ...,
         status: global___Survey.AgentStatus.ValueType = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["survey_info", b"survey_info"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["display_name", b"display_name", "exclude_subflows", b"exclude_subflows", "language_code", b"language_code", "questions", b"questions", "status", b"status", "survey_id", b"survey_id", "survey_info", b"survey_info"]) -> None: ...
+    def HasField(self, field_name: typing.Literal["survey_info", b"survey_info"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing.Literal["display_name", b"display_name", "exclude_subflows", b"exclude_subflows", "language_code", b"language_code", "questions", b"questions", "status", b"status", "survey_id", b"survey_id", "survey_info", b"survey_info"]) -> None: ...
 
 global___Survey = Survey
 
-@typing_extensions.final
+@typing.final
 class SurveyInfo(google.protobuf.message.Message):
     """Collect information about the entity behind the survey, the purpose of the survey, legal stuff, etc.
     This is needed to generate meaningful messages and training data for some of the auto-generated intents.
@@ -236,11 +240,11 @@ class SurveyInfo(google.protobuf.message.Message):
         legal_disclaimer: builtins.str = ...,
         anonymous: builtins.bool = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["anonymous", b"anonymous", "email_address", b"email_address", "expected_duration", b"expected_duration", "legal_disclaimer", b"legal_disclaimer", "legal_entity", b"legal_entity", "phone_hours", b"phone_hours", "phone_number", b"phone_number", "postal_address", b"postal_address", "purpose", b"purpose", "topic", b"topic"]) -> None: ...
+    def ClearField(self, field_name: typing.Literal["anonymous", b"anonymous", "email_address", b"email_address", "expected_duration", b"expected_duration", "legal_disclaimer", b"legal_disclaimer", "legal_entity", b"legal_entity", "phone_hours", b"phone_hours", "phone_number", b"phone_number", "postal_address", b"postal_address", "purpose", b"purpose", "topic", b"topic"]) -> None: ...
 
 global___SurveyInfo = SurveyInfo
 
-@typing_extensions.final
+@typing.final
 class Question(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -259,6 +263,7 @@ class Question(google.protobuf.message.Message):
     @property
     def scale_question(self) -> global___ScaleQuestion:
         """convenience wrapper around a SingleChoiceQuestion"""
+
     @property
     def single_parameter_question(self) -> global___SingleParameterQuestion: ...
     @property
@@ -273,13 +278,13 @@ class Question(google.protobuf.message.Message):
         single_parameter_question: global___SingleParameterQuestion | None = ...,
         multiple_parameter_question: global___MultipleParameterQuestion | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["multiple_choice_question", b"multiple_choice_question", "multiple_parameter_question", b"multiple_parameter_question", "open_question", b"open_question", "question", b"question", "scale_question", b"scale_question", "single_choice_question", b"single_choice_question", "single_parameter_question", b"single_parameter_question"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["multiple_choice_question", b"multiple_choice_question", "multiple_parameter_question", b"multiple_parameter_question", "open_question", b"open_question", "question", b"question", "scale_question", b"scale_question", "single_choice_question", b"single_choice_question", "single_parameter_question", b"single_parameter_question"]) -> None: ...
-    def WhichOneof(self, oneof_group: typing_extensions.Literal["question", b"question"]) -> typing_extensions.Literal["open_question", "single_choice_question", "multiple_choice_question", "scale_question", "single_parameter_question", "multiple_parameter_question"] | None: ...
+    def HasField(self, field_name: typing.Literal["multiple_choice_question", b"multiple_choice_question", "multiple_parameter_question", b"multiple_parameter_question", "open_question", b"open_question", "question", b"question", "scale_question", b"scale_question", "single_choice_question", b"single_choice_question", "single_parameter_question", b"single_parameter_question"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing.Literal["multiple_choice_question", b"multiple_choice_question", "multiple_parameter_question", b"multiple_parameter_question", "open_question", b"open_question", "question", b"question", "scale_question", b"scale_question", "single_choice_question", b"single_choice_question", "single_parameter_question", b"single_parameter_question"]) -> None: ...
+    def WhichOneof(self, oneof_group: typing.Literal["question", b"question"]) -> typing.Literal["open_question", "single_choice_question", "multiple_choice_question", "scale_question", "single_parameter_question", "multiple_parameter_question"] | None: ...
 
 global___Question = Question
 
-@typing_extensions.final
+@typing.final
 class OpenQuestion(google.protobuf.message.Message):
     """A question to which any kind of reply can be given and recorded
     fixme: not working yet
@@ -295,11 +300,11 @@ class OpenQuestion(google.protobuf.message.Message):
         *,
         question_text: builtins.str = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["question_text", b"question_text"]) -> None: ...
+    def ClearField(self, field_name: typing.Literal["question_text", b"question_text"]) -> None: ...
 
 global___OpenQuestion = OpenQuestion
 
-@typing_extensions.final
+@typing.final
 class SingleChoiceQuestion(google.protobuf.message.Message):
     """A question for which exactly one out of a predefined set of options is expected as answer
     Example: SingleChoiceQuestion(
@@ -324,17 +329,18 @@ class SingleChoiceQuestion(google.protobuf.message.Message):
         Each Choice is represented by lists of synonyms.
         Note: needs to contain at least 2 choices
         """
+
     def __init__(
         self,
         *,
         question_text: builtins.str = ...,
         choices: collections.abc.Iterable[global___Choice] | None = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["choices", b"choices", "question_text", b"question_text"]) -> None: ...
+    def ClearField(self, field_name: typing.Literal["choices", b"choices", "question_text", b"question_text"]) -> None: ...
 
 global___SingleChoiceQuestion = SingleChoiceQuestion
 
-@typing_extensions.final
+@typing.final
 class MultipleChoiceQuestion(google.protobuf.message.Message):
     """A question for which exactly one or more out of a predefined set of options are expected as answers
     Example: MultipleChoiceQuestion(
@@ -359,23 +365,24 @@ class MultipleChoiceQuestion(google.protobuf.message.Message):
         Each Choice is represented by lists of synonyms.
         Note: needs to contain at least 2 choices
         """
+
     def __init__(
         self,
         *,
         question_text: builtins.str = ...,
         choices: collections.abc.Iterable[global___Choice] | None = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["choices", b"choices", "question_text", b"question_text"]) -> None: ...
+    def ClearField(self, field_name: typing.Literal["choices", b"choices", "question_text", b"question_text"]) -> None: ...
 
 global___MultipleChoiceQuestion = MultipleChoiceQuestion
 
-@typing_extensions.final
+@typing.final
 class ScaleQuestion(google.protobuf.message.Message):
     """A question for which an answer on a user-defined scale is expected"""
 
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
-    @typing_extensions.final
+    @typing.final
     class ScaleValue(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -389,7 +396,7 @@ class ScaleQuestion(google.protobuf.message.Message):
             value: builtins.int = ...,
             label: builtins.str = ...,
         ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal["label", b"label", "value", b"value"]) -> None: ...
+        def ClearField(self, field_name: typing.Literal["label", b"label", "value", b"value"]) -> None: ...
 
     QUESTION_TEXT_FIELD_NUMBER: builtins.int
     MIN_VALUE_FIELD_NUMBER: builtins.int
@@ -407,12 +414,12 @@ class ScaleQuestion(google.protobuf.message.Message):
         min_value: global___ScaleQuestion.ScaleValue | None = ...,
         max_value: global___ScaleQuestion.ScaleValue | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["max_value", b"max_value", "min_value", b"min_value"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["max_value", b"max_value", "min_value", b"min_value", "question_text", b"question_text"]) -> None: ...
+    def HasField(self, field_name: typing.Literal["max_value", b"max_value", "min_value", b"min_value"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing.Literal["max_value", b"max_value", "min_value", b"min_value", "question_text", b"question_text"]) -> None: ...
 
 global___ScaleQuestion = ScaleQuestion
 
-@typing_extensions.final
+@typing.final
 class SingleParameterQuestion(google.protobuf.message.Message):
     """SingleParameterQuestion defines a question which prompts the user for one entity of a particular type
     Example: SingleParameterQuestion(question_text='How old are you?', parameter_type='sys.number')
@@ -434,11 +441,11 @@ class SingleParameterQuestion(google.protobuf.message.Message):
         question_text: builtins.str = ...,
         parameter_type: builtins.str = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["parameter_type", b"parameter_type", "question_text", b"question_text"]) -> None: ...
+    def ClearField(self, field_name: typing.Literal["parameter_type", b"parameter_type", "question_text", b"question_text"]) -> None: ...
 
 global___SingleParameterQuestion = SingleParameterQuestion
 
-@typing_extensions.final
+@typing.final
 class MultipleParameterQuestion(google.protobuf.message.Message):
     """MultipleParameterQuestion defines a question which prompts the user for one or several entities of one particular type
     Example: MultipleParameterQuestion(question_text='How old are your children?', parameter_type='sys.number')
@@ -460,11 +467,11 @@ class MultipleParameterQuestion(google.protobuf.message.Message):
         question_text: builtins.str = ...,
         parameter_type: builtins.str = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["parameter_type", b"parameter_type", "question_text", b"question_text"]) -> None: ...
+    def ClearField(self, field_name: typing.Literal["parameter_type", b"parameter_type", "question_text", b"question_text"]) -> None: ...
 
 global___MultipleParameterQuestion = MultipleParameterQuestion
 
-@typing_extensions.final
+@typing.final
 class Choice(google.protobuf.message.Message):
     """The Choice message defines one "option" for the SingleChoiceQuestion and MultipleChoiceQuestion question types
     Example: Choice(synonyms=["blue", "blueish", "pale blue", "deep blue"])
@@ -475,16 +482,18 @@ class Choice(google.protobuf.message.Message):
     SYNONYMS_FIELD_NUMBER: builtins.int
     FOLLOW_UP_QUESTION_FIELD_NUMBER: builtins.int
     VALUE_FIELD_NUMBER: builtins.int
+    value: builtins.str
+    """The "canonical value" (i.e. the entity value)"""
     @property
     def synonyms(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.str]:
         """The synonyms which are recognized as equivalent for identifying one option"""
+
     @property
     def follow_up_question(self) -> global___Question:
         """Optional; Nested question if this specific choice gets chosen.
         Note: the follow-up question is only available for the SingleChoiceQuestion
         """
-    value: builtins.str
-    """The "canonical value" (i.e. the entity value)"""
+
     def __init__(
         self,
         *,
@@ -492,16 +501,16 @@ class Choice(google.protobuf.message.Message):
         follow_up_question: global___Question | None = ...,
         value: builtins.str = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["follow_up_question", b"follow_up_question"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["follow_up_question", b"follow_up_question", "synonyms", b"synonyms", "value", b"value"]) -> None: ...
+    def HasField(self, field_name: typing.Literal["follow_up_question", b"follow_up_question"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing.Literal["follow_up_question", b"follow_up_question", "synonyms", b"synonyms", "value", b"value"]) -> None: ...
 
 global___Choice = Choice
 
-@typing_extensions.final
+@typing.final
 class Answer(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
-    @typing_extensions.final
+    @typing.final
     class UserInfo(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -529,7 +538,7 @@ class Answer(google.protobuf.message.Message):
             session_id: builtins.str = ...,
             user_id: builtins.str = ...,
         ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal["first_name", b"first_name", "last_name", b"last_name", "phone_number", b"phone_number", "session_id", b"session_id", "user_id", b"user_id"]) -> None: ...
+        def ClearField(self, field_name: typing.Literal["first_name", b"first_name", "last_name", b"last_name", "phone_number", b"phone_number", "session_id", b"session_id", "user_id", b"user_id"]) -> None: ...
 
     QUESTION_NR_FIELD_NUMBER: builtins.int
     SESSION_ID_FIELD_NUMBER: builtins.int
@@ -564,13 +573,13 @@ class Answer(google.protobuf.message.Message):
         anonymous: builtins.bool = ...,
         user_information: global___Answer.UserInfo | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["anonymous", b"anonymous", "is_anonymous", b"is_anonymous", "user_information", b"user_information"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["anonymous", b"anonymous", "answer_parameter", b"answer_parameter", "answer_parameter_original", b"answer_parameter_original", "answer_text", b"answer_text", "is_anonymous", b"is_anonymous", "question_nr", b"question_nr", "session_id", b"session_id", "user_information", b"user_information"]) -> None: ...
-    def WhichOneof(self, oneof_group: typing_extensions.Literal["is_anonymous", b"is_anonymous"]) -> typing_extensions.Literal["anonymous", "user_information"] | None: ...
+    def HasField(self, field_name: typing.Literal["anonymous", b"anonymous", "is_anonymous", b"is_anonymous", "user_information", b"user_information"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing.Literal["anonymous", b"anonymous", "answer_parameter", b"answer_parameter", "answer_parameter_original", b"answer_parameter_original", "answer_text", b"answer_text", "is_anonymous", b"is_anonymous", "question_nr", b"question_nr", "session_id", b"session_id", "user_information", b"user_information"]) -> None: ...
+    def WhichOneof(self, oneof_group: typing.Literal["is_anonymous", b"is_anonymous"]) -> typing.Literal["anonymous", "user_information"] | None: ...
 
 global___Answer = Answer
 
-@typing_extensions.final
+@typing.final
 class CreateSurveyRequest(google.protobuf.message.Message):
     """///// Request / Response messages ///////"""
 
@@ -584,12 +593,12 @@ class CreateSurveyRequest(google.protobuf.message.Message):
         *,
         survey: global___Survey | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["survey", b"survey"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["survey", b"survey"]) -> None: ...
+    def HasField(self, field_name: typing.Literal["survey", b"survey"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing.Literal["survey", b"survey"]) -> None: ...
 
 global___CreateSurveyRequest = CreateSurveyRequest
 
-@typing_extensions.final
+@typing.final
 class GetSurveyRequest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -603,11 +612,11 @@ class GetSurveyRequest(google.protobuf.message.Message):
         *,
         survey_id: builtins.str = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["survey_id", b"survey_id"]) -> None: ...
+    def ClearField(self, field_name: typing.Literal["survey_id", b"survey_id"]) -> None: ...
 
 global___GetSurveyRequest = GetSurveyRequest
 
-@typing_extensions.final
+@typing.final
 class UpdateSurveyRequest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -616,24 +625,26 @@ class UpdateSurveyRequest(google.protobuf.message.Message):
     @property
     def survey(self) -> global___Survey:
         """Updated survey. Note: the ID must refer to an existing survey which will be updated"""
+
     @property
     def update_mask(self) -> google.protobuf.field_mask_pb2.FieldMask:
         """Optional. Field mask that defines which fields get updated. Default: all fields are updated.
         Example:
                  - update_mask = FieldMask( [ 'survey.display_name', 'survey.questions' ] )
         """
+
     def __init__(
         self,
         *,
         survey: global___Survey | None = ...,
         update_mask: google.protobuf.field_mask_pb2.FieldMask | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["survey", b"survey", "update_mask", b"update_mask"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["survey", b"survey", "update_mask", b"update_mask"]) -> None: ...
+    def HasField(self, field_name: typing.Literal["survey", b"survey", "update_mask", b"update_mask"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing.Literal["survey", b"survey", "update_mask", b"update_mask"]) -> None: ...
 
 global___UpdateSurveyRequest = UpdateSurveyRequest
 
-@typing_extensions.final
+@typing.final
 class DeleteSurveyRequest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -647,11 +658,11 @@ class DeleteSurveyRequest(google.protobuf.message.Message):
         *,
         survey_id: builtins.str = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["survey_id", b"survey_id"]) -> None: ...
+    def ClearField(self, field_name: typing.Literal["survey_id", b"survey_id"]) -> None: ...
 
 global___DeleteSurveyRequest = DeleteSurveyRequest
 
-@typing_extensions.final
+@typing.final
 class GetSurveyAnswersRequest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -674,13 +685,13 @@ class GetSurveyAnswersRequest(google.protobuf.message.Message):
         user_id: builtins.str = ...,
         user_phone_number: builtins.str = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["identifier", b"identifier", "session_id", b"session_id", "user_id", b"user_id", "user_phone_number", b"user_phone_number"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["identifier", b"identifier", "session_id", b"session_id", "survey_id", b"survey_id", "user_id", b"user_id", "user_phone_number", b"user_phone_number"]) -> None: ...
-    def WhichOneof(self, oneof_group: typing_extensions.Literal["identifier", b"identifier"]) -> typing_extensions.Literal["session_id", "user_id", "user_phone_number"] | None: ...
+    def HasField(self, field_name: typing.Literal["identifier", b"identifier", "session_id", b"session_id", "user_id", b"user_id", "user_phone_number", b"user_phone_number"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing.Literal["identifier", b"identifier", "session_id", b"session_id", "survey_id", b"survey_id", "user_id", b"user_id", "user_phone_number", b"user_phone_number"]) -> None: ...
+    def WhichOneof(self, oneof_group: typing.Literal["identifier", b"identifier"]) -> typing.Literal["session_id", "user_id", "user_phone_number"] | None: ...
 
 global___GetSurveyAnswersRequest = GetSurveyAnswersRequest
 
-@typing_extensions.final
+@typing.final
 class GetAllSurveyAnswersRequest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -694,11 +705,11 @@ class GetAllSurveyAnswersRequest(google.protobuf.message.Message):
         *,
         survey_id: builtins.str = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["survey_id", b"survey_id"]) -> None: ...
+    def ClearField(self, field_name: typing.Literal["survey_id", b"survey_id"]) -> None: ...
 
 global___GetAllSurveyAnswersRequest = GetAllSurveyAnswersRequest
 
-@typing_extensions.final
+@typing.final
 class SurveyAnswersResponse(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -711,17 +722,18 @@ class SurveyAnswersResponse(google.protobuf.message.Message):
     @property
     def answers(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___Answer]:
         """all requested answers"""
+
     def __init__(
         self,
         *,
         survey_id: builtins.str = ...,
         answers: collections.abc.Iterable[global___Answer] | None = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["answers", b"answers", "survey_id", b"survey_id"]) -> None: ...
+    def ClearField(self, field_name: typing.Literal["answers", b"answers", "survey_id", b"survey_id"]) -> None: ...
 
 global___SurveyAnswersResponse = SurveyAnswersResponse
 
-@typing_extensions.final
+@typing.final
 class ListSurveysRequest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -738,11 +750,11 @@ class ListSurveysRequest(google.protobuf.message.Message):
         *,
         page_token: builtins.str = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["page_token", b"page_token"]) -> None: ...
+    def ClearField(self, field_name: typing.Literal["page_token", b"page_token"]) -> None: ...
 
 global___ListSurveysRequest = ListSurveysRequest
 
-@typing_extensions.final
+@typing.final
 class ListSurveysResponse(google.protobuf.message.Message):
     """The response message for [Intents.ListIntents][google.cloud.dialogflow.v2.Intents.ListIntents]."""
 
@@ -750,26 +762,27 @@ class ListSurveysResponse(google.protobuf.message.Message):
 
     SURVEYS_FIELD_NUMBER: builtins.int
     NEXT_PAGE_TOKEN_FIELD_NUMBER: builtins.int
+    next_page_token: builtins.str
+    """Token to retrieve the next page of results, or empty if there are no
+    more results in the list.
+    """
     @property
     def surveys(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___Survey]:
         """The list of surveys. There will be a maximum number of items
         returned based on the page_token field in the request.
         """
-    next_page_token: builtins.str
-    """Token to retrieve the next page of results, or empty if there are no
-    more results in the list.
-    """
+
     def __init__(
         self,
         *,
         surveys: collections.abc.Iterable[global___Survey] | None = ...,
         next_page_token: builtins.str = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["next_page_token", b"next_page_token", "surveys", b"surveys"]) -> None: ...
+    def ClearField(self, field_name: typing.Literal["next_page_token", b"next_page_token", "surveys", b"surveys"]) -> None: ...
 
 global___ListSurveysResponse = ListSurveysResponse
 
-@typing_extensions.final
+@typing.final
 class AgentSurveyRequest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -783,11 +796,11 @@ class AgentSurveyRequest(google.protobuf.message.Message):
         *,
         survey_id: builtins.str = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["survey_id", b"survey_id"]) -> None: ...
+    def ClearField(self, field_name: typing.Literal["survey_id", b"survey_id"]) -> None: ...
 
 global___AgentSurveyRequest = AgentSurveyRequest
 
-@typing_extensions.final
+@typing.final
 class AgentSurveyResponse(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -801,6 +814,6 @@ class AgentSurveyResponse(google.protobuf.message.Message):
         *,
         parent: builtins.str = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["parent", b"parent"]) -> None: ...
+    def ClearField(self, field_name: typing.Literal["parent", b"parent"]) -> None: ...
 
 global___AgentSurveyResponse = AgentSurveyResponse
