@@ -41,7 +41,7 @@ from ondewo.survey.survey_pb2 import (
 # Bound exactly once so a refactor that changes only an input or only an expectation cannot
 # silently make a test tautological.
 ACCESS_TOKEN: str = 'test-access-token'
-BEARER_METADATA: List[Tuple[str, str]] = [('authorization', f'Bearer {ACCESS_TOKEN}')]
+BEARER_METADATA: List[Tuple[str, str]] = [('Authorization', f'Bearer {ACCESS_TOKEN}')]
 EXPECTED_PAGE_TOKEN: str = 'page_size-10000'
 
 HOST: str = 'survey.example.com'
