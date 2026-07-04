@@ -29,6 +29,10 @@ jobs:
           pytest tests/unit -q \
             --cov=ondewo.survey.utils.keycloak \
             --cov=ondewo.survey.client.client_config \
+            --cov=ondewo.survey.client.client \
+            --cov=ondewo.survey.client.async_client \
+            --cov=ondewo.survey.client.services_interface \
+            --cov=ondewo.survey.client.async_services_interface \
             --cov-report=term-missing \
             --cov-report=xml \
             --cov-fail-under=100

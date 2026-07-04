@@ -11,27 +11,26 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from ondewo.utils.base_services_interface import BaseServicesInterface
-
+from ondewo.survey.client.services_interface import ServicesInterface
 from ondewo.survey.survey_pb2_grpc import SurveysStub
 
 
-class Survey(BaseServicesInterface):
+class Survey(ServicesInterface):
     """
-    A class representing the Projects service interface.
+    A class representing the Surveys service interface.
 
-    This class provides methods to interact with the Projects service, which allows managing VtsiProjects.
+    This class provides methods to interact with the Surveys service (SurveysStub).
 
-    Inherits from BaseServicesInterface.
+    Inherits from ServicesInterface.
     """
 
     @property
     def stub(self) -> SurveysStub:
         """
-        Get the gRPC stub for the Projects service.
+        Get the gRPC stub for the Surveys service.
 
         Returns:
-            ProjectsStub: The gRPC stub for the Projects service.
+            SurveysStub: The gRPC stub for the Surveys service.
         """
         stub: SurveysStub = SurveysStub(channel=self.grpc_channel)
         return stub

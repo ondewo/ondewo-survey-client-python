@@ -93,8 +93,13 @@ The `/examples` folder provides a possible implementation of this library. To ru
 - port `// Port of the Server - e.g. 6600`
 - user_name `// Username - same as you would use in AIM`
 - password `// Password of the user`
-- http_token `// Token to allow access through`
+- keycloak_url `// Keycloak base URL for headless auth - e.g. https://my-host/auth`
+- realm `// Keycloak realm - e.g. ondewo-ccai-platform`
+- client_id `// Keycloak public client id - e.g. ondewo-survey-cai-sdk-public`
+- http_token `// Optional/legacy - token to allow access through`
 - grpc_cert `// gRPC Certificate of the server`
+
+With `keycloak_url`, `realm`, and `client_id` set, the client authenticates via Keycloak and attaches an `authorization: Bearer <jwt>` header to every RPC. See [examples/survey_list_surveys_example.py](examples/survey_list_surveys_example.py) for the full D18 flow.
 
 ## Automatic Release Process
 
