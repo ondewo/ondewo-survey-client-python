@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""Unit tests for `ClientConfig` validation across the dual-mode auth paths (D5/D18)."""
+"""Unit tests for `ClientConfig` validation on the bearer-only auth model (D18)."""
 import pytest
 
 from ondewo.survey.client.client_config import ClientConfig
@@ -25,40 +25,31 @@ REALM: str = 'ondewo-ccai-platform'
 CLIENT_ID: str = 'ondewo-survey-cai-sdk-public'
 
 
-class TestLegacyPath:
-    """Validation of the legacy `Login` RPC auth path (no Keycloak fields, D5)."""
+class TestNonKeycloakPath:
+    """Validation of a config with no Keycloak fields (calls travel unauthenticated)."""
 
-    def test_legacy_config_without_http_token_is_valid(self) -> None:
-        """A legacy config builds without `http_token` and is not flagged for Keycloak.
+    def test_config_without_keycloak_is_valid_and_not_keycloak(self) -> None:
+        """A config with only user_name/password is valid and reports `use_keycloak is False`.
 
         Returns:
             None
         """
-        # http_token is no longer mandatory (D5).
         config = ClientConfig(host=HOST, port=PORT, user_name=USERNAME, password=PASSWORD)
 
-        assert config.http_token == ''
         assert config.use_keycloak is False
 
-    def test_legacy_config_with_http_token_still_valid(self) -> None:
-        """An explicit legacy `http_token` is retained and does not enable the Keycloak path.
+    def test_no_http_token_field_present(self) -> None:
+        """The bearer-only config exposes no legacy `http_token` attribute.
 
         Returns:
             None
         """
-        config = ClientConfig(
-            host=HOST,
-            port=PORT,
-            http_token='Basic abc',
-            user_name=USERNAME,
-            password=PASSWORD,
-        )
+        config = ClientConfig(host=HOST, port=PORT, user_name=USERNAME, password=PASSWORD)
 
-        assert config.http_token == 'Basic abc'
-        assert config.use_keycloak is False
+        assert not hasattr(config, 'http_token')
 
     def test_missing_user_name_raises(self) -> None:
-        """Omitting `user_name` raises `ValueError` (mandatory for both auth paths).
+        """Omitting `user_name` raises `ValueError` (mandatory for the bearer-only path).
 
         Returns:
             None
@@ -67,7 +58,7 @@ class TestLegacyPath:
             ClientConfig(host=HOST, port=PORT, password=PASSWORD)
 
     def test_missing_password_raises(self) -> None:
-        """Omitting `password` raises `ValueError` (mandatory for both auth paths).
+        """Omitting `password` raises `ValueError` (mandatory for the bearer-only path).
 
         Returns:
             None
