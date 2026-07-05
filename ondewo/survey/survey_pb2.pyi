@@ -3,17 +3,11 @@
 isort:skip_file
 Copyright 2020 ONDEWO GmbH
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+    <a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a>
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License. (editesyntax = "proto3";
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. (editesyntax = "proto3";
 """
 
 import builtins
@@ -59,12 +53,13 @@ class _SubFlowEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTy
     """The subflow allowing the user to inquire about the purpose of the survey"""
 
 class SubFlow(_SubFlow, metaclass=_SubFlowEnumTypeWrapper):
-    """Enumeration of (some of) the subflows which are created by default
-    This can be used to "switch off" particular subflows when creating an agent during CreateSurvey
-    Subflows are defined as one of the following:
-    - sequences of intents A -> B_1, ..., B_n -> ... -> Z_1, ..., Z_m which are linked by context relationships
-         such that the first intent in the sequence can always be triggered
-    - single intents which can always be triggered
+    """<p>Enumeration of (some of) the subflows which are created by default</p>
+    <p>This can be used to &quot;switch off&quot; particular subflows when creating an agent during CreateSurvey</p>
+    <p>Subflows are defined as one of the following:</p>
+    <ul>
+      <li>sequences of intents A -&gt; B_1, ..., B_n -&gt; ... -&gt; Z_1, ..., Z_m which are linked by context relationships such that the first intent in the sequence can always be triggered</li>
+      <li>single intents which can always be triggered</li>
+    </ul>
     """
 
 SUBFLOW_UNSPECIFIED: SubFlow.ValueType  # 0
@@ -89,7 +84,10 @@ global___SubFlow = SubFlow
 
 @typing.final
 class Survey(google.protobuf.message.Message):
-    """///// Core Messages ///////"""
+    """///// Core Messages ///////
+
+    A survey containing questions and metadata for conducting user surveys
+    """
 
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -100,19 +98,25 @@ class Survey(google.protobuf.message.Message):
     class _AgentStatusEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[Survey._AgentStatus.ValueType], builtins.type):
         DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
         TO_BE_INITIALIZED: Survey._AgentStatus.ValueType  # 0
+        """Agent has not been initialized yet"""
         UPDATED: Survey._AgentStatus.ValueType  # 1
+        """Agent has been successfully updated and is current"""
         UPDATING: Survey._AgentStatus.ValueType  # 2
+        """Agent is currently being updated"""
         OUTDATED: Survey._AgentStatus.ValueType  # 3
+        """Agent is outdated and needs to be updated"""
 
     class AgentStatus(_AgentStatus, metaclass=_AgentStatusEnumTypeWrapper):
-        """Note: All other attributes of the Agent message should be updated using the std mechanism of UpdateAgent
-         once the survey has been created.
-        """
+        """Note: All other attributes of the Agent message should be updated using the std mechanism of UpdateAgent once the survey has been created."""
 
     TO_BE_INITIALIZED: Survey.AgentStatus.ValueType  # 0
+    """Agent has not been initialized yet"""
     UPDATED: Survey.AgentStatus.ValueType  # 1
+    """Agent has been successfully updated and is current"""
     UPDATING: Survey.AgentStatus.ValueType  # 2
+    """Agent is currently being updated"""
     OUTDATED: Survey.AgentStatus.ValueType  # 3
+    """Agent is outdated and needs to be updated"""
 
     SURVEY_ID_FIELD_NUMBER: builtins.int
     DISPLAY_NAME_FIELD_NUMBER: builtins.int
@@ -123,7 +127,7 @@ class Survey(google.protobuf.message.Message):
     STATUS_FIELD_NUMBER: builtins.int
     survey_id: builtins.str
     """The project identifier for this survey. Equal to the parent of the corresponding Agent.
-    Format: `projects/<Project ID>/agent`.
+    Format: <pre><code>projects/&lt;Project ID&gt;/agent</code></pre>
     Read-only in the Survey message (assigned by the back-end)
     """
     display_name: builtins.str
@@ -165,8 +169,8 @@ global___Survey = Survey
 
 @typing.final
 class SurveyInfo(google.protobuf.message.Message):
-    """Collect information about the entity behind the survey, the purpose of the survey, legal stuff, etc.
-    This is needed to generate meaningful messages and training data for some of the auto-generated intents.
+    """<p>Collect information about the entity behind the survey, the purpose of the survey, legal stuff, etc.</p>
+    <p>This is needed to generate meaningful messages and training data for some of the auto-generated intents.</p>
     """
 
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
@@ -216,10 +220,9 @@ class SurveyInfo(google.protobuf.message.Message):
     legal_disclaimer: builtins.str
     """Required.
     A pronounceable explanation of the legal implications of participating in the survey.
-    For example:
-     "Your answers during this survey will be stored anonymously for the next two years and then deleted."
+    For example: &quot;Your answers during this survey will be stored anonymously for the next two years and then deleted.&quot;
     Should be formulated such that the agent can afterwards ask for the consent of the user.
-    Example for how the agent could continue: "Are you willing to participate in this survey?"
+    Example for how the agent could continue: &quot;Are you willing to participate in this survey?&quot;
     """
     anonymous: builtins.bool
     """Optional.
@@ -246,6 +249,8 @@ global___SurveyInfo = SurveyInfo
 
 @typing.final
 class Question(google.protobuf.message.Message):
+    """A question that can be one of several question types: open-ended, single choice, multiple choice, scale, or parameter-based questions"""
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
     OPEN_QUESTION_FIELD_NUMBER: builtins.int
@@ -255,19 +260,29 @@ class Question(google.protobuf.message.Message):
     SINGLE_PARAMETER_QUESTION_FIELD_NUMBER: builtins.int
     MULTIPLE_PARAMETER_QUESTION_FIELD_NUMBER: builtins.int
     @property
-    def open_question(self) -> global___OpenQuestion: ...
+    def open_question(self) -> global___OpenQuestion:
+        """A question to which any kind of reply can be given and recorded"""
+
     @property
-    def single_choice_question(self) -> global___SingleChoiceQuestion: ...
+    def single_choice_question(self) -> global___SingleChoiceQuestion:
+        """A question for which exactly one out of a predefined set of options is expected as answer"""
+
     @property
-    def multiple_choice_question(self) -> global___MultipleChoiceQuestion: ...
+    def multiple_choice_question(self) -> global___MultipleChoiceQuestion:
+        """A question for which exactly one or more out of a predefined set of options are expected as answers"""
+
     @property
     def scale_question(self) -> global___ScaleQuestion:
         """convenience wrapper around a SingleChoiceQuestion"""
 
     @property
-    def single_parameter_question(self) -> global___SingleParameterQuestion: ...
+    def single_parameter_question(self) -> global___SingleParameterQuestion:
+        """A question for which one or more entities of a particular type are expected as answers"""
+
     @property
-    def multiple_parameter_question(self) -> global___MultipleParameterQuestion: ...
+    def multiple_parameter_question(self) -> global___MultipleParameterQuestion:
+        """A question for which one or more entities of a particular type are expected as answers"""
+
     def __init__(
         self,
         *,
@@ -286,8 +301,8 @@ global___Question = Question
 
 @typing.final
 class OpenQuestion(google.protobuf.message.Message):
-    """A question to which any kind of reply can be given and recorded
-    fixme: not working yet
+    """<p>A question to which any kind of reply can be given and recorded</p>
+    <p>fixme: not working yet</p>
     """
 
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
@@ -306,15 +321,8 @@ global___OpenQuestion = OpenQuestion
 
 @typing.final
 class SingleChoiceQuestion(google.protobuf.message.Message):
-    """A question for which exactly one out of a predefined set of options is expected as answer
-    Example: SingleChoiceQuestion(
-         question_text='Who is your favorite movie hero?',
-         choices=[
-             Choice(synonyms=['Bond', 'James Bond']),
-             Choice(synonyms=['Batman']),
-             Choice(synonyms=['Superman', 'Clark Kent']),
-             ]
-         )
+    """<p>A question for which exactly one out of a predefined set of options is expected as answer</p>
+    <p>Example: <code>SingleChoiceQuestion(question_text=&apos;Who is your favorite movie hero?&apos;, choices=[Choice(synonyms=[&apos;Bond&apos;, &apos;James Bond&apos;]), Choice(synonyms=[&apos;Batman&apos;]), Choice(synonyms=[&apos;Superman&apos;, &apos;Clark Kent&apos;])])</code></p>
     """
 
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
@@ -342,15 +350,8 @@ global___SingleChoiceQuestion = SingleChoiceQuestion
 
 @typing.final
 class MultipleChoiceQuestion(google.protobuf.message.Message):
-    """A question for which exactly one or more out of a predefined set of options are expected as answers
-    Example: MultipleChoiceQuestion(
-         question_text='Which colors do you like?',
-         choices=[
-             Choice(synonyms=['red', 'reddisch']),
-             Choice(synonyms=['blue', 'blueish']),
-             Choice(synonyms=['yellow']),
-             ]
-          )
+    """<p>A question for which exactly one or more out of a predefined set of options are expected as answers</p>
+    <p>Example: <code>MultipleChoiceQuestion(question_text=&apos;Which colors do you like?&apos;, choices=[Choice(synonyms=[&apos;red&apos;, &apos;reddisch&apos;]), Choice(synonyms=[&apos;blue&apos;, &apos;blueish&apos;]), Choice(synonyms=[&apos;yellow&apos;])])</code></p>
     """
 
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
@@ -384,12 +385,16 @@ class ScaleQuestion(google.protobuf.message.Message):
 
     @typing.final
     class ScaleValue(google.protobuf.message.Message):
+        """Represents a value and label pair for scale question endpoints"""
+
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
         VALUE_FIELD_NUMBER: builtins.int
         LABEL_FIELD_NUMBER: builtins.int
         value: builtins.int
+        """Numeric value for this scale point"""
         label: builtins.str
+        """Human-readable label for this scale point"""
         def __init__(
             self,
             *,
@@ -404,9 +409,13 @@ class ScaleQuestion(google.protobuf.message.Message):
     question_text: builtins.str
     """The text which introduces the question (should be pronounceable)"""
     @property
-    def min_value(self) -> global___ScaleQuestion.ScaleValue: ...
+    def min_value(self) -> global___ScaleQuestion.ScaleValue:
+        """Minimum value and label for the scale"""
+
     @property
-    def max_value(self) -> global___ScaleQuestion.ScaleValue: ...
+    def max_value(self) -> global___ScaleQuestion.ScaleValue:
+        """Maximum value and label for the scale"""
+
     def __init__(
         self,
         *,
@@ -421,8 +430,8 @@ global___ScaleQuestion = ScaleQuestion
 
 @typing.final
 class SingleParameterQuestion(google.protobuf.message.Message):
-    """SingleParameterQuestion defines a question which prompts the user for one entity of a particular type
-    Example: SingleParameterQuestion(question_text='How old are you?', parameter_type='sys.number')
+    """<p>SingleParameterQuestion defines a question which prompts the user for one entity of a particular type</p>
+    <p>Example: <code>SingleParameterQuestion(question_text=&apos;How old are you?&apos;, parameter_type=&apos;sys.number&apos;)</code></p>
     """
 
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
@@ -447,8 +456,8 @@ global___SingleParameterQuestion = SingleParameterQuestion
 
 @typing.final
 class MultipleParameterQuestion(google.protobuf.message.Message):
-    """MultipleParameterQuestion defines a question which prompts the user for one or several entities of one particular type
-    Example: MultipleParameterQuestion(question_text='How old are your children?', parameter_type='sys.number')
+    """<p>MultipleParameterQuestion defines a question which prompts the user for one or several entities of one particular type</p>
+    <p>Example: <code>MultipleParameterQuestion(question_text=&apos;How old are your children?&apos;, parameter_type=&apos;sys.number&apos;)</code></p>
     """
 
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
@@ -473,8 +482,8 @@ global___MultipleParameterQuestion = MultipleParameterQuestion
 
 @typing.final
 class Choice(google.protobuf.message.Message):
-    """The Choice message defines one "option" for the SingleChoiceQuestion and MultipleChoiceQuestion question types
-    Example: Choice(synonyms=["blue", "blueish", "pale blue", "deep blue"])
+    """<p>The Choice message defines one &quot;option&quot; for the SingleChoiceQuestion and MultipleChoiceQuestion question types</p>
+    <p>Example: <code>Choice(synonyms=[&quot;blue&quot;, &quot;blueish&quot;, &quot;pale blue&quot;, &quot;deep blue&quot;])</code></p>
     """
 
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
@@ -483,7 +492,7 @@ class Choice(google.protobuf.message.Message):
     FOLLOW_UP_QUESTION_FIELD_NUMBER: builtins.int
     VALUE_FIELD_NUMBER: builtins.int
     value: builtins.str
-    """The "canonical value" (i.e. the entity value)"""
+    """The &quot;canonical value&quot; (i.e. the entity value)"""
     @property
     def synonyms(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.str]:
         """The synonyms which are recognized as equivalent for identifying one option"""
@@ -508,10 +517,14 @@ global___Choice = Choice
 
 @typing.final
 class Answer(google.protobuf.message.Message):
+    """An answer to a survey question collected during a session"""
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
     @typing.final
     class UserInfo(google.protobuf.message.Message):
+        """User information for non-anonymous surveys"""
+
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
         FIRST_NAME_FIELD_NUMBER: builtins.int
@@ -560,8 +573,11 @@ class Answer(google.protobuf.message.Message):
     answer_parameter_original: builtins.str
     """Optional; contains the original text of the selected option (parameter) extracted"""
     anonymous: builtins.bool
+    """True if the survey is anonymous, false otherwise"""
     @property
-    def user_information(self) -> global___Answer.UserInfo: ...
+    def user_information(self) -> global___Answer.UserInfo:
+        """User information if the survey is not anonymous"""
+
     def __init__(
         self,
         *,
@@ -581,13 +597,18 @@ global___Answer = Answer
 
 @typing.final
 class CreateSurveyRequest(google.protobuf.message.Message):
-    """///// Request / Response messages ///////"""
+    """///// Request / Response messages ///////
+
+    Request message for creating a new survey
+    """
 
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
     SURVEY_FIELD_NUMBER: builtins.int
     @property
-    def survey(self) -> global___Survey: ...
+    def survey(self) -> global___Survey:
+        """The survey to create"""
+
     def __init__(
         self,
         *,
@@ -600,12 +621,14 @@ global___CreateSurveyRequest = CreateSurveyRequest
 
 @typing.final
 class GetSurveyRequest(google.protobuf.message.Message):
+    """Request message for retrieving a survey"""
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
     SURVEY_ID_FIELD_NUMBER: builtins.int
     survey_id: builtins.str
     """The project identifier for this survey. Equal to the parent of the corresponding Agent.
-    Format: `projects/<Project ID>/agent`.
+    Format: <pre><code>projects/&lt;Project ID&gt;/agent</code></pre>
     """
     def __init__(
         self,
@@ -618,6 +641,8 @@ global___GetSurveyRequest = GetSurveyRequest
 
 @typing.final
 class UpdateSurveyRequest(google.protobuf.message.Message):
+    """Request message for updating an existing survey"""
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
     SURVEY_FIELD_NUMBER: builtins.int
@@ -629,8 +654,7 @@ class UpdateSurveyRequest(google.protobuf.message.Message):
     @property
     def update_mask(self) -> google.protobuf.field_mask_pb2.FieldMask:
         """Optional. Field mask that defines which fields get updated. Default: all fields are updated.
-        Example:
-                 - update_mask = FieldMask( [ 'survey.display_name', 'survey.questions' ] )
+        Example: <code>update_mask = FieldMask([&apos;survey.display_name&apos;, &apos;survey.questions&apos;])</code>
         """
 
     def __init__(
@@ -646,12 +670,14 @@ global___UpdateSurveyRequest = UpdateSurveyRequest
 
 @typing.final
 class DeleteSurveyRequest(google.protobuf.message.Message):
+    """Request message for deleting a survey"""
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
     SURVEY_ID_FIELD_NUMBER: builtins.int
     survey_id: builtins.str
     """The project identifier for this survey. Equal to the parent of the corresponding Agent.
-    Format: `projects/<Project ID>/agent`.
+    Format: <pre><code>projects/&lt;Project ID&gt;/agent</code></pre>
     """
     def __init__(
         self,
@@ -664,6 +690,8 @@ global___DeleteSurveyRequest = DeleteSurveyRequest
 
 @typing.final
 class GetSurveyAnswersRequest(google.protobuf.message.Message):
+    """Request message for retrieving survey answers for a specific session or user"""
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
     SURVEY_ID_FIELD_NUMBER: builtins.int
@@ -671,6 +699,9 @@ class GetSurveyAnswersRequest(google.protobuf.message.Message):
     USER_ID_FIELD_NUMBER: builtins.int
     USER_PHONE_NUMBER_FIELD_NUMBER: builtins.int
     survey_id: builtins.str
+    """The project identifier for this survey. Equal to the parent of the corresponding Agent.
+    Format: <pre><code>projects/&lt;Project ID&gt;/agent</code></pre>
+    """
     session_id: builtins.str
     """ID of one specific session on which survey answers were collected (contains survey_id)"""
     user_id: builtins.str
@@ -693,12 +724,14 @@ global___GetSurveyAnswersRequest = GetSurveyAnswersRequest
 
 @typing.final
 class GetAllSurveyAnswersRequest(google.protobuf.message.Message):
+    """Request message for retrieving all survey answers"""
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
     SURVEY_ID_FIELD_NUMBER: builtins.int
     survey_id: builtins.str
     """The project identifier for this survey. Equal to the parent of the corresponding Agent.
-    Format: `projects/<Project ID>/agent`.
+    Format: <pre><code>projects/&lt;Project ID&gt;/agent</code></pre>
     """
     def __init__(
         self,
@@ -711,13 +744,15 @@ global___GetAllSurveyAnswersRequest = GetAllSurveyAnswersRequest
 
 @typing.final
 class SurveyAnswersResponse(google.protobuf.message.Message):
+    """Response message containing survey answers"""
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
     SURVEY_ID_FIELD_NUMBER: builtins.int
     ANSWERS_FIELD_NUMBER: builtins.int
     survey_id: builtins.str
     """The project identifier for this survey. Equal to the parent of the corresponding Agent.
-    Format: `projects/<Project ID>/agent`.
+    Format: <pre><code>projects/&lt;Project ID&gt;/agent</code></pre>
     """
     @property
     def answers(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___Answer]:
@@ -735,15 +770,17 @@ global___SurveyAnswersResponse = SurveyAnswersResponse
 
 @typing.final
 class ListSurveysRequest(google.protobuf.message.Message):
+    """Request message for listing surveys with pagination support"""
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
     PAGE_TOKEN_FIELD_NUMBER: builtins.int
     page_token: builtins.str
     """Optional. The next_page_token value returned from a previous list request.
     Example:
-         "current_index-10--page_size-20"
-         Start page -> 10
-         Page size -> 20
+    <ul>
+      <li>&quot;current_index-10--page_size-20&quot; - Start page -&gt; 10, Page size -&gt; 20</li>
+    </ul>
     """
     def __init__(
         self,
@@ -756,21 +793,17 @@ global___ListSurveysRequest = ListSurveysRequest
 
 @typing.final
 class ListSurveysResponse(google.protobuf.message.Message):
-    """The response message for [Intents.ListIntents][google.cloud.dialogflow.v2.Intents.ListIntents]."""
+    """<p>The response message for <a href="index.html#google.cloud.dialogflow.v2.Intents.ListIntents">Intents.ListIntents</a>.</p>"""
 
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
     SURVEYS_FIELD_NUMBER: builtins.int
     NEXT_PAGE_TOKEN_FIELD_NUMBER: builtins.int
     next_page_token: builtins.str
-    """Token to retrieve the next page of results, or empty if there are no
-    more results in the list.
-    """
+    """Token to retrieve the next page of results, or empty if there are no more results in the list."""
     @property
     def surveys(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___Survey]:
-        """The list of surveys. There will be a maximum number of items
-        returned based on the page_token field in the request.
-        """
+        """The list of surveys. There will be a maximum number of items returned based on the page_token field in the request."""
 
     def __init__(
         self,
@@ -784,12 +817,14 @@ global___ListSurveysResponse = ListSurveysResponse
 
 @typing.final
 class AgentSurveyRequest(google.protobuf.message.Message):
+    """Request message for agent-related survey operations"""
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
     SURVEY_ID_FIELD_NUMBER: builtins.int
     survey_id: builtins.str
     """The project identifier for this survey. Equal to the parent of the corresponding Agent.
-    Format: `projects/<Project ID>/agent`.
+    Format: <pre><code>projects/&lt;Project ID&gt;/agent</code></pre>
     """
     def __init__(
         self,
@@ -802,12 +837,14 @@ global___AgentSurveyRequest = AgentSurveyRequest
 
 @typing.final
 class AgentSurveyResponse(google.protobuf.message.Message):
+    """Response message for agent-related survey operations"""
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
     PARENT_FIELD_NUMBER: builtins.int
     parent: builtins.str
     """The parent of an agent. Equal to the survey ID.
-    Format: `projects/<Project ID>/agent`.
+    Format: <pre><code>projects/&lt;Project ID&gt;/agent</code></pre>
     """
     def __init__(
         self,

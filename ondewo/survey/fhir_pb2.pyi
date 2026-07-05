@@ -3,17 +3,11 @@
 isort:skip_file
 Copyright 2020 ONDEWO GmbH
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+    <a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a>
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License. (editesyntax = "proto3";
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. (editesyntax = "proto3";
 """
 
 import builtins
@@ -28,6 +22,8 @@ DESCRIPTOR: google.protobuf.descriptor.FileDescriptor
 
 @typing.final
 class CreateFHIRSurveyRequest(google.protobuf.message.Message):
+    """Request message for creating a survey from FHIR format"""
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
     FHIR_QUESTIONNAIRE_FIELD_NUMBER: builtins.int
@@ -47,13 +43,15 @@ global___CreateFHIRSurveyRequest = CreateFHIRSurveyRequest
 
 @typing.final
 class SurveyFHIRAnswersResponse(google.protobuf.message.Message):
+    """Response message containing survey answers in FHIR format"""
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
     SURVEY_ID_FIELD_NUMBER: builtins.int
     FHIR_QUESTIONNAIRE_RESPONSES_FIELD_NUMBER: builtins.int
     survey_id: builtins.str
     """The project identifier for this survey. Equal to the parent of the corresponding Agent.
-    Format: `projects/<Project ID>/agent`.
+    Format: <pre><code>projects/&lt;Project ID&gt;/agent</code></pre>
     """
     @property
     def fhir_questionnaire_responses(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[google.protobuf.struct_pb2.Struct]:

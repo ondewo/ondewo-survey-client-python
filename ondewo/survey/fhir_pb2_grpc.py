@@ -29,8 +29,8 @@ if _version_not_supported:
 class FHIRStub(object):
     """///// FHIR Services ///////
 
-    The following servicer was designed to support the FHIR standard.
-    Both Questionnaires and Responses will be detected and transformed for a simpler usage.
+    <p>The following servicer was designed to support the FHIR standard.</p>
+    <p>Both Questionnaires and Responses will be detected and transformed for a simpler usage.</p>
 
     """
 
@@ -60,27 +60,27 @@ class FHIRStub(object):
 class FHIRServicer(object):
     """///// FHIR Services ///////
 
-    The following servicer was designed to support the FHIR standard.
-    Both Questionnaires and Responses will be detected and transformed for a simpler usage.
+    <p>The following servicer was designed to support the FHIR standard.</p>
+    <p>Both Questionnaires and Responses will be detected and transformed for a simpler usage.</p>
 
     """
 
     def CreateFHIRSurvey(self, request, context):
-        """Create a Survey from FHIR format and an empty NLU Agent for it
+        """<p>Create a Survey from FHIR format and an empty NLU Agent for it</p>
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def GetFHIRSurveyAnswers(self, request, context):
-        """Get Survey Answers on FHIR format
+        """<p>Get Survey Answers on FHIR format</p>
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def GetAllFHIRSurveyAnswers(self, request, context):
-        """Get all Survey Answers on FHIR format
+        """<p>Get all Survey Answers on FHIR format</p>
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -115,8 +115,8 @@ def add_FHIRServicer_to_server(servicer, server):
 class FHIR(object):
     """///// FHIR Services ///////
 
-    The following servicer was designed to support the FHIR standard.
-    Both Questionnaires and Responses will be detected and transformed for a simpler usage.
+    <p>The following servicer was designed to support the FHIR standard.</p>
+    <p>Both Questionnaires and Responses will be detected and transformed for a simpler usage.</p>
 
     """
 
