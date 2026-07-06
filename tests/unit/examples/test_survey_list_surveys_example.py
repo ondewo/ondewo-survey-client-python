@@ -131,13 +131,13 @@ class TestBuildClientConfig:
             monkeypatch (pytest.MonkeyPatch):
                 Fixture used to set the connection/credential env vars.
         """
-        monkeypatch.setenv('ONDEWO_SURVEY_HOST', HOST)
-        monkeypatch.setenv('ONDEWO_SURVEY_PORT', PORT)
-        monkeypatch.setenv('ONDEWO_SURVEY_USER_NAME', USERNAME)
-        monkeypatch.setenv('ONDEWO_SURVEY_PASSWORD', PASSWORD)
-        monkeypatch.setenv('ONDEWO_SURVEY_KEYCLOAK_URL', KEYCLOAK_URL)
-        monkeypatch.setenv('ONDEWO_SURVEY_KEYCLOAK_REALM', REALM)
-        monkeypatch.setenv('ONDEWO_SURVEY_KEYCLOAK_CLIENT_ID', CLIENT_ID)
+        monkeypatch.setenv('ONDEWO_HOST', HOST)
+        monkeypatch.setenv('ONDEWO_PORT', PORT)
+        monkeypatch.setenv('KEYCLOAK_USER_NAME', USERNAME)
+        monkeypatch.setenv('KEYCLOAK_PASSWORD', PASSWORD)
+        monkeypatch.setenv('KEYCLOAK_URL', KEYCLOAK_URL)
+        monkeypatch.setenv('KEYCLOAK_REALM', REALM)
+        monkeypatch.setenv('KEYCLOAK_CLIENT_ID', CLIENT_ID)
 
         example: ModuleType = _load_example()
         config: ClientConfig = example.build_client_config()
