@@ -95,70 +95,70 @@ class SurveysServicer(object):
     """
 
     def CreateSurvey(self, request, context):
-        """Create a Survey and an empty NLU Agent for it
+        """<p>Create a Survey and an empty NLU Agent for it</p>
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def GetSurvey(self, request, context):
-        """Retrieve a Survey message from the Database and return it
+        """<p>Retrieve a Survey message from the Database and return it</p>
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def UpdateSurvey(self, request, context):
-        """Update an existing Survey message from the Database and return it
+        """<p>Update an existing Survey message from the Database and return it</p>
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def DeleteSurvey(self, request, context):
-        """Delete a survey and its associated agent (if existent)
+        """<p>Delete a survey and its associated agent (if existent)</p>
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def ListSurveys(self, request, context):
-        """Returns the list of all surveys in the server
+        """<p>Returns the list of all surveys in the server</p>
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def GetSurveyAnswers(self, request, context):
-        """Retrieve answers to survey questions collected in interactions with a survey agent for a specific session
+        """<p>Retrieve answers to survey questions collected in interactions with a survey agent for a specific session</p>
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def GetAllSurveyAnswers(self, request, context):
-        """Retrieve all answers to survey questions collected in interactions with a survey agent in any session
+        """<p>Retrieve all answers to survey questions collected in interactions with a survey agent in any session</p>
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def CreateAgentSurvey(self, request, context):
-        """Populate and configures an NLU Agent from a Survey
+        """<p>Populate and configures an NLU Agent from a Survey</p>
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def UpdateAgentSurvey(self, request, context):
-        """Update an NLU agent from a survey
+        """<p>Update an NLU agent from a survey</p>
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def DeleteAgentSurvey(self, request, context):
-        """Deletes all data of an NLU agent associated to a survey
+        """<p>Deletes all data of an NLU agent associated to a survey</p>
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')

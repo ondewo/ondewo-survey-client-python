@@ -28,7 +28,7 @@ from ondewo.survey.client.services.async_survey import Survey
 
 class AsyncClient(AsyncBaseClient):
     """
-    The core asynchronous Python client for interacting with ONDEWO s2t services.
+    The core asynchronous Python client for interacting with ONDEWO SURVEY services.
     """
 
     def _initialize_services(
@@ -47,6 +47,6 @@ class AsyncClient(AsyncBaseClient):
             options (Optional[Set[Tuple[str, Any]]]): Additional options for the gRPC channel.
         """
         self.services: AsyncServicesContainer = AsyncServicesContainer(
-            projects=FHIR(config=config, use_secure_channel=use_secure_channel, options=options),
-            calls=Survey(config=config, use_secure_channel=use_secure_channel, options=options),
+            fhir=FHIR(config=config, use_secure_channel=use_secure_channel, options=options),
+            survey=Survey(config=config, use_secure_channel=use_secure_channel, options=options),
         )

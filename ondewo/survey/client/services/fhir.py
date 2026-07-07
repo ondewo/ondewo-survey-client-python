@@ -11,28 +11,26 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from ondewo.utils.base_services_interface import BaseServicesInterface
-
+from ondewo.survey.client.services_interface import ServicesInterface
 from ondewo.survey.fhir_pb2_grpc import FHIRStub
 
 
-class FHIR(BaseServicesInterface):
+class FHIR(ServicesInterface):
     """
-    A class representing the Calls service interface.
+    A class representing the FHIR service interface.
 
-    This class provides methods to interact with the Calls service, which allows starting and managing
-    callers, listeners, scheduled callers, and handling calls and audio files.
+    This class provides methods to interact with the FHIR service (FHIRStub).
 
-    Inherits from BaseServicesInterface.
+    Inherits from ServicesInterface.
     """
 
     @property
     def stub(self) -> FHIRStub:
         """
-        Get the gRPC stub for the Calls service.
+        Get the gRPC stub for the FHIR service.
 
         Returns:
-            CallsStub: The gRPC stub for the Calls service.
+            FHIRStub: The gRPC stub for the FHIR service.
         """
         stub: FHIRStub = FHIRStub(channel=self.grpc_channel)
         return stub

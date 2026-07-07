@@ -4,5 +4,6 @@ mypy-protobuf
 pre-commit
 flake8
 pytest
+python-dotenv
 setuptools
 typing_extensions

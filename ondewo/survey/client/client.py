@@ -28,7 +28,7 @@ from ondewo.survey.client.services_container import ServicesContainer
 
 class Client(BaseClient):
     """
-    The core python client for interacting with ONDEWO VTSI services.
+    The core python client for interacting with ONDEWO SURVEY services.
     """
 
     def _initialize_services(
@@ -50,6 +50,6 @@ class Client(BaseClient):
                 Additional options for the gRPC channel.
         """
         self.services: ServicesContainer = ServicesContainer(
-            projects=FHIR(config=config, use_secure_channel=use_secure_channel, options=options),
-            calls=Survey(config=config, use_secure_channel=use_secure_channel, options=options),
+            fhir=FHIR(config=config, use_secure_channel=use_secure_channel, options=options),
+            survey=Survey(config=config, use_secure_channel=use_secure_channel, options=options),
         )
