@@ -17,6 +17,7 @@ No live server and no Keycloak network call are involved: the gRPC stub and the 
 Keycloak token provider are both replaced with fakes, so the tests prove the example
 builds the right request, attaches the bearer metadata, and handles the response.
 """
+
 import importlib.util
 import os
 from types import (
@@ -40,20 +41,20 @@ from ondewo.survey.survey_pb2 import (
 
 # Bound exactly once so a refactor that changes only an input or only an expectation cannot
 # silently make a test tautological.
-ACCESS_TOKEN: str = 'test-access-token'
-BEARER_METADATA: List[Tuple[str, str]] = [('authorization', f'Bearer {ACCESS_TOKEN}')]
-EXPECTED_PAGE_TOKEN: str = 'page_size-10000'
+ACCESS_TOKEN: str = "test-access-token"
+BEARER_METADATA: List[Tuple[str, str]] = [("authorization", f"Bearer {ACCESS_TOKEN}")]
+EXPECTED_PAGE_TOKEN: str = "page_size-10000"
 
-HOST: str = 'survey.example.com'
-PORT: str = '50051'
-USERNAME: str = 'tech-user@ondewo.com'
-PASSWORD: str = 's3cr3t'
-KEYCLOAK_URL: str = 'https://kc.example.com/auth'
-REALM: str = 'ondewo-ccai-platform'
-CLIENT_ID: str = 'ondewo-survey-cai-sdk-public'
+HOST: str = "survey.example.com"
+PORT: str = "50051"
+USERNAME: str = "tech-user@ondewo.com"
+PASSWORD: str = "s3cr3t"
+KEYCLOAK_URL: str = "https://kc.example.com/auth"
+REALM: str = "ondewo-ccai-platform"
+CLIENT_ID: str = "ondewo-survey-cai-sdk-public"
 
-_REPO_ROOT: str = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
-_EXAMPLE_PATH: str = os.path.join(_REPO_ROOT, 'examples', 'survey_list_surveys_example.py')
+_REPO_ROOT: str = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
+_EXAMPLE_PATH: str = os.path.join(_REPO_ROOT, "examples", "survey_list_surveys_example.py")
 
 
 def _load_example() -> ModuleType:
@@ -63,7 +64,7 @@ def _load_example() -> ModuleType:
         ModuleType:
             The freshly imported `survey_list_surveys_example` module.
     """
-    spec = importlib.util.spec_from_file_location('survey_list_surveys_example', _EXAMPLE_PATH)
+    spec = importlib.util.spec_from_file_location("survey_list_surveys_example", _EXAMPLE_PATH)
     assert spec is not None and spec.loader is not None
     module: ModuleType = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
@@ -95,7 +96,7 @@ def _fake_provider() -> MagicMock:
         MagicMock:
             A provider whose `bearer_metadata()` returns `BEARER_METADATA`.
     """
-    provider: MagicMock = MagicMock(name='KeycloakTokenProvider')
+    provider: MagicMock = MagicMock(name="KeycloakTokenProvider")
     provider.bearer_metadata.return_value = BEARER_METADATA
     return provider
 
@@ -112,11 +113,11 @@ def _fake_client_returning(response: ListSurveysResponse) -> SimpleNamespace:
             A client shaped like `client.services.survey.stub.ListSurveys`, with a
             `MagicMock` stub and a `disconnect` mock.
     """
-    stub: MagicMock = MagicMock(name='SurveysStub')
+    stub: MagicMock = MagicMock(name="SurveysStub")
     stub.ListSurveys.return_value = response
     client: SimpleNamespace = SimpleNamespace(
         services=SimpleNamespace(survey=SimpleNamespace(stub=stub)),
-        disconnect=MagicMock(name='disconnect'),
+        disconnect=MagicMock(name="disconnect"),
     )
     return client
 
@@ -131,13 +132,13 @@ class TestBuildClientConfig:
             monkeypatch (pytest.MonkeyPatch):
                 Fixture used to set the connection/credential env vars.
         """
-        monkeypatch.setenv('ONDEWO_HOST', HOST)
-        monkeypatch.setenv('ONDEWO_PORT', PORT)
-        monkeypatch.setenv('KEYCLOAK_USER_NAME', USERNAME)
-        monkeypatch.setenv('KEYCLOAK_PASSWORD', PASSWORD)
-        monkeypatch.setenv('KEYCLOAK_URL', KEYCLOAK_URL)
-        monkeypatch.setenv('KEYCLOAK_REALM', REALM)
-        monkeypatch.setenv('KEYCLOAK_CLIENT_ID', CLIENT_ID)
+        monkeypatch.setenv("ONDEWO_HOST", HOST)
+        monkeypatch.setenv("ONDEWO_PORT", PORT)
+        monkeypatch.setenv("KEYCLOAK_USER_NAME", USERNAME)
+        monkeypatch.setenv("KEYCLOAK_PASSWORD", PASSWORD)
+        monkeypatch.setenv("KEYCLOAK_URL", KEYCLOAK_URL)
+        monkeypatch.setenv("KEYCLOAK_REALM", REALM)
+        monkeypatch.setenv("KEYCLOAK_CLIENT_ID", CLIENT_ID)
 
         example: ModuleType = _load_example()
         config: ClientConfig = example.build_client_config()
@@ -165,10 +166,10 @@ class TestListSurveys:
         example: ModuleType = _load_example()
 
         surveys: List[Survey] = [
-            Survey(survey_id='sid-1', display_name='Customer NPS', language_code='en'),
-            Survey(survey_id='sid-2', display_name='Onboarding', language_code='de'),
+            Survey(survey_id="sid-1", display_name="Customer NPS", language_code="en"),
+            Survey(survey_id="sid-2", display_name="Onboarding", language_code="de"),
         ]
-        response: ListSurveysResponse = ListSurveysResponse(surveys=surveys, next_page_token='')
+        response: ListSurveysResponse = ListSurveysResponse(surveys=surveys, next_page_token="")
         client: SimpleNamespace = _fake_client_returning(response)
 
         provider: MagicMock = _fake_provider()
@@ -178,7 +179,7 @@ class TestListSurveys:
             captured_config.append(config)
             return provider
 
-        monkeypatch.setattr(example, 'get_keycloak_token_provider', fake_get_provider)
+        monkeypatch.setattr(example, "get_keycloak_token_provider", fake_get_provider)
 
         config: ClientConfig = _make_config()
         result: List[Survey] = example.list_surveys(client=client, config=config)
@@ -193,8 +194,8 @@ class TestListSurveys:
         stub: MagicMock = client.services.survey.stub
         stub.ListSurveys.assert_called_once()
         call_kwargs = stub.ListSurveys.call_args.kwargs
-        assert call_kwargs['request'] == ListSurveysRequest(page_token=EXPECTED_PAGE_TOKEN)
-        assert call_kwargs['metadata'] == BEARER_METADATA
+        assert call_kwargs["request"] == ListSurveysRequest(page_token=EXPECTED_PAGE_TOKEN)
+        assert call_kwargs["metadata"] == BEARER_METADATA
 
 
 class TestMain:
@@ -216,20 +217,20 @@ class TestMain:
         example: ModuleType = _load_example()
 
         surveys: List[Survey] = [
-            Survey(survey_id='sid-1', display_name='Customer NPS', language_code='en'),
+            Survey(survey_id="sid-1", display_name="Customer NPS", language_code="en"),
         ]
-        response: ListSurveysResponse = ListSurveysResponse(surveys=surveys, next_page_token='')
+        response: ListSurveysResponse = ListSurveysResponse(surveys=surveys, next_page_token="")
         client: SimpleNamespace = _fake_client_returning(response)
 
         # Replace the real Client constructor so no gRPC channel is opened.
-        monkeypatch.setattr(example, 'Client', MagicMock(return_value=client))
-        monkeypatch.setattr(example, 'get_keycloak_token_provider', lambda config: _fake_provider())
+        monkeypatch.setattr(example, "Client", MagicMock(return_value=client))
+        monkeypatch.setattr(example, "get_keycloak_token_provider", lambda config: _fake_provider())
 
         example.main()
 
         captured = capsys.readouterr()
-        assert 'Retrieved 1 survey(s):' in captured.out
-        assert 'sid-1: Customer NPS [en]' in captured.out
+        assert "Retrieved 1 survey(s):" in captured.out
+        assert "sid-1: Customer NPS [en]" in captured.out
 
         # main() must disconnect the client in its finally block.
         client.disconnect.assert_called_once_with()

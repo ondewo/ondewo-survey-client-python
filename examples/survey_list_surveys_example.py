@@ -29,6 +29,7 @@ values into that file and run::
 
     python examples/survey_list_surveys_example.py
 """
+
 import os
 import sys
 from pathlib import Path
@@ -52,7 +53,7 @@ from ondewo.survey.survey_pb2 import (
 from ondewo.survey.utils.keycloak import get_keycloak_token_provider
 
 # Load the example configuration relative to this script so cwd does not matter.
-load_dotenv(Path(__file__).with_name('environment.env'))
+load_dotenv(Path(__file__).with_name("environment.env"))
 
 
 def build_client_config() -> ClientConfig:
@@ -67,14 +68,14 @@ def build_client_config() -> ClientConfig:
             A config wired for the D18 Keycloak headless auth path.
     """
     return ClientConfig(
-        host=os.getenv('ONDEWO_HOST') or 'localhost',
-        port=os.getenv('ONDEWO_PORT') or '50051',
-        user_name=os.getenv('KEYCLOAK_USER_NAME') or 'tech-user@ondewo.com',
-        password=os.getenv('KEYCLOAK_PASSWORD') or 'change-me',
-        keycloak_url=os.getenv('KEYCLOAK_URL') or 'https://my-host/auth',
-        realm=os.getenv('KEYCLOAK_REALM') or 'ondewo-ccai-platform',
-        client_id=os.getenv('KEYCLOAK_CLIENT_ID') or 'ondewo-survey-cai-sdk-public',
-        keycloak_verify_ssl=(os.getenv('KEYCLOAK_VERIFY_SSL', 'true').lower() == 'true'),
+        host=os.getenv("ONDEWO_HOST") or "localhost",
+        port=os.getenv("ONDEWO_PORT") or "50051",
+        user_name=os.getenv("KEYCLOAK_USER_NAME") or "tech-user@ondewo.com",
+        password=os.getenv("KEYCLOAK_PASSWORD") or "change-me",
+        keycloak_url=os.getenv("KEYCLOAK_URL") or "https://my-host/auth",
+        realm=os.getenv("KEYCLOAK_REALM") or "ondewo-ccai-platform",
+        client_id=os.getenv("KEYCLOAK_CLIENT_ID") or "ondewo-survey-cai-sdk-public",
+        keycloak_verify_ssl=(os.getenv("KEYCLOAK_VERIFY_SSL", "true").lower() == "true"),
     )
 
 
@@ -100,16 +101,16 @@ def list_surveys(client: Client, config: ClientConfig) -> List[Survey]:
         grpc.RpcError:
             If the `ListSurveys` RPC fails; the status code and details are logged.
     """
-    log.info('START: list_surveys: ListSurveys')
+    log.info("START: list_surveys: ListSurveys")
     metadata: Sequence[Tuple[str, str]] = get_keycloak_token_provider(config).bearer_metadata()
-    request: ListSurveysRequest = ListSurveysRequest(page_token='page_size-10000')
+    request: ListSurveysRequest = ListSurveysRequest(page_token="page_size-10000")
     try:
         response: ListSurveysResponse = client.services.survey.stub.ListSurveys(request=request, metadata=metadata)
     except grpc.RpcError as rpc_error:
-        log.error(f'ListSurveys RPC failed: code={rpc_error.code()} details={rpc_error.details()}')
+        log.error(f"ListSurveys RPC failed: code={rpc_error.code()} details={rpc_error.details()}")
         raise
     surveys: List[Survey] = list(response.surveys)
-    log.info(f'DONE: list_surveys: ListSurveys. Retrieved {len(surveys)} survey(s)')
+    log.info(f"DONE: list_surveys: ListSurveys. Retrieved {len(surveys)} survey(s)")
     return surveys
 
 
@@ -118,22 +119,22 @@ def main() -> None:
     Connect to the SURVEY server, list the surveys, and print a short summary.
     """
     config: ClientConfig = build_client_config()
-    use_secure_channel: bool = os.getenv('ONDEWO_USE_SECURE_CHANNEL', 'false').lower() == 'true'
-    log.info(f'START: main: connecting to {config.host}:{config.port} (secure={use_secure_channel})')
+    use_secure_channel: bool = os.getenv("ONDEWO_USE_SECURE_CHANNEL", "false").lower() == "true"
+    log.info(f"START: main: connecting to {config.host}:{config.port} (secure={use_secure_channel})")
     client: Client = Client(config=config, use_secure_channel=use_secure_channel)
     try:
         surveys: List[Survey] = list_surveys(client=client, config=config)
-        print(f'Retrieved {len(surveys)} survey(s):')
+        print(f"Retrieved {len(surveys)} survey(s):")
         for survey in surveys:
-            print(f'  - {survey.survey_id}: {survey.display_name} [{survey.language_code}]')
+            print(f"  - {survey.survey_id}: {survey.display_name} [{survey.language_code}]")
     finally:
         client.disconnect()
-        log.info('DONE: main: client disconnected')
+        log.info("DONE: main: client disconnected")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     try:
         main()
     except Exception:
-        log.exception('survey_list_surveys_example failed')
+        log.exception("survey_list_surveys_example failed")
         sys.exit(1)
