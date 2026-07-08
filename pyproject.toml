@@ -1,0 +1,133 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ondewo-survey-client"
+version = "2.0.1"
+description = "ONDEWO Survey (SURVEY) Client library for Python"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [
+    { name = "ONDEWO GmbH", email = "office@ondewo.com" },
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries",
+]
+dependencies = [
+    "dataclasses-json",
+    "google-api-core",
+    "googleapis-common-protos",
+    "grpcio",
+    "grpcio-reflection",
+    "grpcio-tools",
+    "ondewo-client-utils>=3.2.0",
+    "protobuf",
+    "requests",
+]
+
+[project.optional-dependencies]
+dev = [
+    "loguru",
+    "mypy",
+    "mypy-protobuf",
+    "pre-commit",
+    "ruff",
+    "pytest",
+    "pytest-cov",
+    "pytest-asyncio",
+    "python-dotenv",
+    "setuptools",
+    "typing_extensions",
+]
+
+[project.urls]
+Homepage = "https://github.com/ondewo/ondewo-survey-client-python"
+Repository = "https://github.com/ondewo/ondewo-survey-client-python"
+
+# ---------------------------------------------------------------------------
+# setuptools: package discovery + package data
+# Equivalent to the old setup.py:
+#   packages = [n for n in find_packages() if n == 'ondewo' or n.startswith('ondewo.')]
+#   include_package_data=True + package_data for py.typed / *.pyi
+# ---------------------------------------------------------------------------
+[tool.setuptools.packages.find]
+include = ["ondewo", "ondewo.*"]
+
+[tool.setuptools.package-data]
+"ondewo.survey" = ["py.typed", "*.pyi"]
+
+# ---------------------------------------------------------------------------
+# Ruff  (replaces flake8: ignore C901; max-line-length 120; exclude *_pb2*)
+# ---------------------------------------------------------------------------
+[tool.ruff]
+line-length = 120
+target-version = "py39"
+# Never lint/format the generated protobuf/gRPC stubs (the old .flake8 excluded
+# every ondewo/survey/*_pb2*.py / .pyi individually) or the API/proto-compiler
+# git submodules.
+extend-exclude = [
+    "*_pb2.py",
+    "*_pb2.pyi",
+    "*_pb2_grpc.py",
+    "ondewo-survey-api",
+    "ondewo-proto-compiler",
+]
+
+[tool.ruff.lint]
+# pycodestyle (E/W) + pyflakes (F) == the flake8 default rule set.
+# C901 (mccabe complexity) is intentionally NOT enabled -> old "ignore = C901".
+select = ["E", "F", "W"]
+ignore = []
+
+[tool.ruff.format]
+# Supersedes the old black (async_ files) + autopep8 hooks.
+quote-style = "double"
+
+# ---------------------------------------------------------------------------
+# Mypy  (translated faithfully from mypy.ini)
+# ---------------------------------------------------------------------------
+# NOTE: mypy.ini declared python_version = 3.9, but the pinned mypy no longer
+# supports 3.9 as a target and CI + Dockerfile actually run 3.12; use 3.10
+# (the lowest still-supported target) to match the real runtime.
+[tool.mypy]
+python_version = "3.10"
+ignore_errors = false
+ignore_missing_imports = false
+disallow_untyped_defs = true
+no_implicit_optional = true
+strict_optional = true
+show_traceback = true
+warn_no_return = true
+warn_return_any = true
+warn_unused_configs = true
+
+# Generated protobuf / gRPC stubs: never type-check them.
+[[tool.mypy.overrides]]
+module = [
+    "ondewo.survey.fhir_pb2",
+    "ondewo.survey.fhir_pb2_grpc",
+    "ondewo.survey.survey_pb2",
+    "ondewo.survey.survey_pb2_grpc",
+]
+ignore_errors = true
+ignore_missing_imports = true
+
+# Third-party packages without (complete) type stubs.
+[[tool.mypy.overrides]]
+module = [
+    "dataclasses_json.*",
+    "google.*",
+    "grpc.*",
+    "ondewo.utils.*",
+    "requests.*",
+]
+ignore_missing_imports = true

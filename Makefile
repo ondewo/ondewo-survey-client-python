@@ -106,9 +106,8 @@ check_build: ## Checks if all built proto-code is there
 ########################################################
 #		Build
 
-update_setup: ## Update Version in setup.py
-	@perl -i -pe "s/version='[0-9]*.[0-9]*.[0-9]*'/version='${ONDEWO_SURVEY_VERSION}'/g" setup.py
-	@perl -i -pe "s/version=\"[0-9]*.[0-9]*.[0-9]*\"/version='${ONDEWO_SURVEY_VERSION}'/g" setup.py
+update_setup: ## Update Version in pyproject.toml
+	@perl -i -pe 's/^version = "[0-9]+\.[0-9]+\.[0-9]+"/version = "${ONDEWO_SURVEY_VERSION}"/' pyproject.toml
 
 build: clear_package_data init_submodules checkout_defined_submodule_versions build_compiler generate_ondewo_protos create_async_services update_setup ## Build source code
 
@@ -177,7 +176,7 @@ release: ## Automate the entire release process
 	git add ondewo
 	git add Makefile
 	git add RELEASE.md
-	git add setup.py
+	git add pyproject.toml uv.lock
 	git add ${ONDEWO_PROTO_COMPILER_DIR}
 	git add ${ONDEWO_SURVEY_API_DIR}
 	git status
@@ -223,7 +222,7 @@ checkout_defined_submodule_versions:  ## Update submodule versions
 #		PYPI
 
 build_package:
-	python setup.py sdist bdist_wheel
+	python -m build --no-isolation
 	chmod a+rw dist -R
 
 upload_package:
@@ -247,9 +246,9 @@ push_to_pypi: build_package upload_package clear_package_data ## Builds -> Uploa
 	@echo 'YAY - Pushed to pypi : )'
 
 show_pypi: build_package
-	tar xvfz dist/ondewo-survey-client-${ONDEWO_SURVEY_VERSION}.tar.gz
-	tree ondewo-survey-client-${ONDEWO_SURVEY_VERSION}
-	cat ondewo-survey-client-${ONDEWO_SURVEY_VERSION}/ondewo_survey_client.egg-info/requires.txt
+	tar xvfz dist/ondewo_survey_client-${ONDEWO_SURVEY_VERSION}.tar.gz
+	tree ondewo_survey_client-${ONDEWO_SURVEY_VERSION}
+	cat ondewo_survey_client-${ONDEWO_SURVEY_VERSION}/PKG-INFO
 
 show_pypi_via_docker_image: build_utils_docker_image ## Push source code to pypi via docker
 	[ -d $(OUTPUT_DIR) ] || mkdir -p $(OUTPUT_DIR)
@@ -288,7 +287,7 @@ run_release_with_devops: ## Gets Credentials from devops-repo and run release co
 spc: ## Checks if the Release Branch, Tag and Pypi version already exist
 	$(eval filtered_branches:= $(shell git branch --all | grep "release/${ONDEWO_SURVEY_VERSION}"))
 	$(eval filtered_tags:= $(shell git tag --list | grep "${ONDEWO_SURVEY_VERSION}"))
-	$(eval setuppy_version:= $(shell cat setup.py | grep "version"))
+	$(eval setuppy_version:= $(shell cat pyproject.toml | grep "^version"))
 	@if test "$(filtered_branches)" != ""; then echo "-- Test 1: Branch exists!!" & exit 1; else echo "-- Test 1: Branch is fine";fi
 	@if test "$(filtered_tags)" != ""; then echo "-- Test 2: Tag exists!!" & exit 1; else echo "-- Test 2: Tag is fine";fi
 	#	@if test "$(setuppy_version)" != "version='${ONDEWO_SURVEY_VERSION}',"; then echo "-- Test 3: Setup.py not updated!!" & exit 1; else echo "-- Test 3: Setup.py is fine";fi
