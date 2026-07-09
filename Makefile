@@ -16,7 +16,7 @@ export
 
 # MUST BE THE SAME AS API in Mayor and Minor Version Number
 # example: API 2.9.0 --> Client 2.9.X
-ONDEWO_SURVEY_VERSION = 2.0.1
+ONDEWO_SURVEY_VERSION=2.0.1
 
 ONDEWO_SURVEY_API_GIT_BRANCH=OND211-2418-add-keycloak-for-2-fa
 ONDEWO_PROTO_COMPILER_GIT_BRANCH=tags/5.10.0
