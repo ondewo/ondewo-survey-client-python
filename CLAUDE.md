@@ -185,3 +185,70 @@ The repo is now fully on **uv** (not just pyproject.toml):
 - **`[tool.mypy] python_version` must be `3.12`** wherever numpy 2.x is on the mypy path — its PEP-695 `type X = …` stubs fail to parse on < 3.12.
 - The release `git commit` uses **`--no-verify`** so pre-commit hooks never gate an automated release.
 - **Validated by a real PyPI publish** — `ondewo-t2s-client 6.5.0` was built with `uv build` and uploaded via twine end-to-end; the uv release pipeline works.
+
+## GitHub Actions — `tests` is a REQUIRED gate, not advisory
+
+`.github/workflows/tests.yml` (job `unit-tests`) runs on **every push to every branch** (`branches: ["**"]`) and on
+every pull request. Its four checking steps all block: a frozen `uv sync`, `ruff`, `mypy`, and a pytest run carrying
+`--cov-fail-under=100`. Treat a red run as a broken build, and reproduce it locally **before** pushing.
+
+- **Check the real run, don't guess** — there is no `gh` CLI on the dev boxes, so ask the API for the checked-out SHA:
+
+  ```bash
+  SHA=$(git rev-parse HEAD)
+  curl -s "https://api.github.com/repos/ondewo/ondewo-survey-client-python/actions/runs?head_sha=$SHA" \
+    | python3 -c "import json,sys; d=json.load(sys.stdin); print(d['total_count'], [(r['run_number'], r['status'], r['conclusion']) for r in d['workflow_runs']])"
+  ```
+
+  `total_count: 0` means **no run exists for that commit** (never pushed, or the run was deleted) — which is not the
+  same as "it passed", and must never be reported as green.
+
+- **The exact local reproduction, copied from the workflow — `--frozen` and all:**
+
+  ```bash
+  uv python install 3.12
+  uv sync --extra dev --frozen
+  uv run --frozen ruff check .
+  uv run --frozen mypy ondewo
+  uv run --frozen pytest tests/unit -q \
+    --cov=ondewo.survey.utils.keycloak \
+    --cov=ondewo.survey.client.client_config \
+    --cov=ondewo.survey.client.client \
+    --cov=ondewo.survey.client.async_client \
+    --cov=ondewo.survey.client.services_interface \
+    --cov=ondewo.survey.client.async_services_interface \
+    --cov-report=term-missing \
+    --cov-report=xml \
+    --cov-fail-under=100
+  ```
+
+  The `make ruff` / `make mypy` / `make test` targets are close but **not** the gate — copy the commands from the
+  workflow file rather than approximating them, and keep every `--cov=` argument: dropping one silently shrinks the
+  measured set (see the fail-open note below).
+
+- **Never drop `--frozen`.** A non-frozen `uv sync` / `uv run` re-resolves dependencies on the fly, so it installs a
+  set `uv.lock` does not describe and a stale lock passes locally and fails in CI. `uv sync --extra dev --frozen` is
+  therefore also the assertion that `uv.lock` still matches `pyproject.toml` — after editing `[project.dependencies]`
+  or the `dev` extra, run `uv lock` (the `uv-lock` pre-commit hook does the same) or this step fails first.
+
+- **The coverage gate uses dotted `--cov=<module>` arguments, and that form FAILS OPEN — measured here.** Naming a
+  module that the suite never imports does **not** score it 0 %; it vanishes from the table entirely, leaving only
+  `CoverageWarning: Module <name> was never imported. (module-not-imported)`, and `--cov-fail-under=100` is then
+  computed over what is left — so the gate reports 100 % while measuring less than it claims. Consequences:
+  - That warning line is the only signal. A `module-not-imported` warning in the CI log means the gate silently
+    stopped covering something; fix the import (or the module path), never the threshold.
+  - The gate covers **exactly the six modules listed** — the Keycloak/D18 auth helper plus client/config/interfaces.
+    That is deliberate (the repo is ~95 % generated `*_pb2*` stubs), but it means a new hand-written module is
+    ungated until someone adds a `--cov=` line for it. Adding the module to the workflow is part of adding the module.
+  - The filesystem-scanned counter-check is the **package** form, which does report unimported files at 0 %:
+    `uv run --frozen pytest tests/unit -q --cov=ondewo --cov-report=term-missing`. Today it shows the four thin
+    service wrappers `ondewo/survey/client/services/{async_,}{fhir,survey}.py` at 71 % — outside the gate by design,
+    not a regression.
+
+- **There is no `.python-version`, so a local `uv sync` grabs the newest interpreter it can find while CI runs 3.12.**
+  Locally that resolved to 3.14.6. Pin the interpreter for a faithful run: `uv sync --extra dev --frozen -p 3.12` and
+  `uv run --frozen -p 3.12 …` (point `UV_PROJECT_ENVIRONMENT` at a scratch path to keep your everyday `.venv`). This
+  is not cosmetic for a 100 % gate — **the set of lines it measures is interpreter-dependent**: coverage counts 144
+  statements in `ondewo/survey/utils/keycloak.py` on 3.12 and 143 on 3.14, because PEP 649 deferred annotations make
+  the bare `status_code: int` annotation in the `TokenResponse` Protocol no longer an executed statement on 3.14.
+  Both are at 100 % today, but a line that only exists on CI's interpreter can only fail on CI's interpreter.
