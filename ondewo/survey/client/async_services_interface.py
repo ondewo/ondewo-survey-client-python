@@ -11,14 +11,26 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""Async services base that injects the Keycloak bearer token into every SURVEY gRPC call.
+"""Async services base that PROVIDES the Keycloak bearer token; the caller attaches it.
 
-The generated async service wrappers (``ondewo/survey/client/services/async_*.py``) subclass
-:class:`AsyncServicesInterface` and forward :attr:`AsyncServicesInterface.metadata` to every
-stub call. When the :class:`~ondewo.survey.client.client_config.ClientConfig` opts into the D18
-headless offline-token flow, that metadata carries a freshly auto-refreshed
-``Authorization: Bearer`` header; otherwise it is empty and calls travel unauthenticated
-(e.g. against a plaintext server or an Envoy ingress that injects auth).
+The generated service wrappers (``ondewo/survey/client/services/async_*.py``) subclass
+:class:`AsyncServicesInterface` and expose a single ``stub`` property. They define no RPC
+methods, so nothing here attaches :attr:`AsyncServicesInterface.metadata` automatically --
+**the caller must pass it explicitly on every call**::
+
+    metadata = client.services.survey.metadata
+    response = client.services.survey.stub.ListSurveys(request=request, metadata=metadata)
+
+``examples/survey_list_surveys_example.py`` does exactly that. This docstring previously claimed
+the wrappers "forward ... metadata to every stub call", which was never true in any published
+release and is the more dangerous direction for a doc to be wrong in: a reader who believes auth
+is automatic ships an unauthenticated call and finds out from the server.
+
+When the :class:`~ondewo.survey.client.client_config.ClientConfig` opts into the D18 headless
+offline-token flow, :attr:`AsyncServicesInterface.metadata` carries a freshly auto-refreshed
+``Authorization: Bearer`` header; otherwise it is empty, and a call made with it travels
+unauthenticated -- which is correct against a plaintext server or an Envoy ingress that injects
+auth of its own.
 """
 
 from abc import ABC
