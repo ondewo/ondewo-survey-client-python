@@ -16,8 +16,7 @@ export
 
 # MUST BE THE SAME AS API in Mayor and Minor Version Number
 # example: API 2.9.0 --> Client 2.9.X
-ONDEWO_SURVEY_VERSION=2.0.1
-
+ONDEWO_SURVEY_VERSION=2.0.2
 ONDEWO_SURVEY_API_GIT_BRANCH=OND211-2418-add-keycloak-for-2-fa
 ONDEWO_PROTO_COMPILER_GIT_BRANCH=tags/5.10.0
 PYPI_USERNAME?=ENTER_HERE_YOUR_PYPI_USERNAME
@@ -27,7 +26,7 @@ PYPI_PASSWORD?=ENTER_HERE_YOUR_PYPI_PASSWORD
 GITHUB_GH_TOKEN?=ENTER_YOUR_TOKEN_HERE
 
 CURRENT_RELEASE_NOTES=`cat RELEASE.md \
-	| perl -ne 'print if /Release ONDEWO Survey Python Client ${ONDEWO_SURVEY_VERSION}/../\*\*/'`
+	| perl -ne 'print if /Release ONDEWO Survey Python Client ${ONDEWO_SURVEY_VERSION}/../^\*{5}/'`
 
 GH_REPO="https://github.com/ondewo/ondewo-survey-client-python"
 DEVOPS_ACCOUNT_GIT="ondewo-devops-accounts"

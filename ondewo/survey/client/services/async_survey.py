@@ -11,11 +11,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from ondewo.survey.client.async_services_interface import AsyncServicesInterface
+from ondewo.survey.client.services_interface import ServicesInterface
 from ondewo.survey.survey_pb2_grpc import SurveysStub
 
 
-class Survey(AsyncServicesInterface):
+class Survey(ServicesInterface):
     """
     A class representing the Surveys service interface.
 
