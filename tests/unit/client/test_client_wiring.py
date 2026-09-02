@@ -15,8 +15,17 @@
 
 `BaseClient.__init__` builds the service container before any network I/O and
 `grpc.insecure_channel` is lazy, so constructing the clients opens no connection.
-The shared Keycloak provider factory is patched so the D18 config never triggers a
-real ROPC login. These tests guard the `ServicesContainer` keyword wiring: a mismatch
+BOTH interface modules' provider factories are patched so the D18 config never triggers a
+real ROPC login. Patching only one is not enough and the asymmetry is deliberate to record:
+`AsyncClient` builds `AsyncSurvey`/`AsyncFHIR`, but both of those subclass the SYNCHRONOUS
+`ServicesInterface`, so the async path resolves its provider through
+`services_interface.get_keycloak_token_provider`. `AsyncServicesInterface` is imported by no
+production module at all. Patching only `_ASYNC_FACTORY` therefore intercepted nothing and the
+constructor performed a real ROPC login against the placeholder `kc.example.com`, which is what
+turned the `tests` workflow red on master. A wiring test must not depend on which interface the
+client happens to route through, so it patches both.
+
+These tests guard the `ServicesContainer` keyword wiring: a mismatch
 between the constructor kwargs and the declared container fields raises `TypeError` at
 build time.
 """
@@ -67,7 +76,10 @@ def _make_config() -> ClientConfig:
 
 def test_client_wires_survey_and_fhir_services() -> None:
     """The real `Client` populates `services.survey`/`services.fhir` with the right types."""
-    with patch(_SYNC_FACTORY, return_value=MagicMock(name="KeycloakTokenProvider")):
+    with (
+        patch(_SYNC_FACTORY, return_value=MagicMock(name="KeycloakTokenProvider")),
+        patch(_ASYNC_FACTORY, return_value=MagicMock(name="KeycloakTokenProvider")),
+    ):
         client: Client = Client(config=_make_config(), use_secure_channel=False)
 
     assert isinstance(client.services.survey, Survey)
@@ -76,7 +88,10 @@ def test_client_wires_survey_and_fhir_services() -> None:
 
 def test_async_client_wires_survey_and_fhir_services() -> None:
     """The real `AsyncClient` populates `services.survey`/`services.fhir` with the right types."""
-    with patch(_ASYNC_FACTORY, return_value=MagicMock(name="KeycloakTokenProvider")):
+    with (
+        patch(_SYNC_FACTORY, return_value=MagicMock(name="KeycloakTokenProvider")),
+        patch(_ASYNC_FACTORY, return_value=MagicMock(name="KeycloakTokenProvider")),
+    ):
         client: AsyncClient = AsyncClient(config=_make_config(), use_secure_channel=False)
 
     assert isinstance(client.services.survey, AsyncSurvey)
