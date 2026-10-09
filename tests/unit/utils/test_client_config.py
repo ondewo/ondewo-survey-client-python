@@ -13,6 +13,16 @@
 # limitations under the License.
 """Unit tests for `ClientConfig` validation on the bearer-only auth model (D18)."""
 
+from dataclasses import (
+    dataclass,
+    field,
+)
+from typing import (
+    Any,
+    Dict,
+    Type,
+)
+
 import pytest
 
 from ondewo.survey.client.client_config import ClientConfig
@@ -27,6 +37,9 @@ CLIENT_ID: str = "ondewo-survey-cai-sdk-public"
 #: Distinctive, so a match in a repr cannot be a coincidence of a field name or a host.
 CLIENT_CERT: str = "PLANTED-BEGIN-CLIENT-CERTIFICATE-3a7c52"
 CLIENT_KEY: str = "PLANTED-BEGIN-PRIVATE-KEY-e04b9d"
+PLANTED_PASSWORD: str = "PLANTED-password-6b21fa"
+GRPC_CERT: str = "PLANTED-BEGIN-CERTIFICATE-91cd3e"
+HIDDEN: str = "PLANTED-repr-false-value-58d2a1"
 
 
 class TestNonKeycloakPath:
@@ -150,30 +163,115 @@ class TestKeycloakPath:
         assert not hasattr(config, "client_secret")
 
 
-class TestMutualTlsKeyIsNotPrinted:
-    """`repr()` / `str()` of a config with a mutual-TLS client identity must not print the private key."""
+def _config(config_class: Type[ClientConfig] = ClientConfig, **overrides: Any) -> ClientConfig:
+    """Build a config carrying every secret, each a distinctive planted value.
 
-    def test_the_mutual_tls_private_key_is_not_printed(self) -> None:
-        """The client private key appears in neither `repr()` nor `str()`.
+    Args:
+        config_class (Type[ClientConfig]):
+            The class to instantiate (a subclass in the `repr=False` test).
+        **overrides (Any):
+            Field values replacing the defaults below.
 
-        `BaseClientConfig` declares `grpc_client_key` with `repr=False`. This class keeps the
-        `__repr__` that `@dataclass` generates, which honours that flag; the test pins it so a
-        hand-written `__repr__` (as the nlu/s2t/t2s twins have) cannot reintroduce the leak.
+    Returns:
+        ClientConfig:
+            The config.
+    """
+    kwargs: Dict[str, Any] = {
+        "host": HOST,
+        "port": PORT,
+        "user_name": USERNAME,
+        "password": PLANTED_PASSWORD,
+        "grpc_cert": GRPC_CERT,
+        # __post_init__ refuses half a client identity, so set both cert and key.
+        "grpc_client_cert": CLIENT_CERT,
+        "grpc_client_key": CLIENT_KEY,
+    }
+    kwargs.update(overrides)
+    return config_class(**kwargs)
+
+
+class TestClientConfigReprRedactsSecrets:
+    """`repr()` / `str()` must not print the password, the certificate or the mutual-TLS private key.
+
+    The assertions are behavioural (build the object, read its `repr`) rather than a source grep,
+    because a grep for `__repr__` passes just as well for a `__repr__` that prints the secret anyway.
+    """
+
+    def test_the_password_is_not_printed(self) -> None:
+        """The ROPC password appears in neither `repr()` nor `str()`; the marker does.
 
         Returns:
             None
         """
-        # __post_init__ refuses half a client identity, so set both cert and key.
-        config = ClientConfig(
-            host=HOST,
-            port=PORT,
-            user_name=USERNAME,
-            password=PASSWORD,
-            grpc_client_cert=CLIENT_CERT,
-            grpc_client_key=CLIENT_KEY,
-        )
+        config: ClientConfig = _config()
 
-        # Read the ATTRIBUTE to prove the key is really on the object (encoded to bytes).
+        # Read the ATTRIBUTE to prove the secret is really on the object; repr is the thing under test.
+        assert config.password == PLANTED_PASSWORD
+        assert PLANTED_PASSWORD not in repr(config)
+        assert PLANTED_PASSWORD not in str(config)
+        assert "password='***REDACTED***'" in repr(config)
+
+    def test_the_grpc_certificate_is_not_printed(self) -> None:
+        """The server certificate is redacted.
+
+        Returns:
+            None
+        """
+        config: ClientConfig = _config()
+
+        # BaseClientConfig.__post_init__ encodes the certificate, so the stored value is bytes.
+        assert config.grpc_cert == GRPC_CERT.encode()
+        assert GRPC_CERT not in repr(config)
+        assert "grpc_cert='***REDACTED***'" in repr(config)
+
+    def test_the_mutual_tls_private_key_is_not_printed(self) -> None:
+        """The client private key appears in neither `repr()` nor `str()`; the marker does.
+
+        Returns:
+            None
+        """
+        config: ClientConfig = _config()
+
         assert config.grpc_client_key == CLIENT_KEY.encode()
         assert CLIENT_KEY not in repr(config)
         assert CLIENT_KEY not in str(config)
+        assert "grpc_client_key='***REDACTED***'" in repr(config)
+
+    def test_an_unset_secret_is_not_reported_as_present(self) -> None:
+        """An empty secret renders as `''`, not as the marker, which would read as "set".
+
+        Returns:
+            None
+        """
+        rendered: str = repr(_config(grpc_cert="", grpc_client_cert="", grpc_client_key=""))
+
+        assert "grpc_cert=''" in rendered
+        assert "grpc_client_key=''" in rendered
+
+    def test_any_field_declared_repr_false_is_redacted(self) -> None:
+        """A field declared `repr=False` is redacted without being named in `SECRET_FIELD_NAMES`.
+
+        Returns:
+            None
+        """
+
+        @dataclass(frozen=True, repr=False)
+        class _ConfigWithHiddenField(ClientConfig):
+            planted_hidden: str = field(default="", repr=False)
+
+        config: ClientConfig = _config(config_class=_ConfigWithHiddenField, planted_hidden=HIDDEN)
+
+        assert getattr(config, "planted_hidden") == HIDDEN
+        assert HIDDEN not in repr(config)
+        assert "planted_hidden='***REDACTED***'" in repr(config)
+
+    def test_the_non_secret_fields_survive(self) -> None:
+        """Redaction must not be satisfied by printing nothing: host and user stay visible.
+
+        Returns:
+            None
+        """
+        rendered: str = repr(_config())
+
+        assert HOST in rendered
+        assert USERNAME in rendered
