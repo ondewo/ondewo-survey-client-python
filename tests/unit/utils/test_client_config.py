@@ -24,6 +24,9 @@ PASSWORD: str = "s3cr3t"
 KEYCLOAK_URL: str = "https://kc.example.com/auth"
 REALM: str = "ondewo-ccai-platform"
 CLIENT_ID: str = "ondewo-survey-cai-sdk-public"
+#: Distinctive, so a match in a repr cannot be a coincidence of a field name or a host.
+CLIENT_CERT: str = "PLANTED-BEGIN-CLIENT-CERTIFICATE-3a7c52"
+CLIENT_KEY: str = "PLANTED-BEGIN-PRIVATE-KEY-e04b9d"
 
 
 class TestNonKeycloakPath:
@@ -145,3 +148,32 @@ class TestKeycloakPath:
         )
 
         assert not hasattr(config, "client_secret")
+
+
+class TestMutualTlsKeyIsNotPrinted:
+    """`repr()` / `str()` of a config with a mutual-TLS client identity must not print the private key."""
+
+    def test_the_mutual_tls_private_key_is_not_printed(self) -> None:
+        """The client private key appears in neither `repr()` nor `str()`.
+
+        `BaseClientConfig` declares `grpc_client_key` with `repr=False`. This class keeps the
+        `__repr__` that `@dataclass` generates, which honours that flag; the test pins it so a
+        hand-written `__repr__` (as the nlu/s2t/t2s twins have) cannot reintroduce the leak.
+
+        Returns:
+            None
+        """
+        # __post_init__ refuses half a client identity, so set both cert and key.
+        config = ClientConfig(
+            host=HOST,
+            port=PORT,
+            user_name=USERNAME,
+            password=PASSWORD,
+            grpc_client_cert=CLIENT_CERT,
+            grpc_client_key=CLIENT_KEY,
+        )
+
+        # Read the ATTRIBUTE to prove the key is really on the object (encoded to bytes).
+        assert config.grpc_client_key == CLIENT_KEY.encode()
+        assert CLIENT_KEY not in repr(config)
+        assert CLIENT_KEY not in str(config)

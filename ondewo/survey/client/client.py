@@ -16,11 +16,13 @@ from typing import (
     Optional,
     Set,
     Tuple,
+    cast,
 )
 
 from ondewo.utils.base_client import BaseClient
 from ondewo.utils.base_client_config import BaseClientConfig
 
+from ondewo.survey.client.client_config import ClientConfig
 from ondewo.survey.client.services.fhir import FHIR
 from ondewo.survey.client.services.survey import Survey
 from ondewo.survey.client.services_container import ServicesContainer
@@ -49,7 +51,9 @@ class Client(BaseClient):
             options (Optional[Set[Tuple[str, Any]]]):
                 Additional options for the gRPC channel.
         """
+        # The FHIR / Survey services need the survey ClientConfig (Keycloak fields); BaseClient types it as the base.
+        survey_config: ClientConfig = cast(ClientConfig, config)
         self.services: ServicesContainer = ServicesContainer(
-            fhir=FHIR(config=config, use_secure_channel=use_secure_channel, options=options),
-            survey=Survey(config=config, use_secure_channel=use_secure_channel, options=options),
+            fhir=FHIR(config=survey_config, use_secure_channel=use_secure_channel, options=options),
+            survey=Survey(config=survey_config, use_secure_channel=use_secure_channel, options=options),
         )

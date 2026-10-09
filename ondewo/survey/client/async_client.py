@@ -16,12 +16,13 @@ from typing import (
     Optional,
     Set,
     Tuple,
+    cast,
 )
 
 from ondewo.utils.async_base_client import AsyncBaseClient
 
 from ondewo.survey.client.async_services_container import AsyncServicesContainer
-from ondewo.survey.client.client_config import BaseClientConfig
+from ondewo.survey.client.client_config import BaseClientConfig, ClientConfig
 from ondewo.survey.client.services.async_fhir import FHIR
 from ondewo.survey.client.services.async_survey import Survey
 
@@ -46,7 +47,9 @@ class AsyncClient(AsyncBaseClient):
             use_secure_channel (bool): Whether to use a secure gRPC channel.
             options (Optional[Set[Tuple[str, Any]]]): Additional options for the gRPC channel.
         """
+        # The FHIR / Survey services need the survey ClientConfig (Keycloak fields); BaseClient types it as the base.
+        survey_config: ClientConfig = cast(ClientConfig, config)
         self.services: AsyncServicesContainer = AsyncServicesContainer(
-            fhir=FHIR(config=config, use_secure_channel=use_secure_channel, options=options),
-            survey=Survey(config=config, use_secure_channel=use_secure_channel, options=options),
+            fhir=FHIR(config=survey_config, use_secure_channel=use_secure_channel, options=options),
+            survey=Survey(config=survey_config, use_secure_channel=use_secure_channel, options=options),
         )
