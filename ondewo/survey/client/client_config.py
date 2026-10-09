@@ -11,8 +11,17 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from dataclasses import dataclass
-from typing import Optional
+from dataclasses import (
+    dataclass,
+    fields,
+)
+from typing import (
+    Any,
+    ClassVar,
+    FrozenSet,
+    List,
+    Optional,
+)
 
 from dataclasses_json import dataclass_json
 from ondewo.utils.base_client_config import BaseClientConfig
@@ -67,6 +76,42 @@ class ClientConfig(BaseClientConfig):
     client_id: str = ""
     token_expiration_in_s: Optional[int] = None
     keycloak_verify_ssl: bool = True
+
+    #: Fields whose value must never be rendered. ``grpc_cert`` is PEM material, ``password`` is the
+    #: ROPC login secret and ``grpc_client_key`` is the mutual-TLS private key; the ``__repr__``
+    #: ``@dataclass`` generates printed the password verbatim. ``__repr__`` additionally redacts every
+    #: field declared with ``repr=False``, so a secret ``BaseClientConfig`` adds and hides is not printed.
+    SECRET_FIELD_NAMES: ClassVar[FrozenSet[str]] = frozenset({"password", "grpc_cert", "grpc_client_key"})
+
+    def __repr__(self) -> str:
+        """
+        Render the config without its credential material.
+
+        ``@dataclass`` generates a ``__repr__`` that prints every field not declared ``repr=False``, so
+        any caller doing ``log.debug(f"...{config}")`` -- or a bare traceback carrying locals -- wrote
+        the ROPC password and the gRPC certificate to its logs in clear text.
+
+        A field is redacted when it is named in ``SECRET_FIELD_NAMES`` OR declared with ``repr=False``.
+        The second condition matters because this override replaces the generated ``__repr__``, which
+        is what honours ``repr=False``: ``BaseClientConfig.grpc_client_key`` (the mutual-TLS private
+        key) is declared that way, and iterating ``fields()`` without checking it would print the key.
+
+        An EMPTY secret still renders as ``''`` rather than as ``***REDACTED***``. The distinction is
+        deliberate: the marker reads as "this is set and sensitive", which is actively misleading
+        when the real problem is that nobody set it -- usually the very thing being debugged.
+
+        Returns:
+            str:
+                ``ClientConfig(host=..., password='***REDACTED***', ...)``.
+        """
+        rendered: List[str] = []
+        for config_field in fields(self):
+            value: Any = getattr(self, config_field.name, None)
+            if (config_field.name in self.SECRET_FIELD_NAMES or not config_field.repr) and value:
+                rendered.append(f"{config_field.name}='***REDACTED***'")
+            else:
+                rendered.append(f"{config_field.name}={value!r}")
+        return f"{type(self).__name__}({', '.join(rendered)})"
 
     @property
     def use_keycloak(self) -> bool:
