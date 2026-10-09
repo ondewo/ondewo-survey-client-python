@@ -35,6 +35,7 @@ import sys
 from pathlib import Path
 from typing import (
     List,
+    Optional,
     Sequence,
     Tuple,
 )
@@ -56,12 +57,36 @@ from ondewo.survey.utils.keycloak import get_keycloak_token_provider
 load_dotenv(Path(__file__).with_name("environment.env"))
 
 
+def read_pem_from_env(env_var: str) -> Optional[str]:
+    """
+    Read the PEM file whose path the environment variable ``env_var`` names.
+
+    The SDK takes PEM **contents**, never a path, so the example reads the file itself.
+
+    Args:
+        env_var (str):
+            Name of the environment variable holding the path to a PEM file.
+
+    Returns:
+        Optional[str]:
+            The PEM contents, or ``None`` when the variable is unset or blank.
+    """
+    pem_path: str = os.getenv(env_var, "").strip()
+    if not pem_path:
+        return None
+    log.info(f"Reading {env_var} from {pem_path}")
+    return Path(pem_path).read_text()
+
+
 def build_client_config() -> ClientConfig:
     """
     Build a `ClientConfig` for the Keycloak offline-token auth path from the environment.
 
     Reads the canonical env vars (see ``examples/environment.env``); each lookup falls
     back to a non-secret local-development default when the variable is unset or blank.
+    ``ONDEWO_GRPC_CERT`` names the CA PEM file a secure channel trusts, and
+    ``ONDEWO_GRPC_CLIENT_CERT`` / ``ONDEWO_GRPC_CLIENT_KEY`` name the client identity PEM files for
+    mutual TLS (set both or neither).
 
     Returns:
         ClientConfig:
@@ -70,6 +95,9 @@ def build_client_config() -> ClientConfig:
     return ClientConfig(
         host=os.getenv("ONDEWO_HOST") or "localhost",
         port=os.getenv("ONDEWO_PORT") or "50051",
+        grpc_cert=read_pem_from_env("ONDEWO_GRPC_CERT"),
+        grpc_client_cert=read_pem_from_env("ONDEWO_GRPC_CLIENT_CERT"),
+        grpc_client_key=read_pem_from_env("ONDEWO_GRPC_CLIENT_KEY"),
         user_name=os.getenv("KEYCLOAK_USER_NAME") or "tech-user@ondewo.com",
         password=os.getenv("KEYCLOAK_PASSWORD") or "change-me",
         keycloak_url=os.getenv("KEYCLOAK_URL") or "https://my-host/auth",

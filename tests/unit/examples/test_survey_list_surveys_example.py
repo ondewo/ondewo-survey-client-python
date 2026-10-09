@@ -20,23 +20,34 @@ builds the right request, attaches the bearer metadata, and handles the response
 
 import importlib.util
 import os
+from concurrent import futures
+from pathlib import Path
 from types import (
     ModuleType,
     SimpleNamespace,
 )
 from typing import (
+    Dict,
+    Iterator,
     List,
     Tuple,
 )
 from unittest.mock import MagicMock
 
+import grpc
 import pytest
 
+from ondewo.survey.client import services_interface
 from ondewo.survey.client.client_config import ClientConfig
 from ondewo.survey.survey_pb2 import (
     ListSurveysRequest,
     ListSurveysResponse,
     Survey,
+)
+from tests.unit.client.test_mutual_tls import (
+    SERVER_NAME,
+    Pki,
+    _server_credentials,
 )
 
 # Bound exactly once so a refactor that changes only an input or only an expectation cannot
@@ -234,3 +245,114 @@ class TestMain:
 
         # main() must disconnect the client in its finally block.
         client.disconnect.assert_called_once_with()
+
+
+def _write_pems(directory: Path, pki: Pki, with_client_identity: bool) -> Dict[str, str]:
+    """Write ``pki``'s CA (and optionally its client leaf and key) to PEM files; return the env vars naming them.
+
+    Args:
+        directory (Path):
+            Where to write the PEM files.
+        pki (Pki):
+            The throwaway PKI whose CA the example trusts and whose client leaf it presents.
+        with_client_identity (bool):
+            Whether to also write the client certificate and key (mutual TLS).
+
+    Returns:
+        Dict[str, str]:
+            ``ONDEWO_GRPC_CERT`` (and ``ONDEWO_GRPC_CLIENT_CERT`` / ``ONDEWO_GRPC_CLIENT_KEY``) mapped to file paths.
+    """
+    pems: Dict[str, bytes] = {"ONDEWO_GRPC_CERT": pki.ca_cert}
+    if with_client_identity:
+        pems["ONDEWO_GRPC_CLIENT_CERT"] = pki.client_cert
+        pems["ONDEWO_GRPC_CLIENT_KEY"] = pki.client_key
+    env: Dict[str, str] = {}
+    for env_var, pem in pems.items():
+        pem_path: Path = directory / f"{env_var.lower()}.pem"
+        pem_path.write_bytes(pem)
+        env[env_var] = str(pem_path)
+    return env
+
+
+@pytest.fixture(scope="module")
+def pki() -> Pki:
+    return Pki("example")
+
+
+@pytest.fixture
+def mutual_tls_server(pki: Pki) -> Iterator[int]:
+    """Start a servicer-less server that requires a client certificate from ``pki``; yield its port."""
+    grpc_server: grpc.Server = grpc.server(futures.ThreadPoolExecutor(max_workers=2))
+    port: int = grpc_server.add_secure_port(f"{SERVER_NAME}:0", _server_credentials(pki, require_client_auth=True))
+    grpc_server.start()
+    yield port
+    grpc_server.stop(grace=None)
+
+
+class TestSecureChannelFromEnvironment:
+    """The example reads the CA and the client identity PEM files the ``ONDEWO_GRPC_*`` variables name."""
+
+    @pytest.mark.parametrize("env_var", ["ONDEWO_GRPC_CERT", "ONDEWO_GRPC_CLIENT_CERT", "ONDEWO_GRPC_CLIENT_KEY"])
+    def test_unset_or_blank_means_none(self, monkeypatch: pytest.MonkeyPatch, env_var: str) -> None:
+        example: ModuleType = _load_example()
+        monkeypatch.setenv(env_var, "  ")
+        assert example.read_pem_from_env(env_var) is None
+        monkeypatch.delenv(env_var)
+        assert example.read_pem_from_env(env_var) is None
+
+    def test_pem_files_reach_the_config(self, monkeypatch: pytest.MonkeyPatch, tmp_path: Path, pki: Pki) -> None:
+        for env_var, pem_path in _write_pems(tmp_path, pki, with_client_identity=True).items():
+            monkeypatch.setenv(env_var, pem_path)
+        config: ClientConfig = _load_example().build_client_config()
+        assert config.grpc_cert == pki.ca_cert
+        assert config.grpc_client_cert == pki.client_cert
+        assert config.grpc_client_key == pki.client_key
+
+    @pytest.mark.parametrize("dropped", ["ONDEWO_GRPC_CLIENT_CERT", "ONDEWO_GRPC_CLIENT_KEY"])
+    def test_half_a_client_identity_is_refused(
+        self,
+        monkeypatch: pytest.MonkeyPatch,
+        tmp_path: Path,
+        pki: Pki,
+        dropped: str,
+    ) -> None:
+        for env_var, pem_path in _write_pems(tmp_path, pki, with_client_identity=True).items():
+            monkeypatch.setenv(env_var, pem_path)
+        monkeypatch.setenv(dropped, "")
+        with pytest.raises(ValueError, match="set both to use mutual TLS, or neither") as refusal:
+            _load_example().build_client_config()
+        assert "PRIVATE KEY" not in str(refusal.value) and "CERTIFICATE" not in str(refusal.value)
+
+    @pytest.mark.parametrize("with_client_identity", [True, False])
+    def test_main_over_mutual_tls(
+        self,
+        monkeypatch: pytest.MonkeyPatch,
+        tmp_path: Path,
+        pki: Pki,
+        mutual_tls_server: int,
+        with_client_identity: bool,
+    ) -> None:
+        """``ONDEWO_USE_SECURE_CHANNEL=true`` reaches a client-auth server only with the client identity.
+
+        The server has no servicer: ``UNIMPLEMENTED`` proves the handshake completed, ``UNAVAILABLE`` that the
+        server refused the client without a certificate.
+        """
+        monkeypatch.setenv("ONDEWO_HOST", SERVER_NAME)
+        monkeypatch.setenv("ONDEWO_PORT", str(mutual_tls_server))
+        monkeypatch.setenv("ONDEWO_USE_SECURE_CHANNEL", "true")
+        for env_var in ("ONDEWO_GRPC_CLIENT_CERT", "ONDEWO_GRPC_CLIENT_KEY"):
+            monkeypatch.setenv(env_var, "")
+        for env_var, pem_path in _write_pems(tmp_path, pki, with_client_identity).items():
+            monkeypatch.setenv(env_var, pem_path)
+        example: ModuleType = _load_example()
+        # Both the example and the client's services interface look the token provider up; no Keycloak call.
+        monkeypatch.setattr(example, "get_keycloak_token_provider", lambda config: _fake_provider())
+        monkeypatch.setattr(services_interface, "get_keycloak_token_provider", lambda config: _fake_provider())
+
+        with pytest.raises(grpc.RpcError) as answer:
+            example.main()
+
+        expected: grpc.StatusCode = (
+            grpc.StatusCode.UNIMPLEMENTED if with_client_identity else grpc.StatusCode.UNAVAILABLE
+        )
+        assert answer.value.code() is expected  # type: ignore[attr-defined]
