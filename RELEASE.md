@@ -2,6 +2,19 @@
 
 *****************
 
+## Release ONDEWO Survey Python Client 2.0.3
+
+### Bug Fixes
+
+* [[OND211-2443]](https://ondewo.atlassian.net/browse/OND211-2443) **`ClientConfig` printed its credentials in clear text.** The `@dataclass`-generated `__repr__` rendered the Keycloak `password` and the gRPC certificate, so `log.debug(f"...{config}")` or a traceback carrying locals wrote them to the logs. `repr()` / `str()` now render `password`, `grpc_cert`, the mutual-TLS private key `grpc_client_key` and every field declared `repr=False` as `***REDACTED***`; an unset or empty secret still renders as `None` / `''`. **Behaviour change** for anyone who parsed the repr: read the attribute instead.
+* [[OND211-2443]](https://ondewo.atlassian.net/browse/OND211-2443) Dependency: `ondewo-client-utils>=4.1.1` on Python >= 3.12 (`>=3.2.0` below).
+* **`AsyncSurvey` / `AsyncFHIR` were synchronous in 2.0.2.** `make create_async_services` no longer matched this repo's own `ServicesInterface`, so the async wrappers were byte-identical copies of the sync ones: `AsyncClient` opened synchronous channels and `AsyncClient.disconnect()` raised `TypeError`. The generator and the wrappers are fixed, and a test guards both.
+* Docs: the service interfaces no longer claim the wrappers attach the bearer token automatically; pass `metadata=` explicitly, as the examples do.
+* Tooling: the duplicate `conventional-pre-commit` commit-msg hook declared after `giticket` is removed (it rejected every commit on a ticket branch); the client wiring test is hermetic (no network).
+* Regenerated with [ondewo-proto-compiler 5.15.2](https://github.com/ondewo/ondewo-proto-compiler/releases/tag/5.15.2).
+
+*****************
+
 ## Release ONDEWO Survey Python Client 2.0.2
 
 ### Bug Fixes
