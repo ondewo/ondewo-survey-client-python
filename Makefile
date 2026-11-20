@@ -53,7 +53,10 @@ install_precommit_hooks: ## Installs pre-commit hooks and sets them up for the o
 	uv run pre-commit install
 	uv run pre-commit install --hook-type commit-msg
 
-precommit_hooks_run_all_files: ## Runs all pre-commit hooks on all files and not just the changed ones
+# The mypy hook runs the mypy of the project .venv (language: system), which only the dev extra installs. Without
+# the sync a fresh release clone failed the second, strict pass of generate_ondewo_protos with
+# "Executable `mypy` not found".
+precommit_hooks_run_all_files: install_dependencies_locally ## Runs all pre-commit hooks on all files and not just the changed ones
 	uv run pre-commit run --all-files
 
 install_dependencies_locally: ## Install runtime + dev dependencies locally into the uv-managed .venv
