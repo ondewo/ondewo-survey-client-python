@@ -2,6 +2,15 @@
 
 *****************
 
+## Release ONDEWO Survey Python Client 2.1.0
+
+### Improvements
+
+* Tracking API Version [2.1.0](https://github.com/ondewo/ondewo-survey-api/releases/tag/2.1.0) ( [Documentation](https://ondewo.github.io/ondewo-survey-api/) )
+* Generated with ondewo-proto-compiler 5.17.0 (grpcio-tools 1.85.1, mypy-protobuf 5.1.0). New runtime floors: Python >= 3.10, `protobuf>=7.35.1,<8`, `grpcio>=1.85.1`; `grpcio-tools` and `grpcio-reflection` are no longer runtime dependencies of this package
+
+*****************
+
 ## Release ONDEWO Survey Python Client 2.0.3
 
 ### Bug Fixes

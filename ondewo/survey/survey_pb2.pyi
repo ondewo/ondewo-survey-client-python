@@ -10,29 +10,29 @@ Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. (editesyntax = "proto3";
 """
 
-import builtins
-import collections.abc
-import google.protobuf.descriptor
-import google.protobuf.field_mask_pb2
-import google.protobuf.internal.containers
-import google.protobuf.internal.enum_type_wrapper
-import google.protobuf.message
+from collections import abc as _abc
+from google.protobuf import descriptor as _descriptor
+from google.protobuf import field_mask_pb2 as _field_mask_pb2
+from google.protobuf import message as _message
+from google.protobuf.internal import containers as _containers
+from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
+import builtins as _builtins
 import sys
-import typing
+import typing as _typing
 
-if sys.version_info >= (3, 10):
-    import typing as typing_extensions
+if sys.version_info >= (3, 11):
+    from typing import TypeAlias as _TypeAlias, Never as _Never
 else:
-    import typing_extensions
+    from typing_extensions import TypeAlias as _TypeAlias, Never as _Never
 
-DESCRIPTOR: google.protobuf.descriptor.FileDescriptor
+DESCRIPTOR: _descriptor.FileDescriptor
 
 class _SubFlow:
-    ValueType = typing.NewType("ValueType", builtins.int)
-    V: typing_extensions.TypeAlias = ValueType
+    ValueType = _typing.NewType("ValueType", _builtins.int)
+    V: _TypeAlias = ValueType  # noqa: Y015
 
-class _SubFlowEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_SubFlow.ValueType], builtins.type):
-    DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
+class _SubFlowEnumTypeWrapper(_enum_type_wrapper._EnumTypeWrapper[_SubFlow.ValueType], _builtins.type):
+    DESCRIPTOR: _descriptor.EnumDescriptor
     SUBFLOW_UNSPECIFIED: _SubFlow.ValueType  # 0
     """Not specified. This value should be never used."""
     BOT: _SubFlow.ValueType  # 1
@@ -80,23 +80,23 @@ EXPECTED_DURATION: SubFlow.ValueType  # 7
 """The subflow allowing the user to inquire about the expected duration of the survey"""
 PURPOSE: SubFlow.ValueType  # 8
 """The subflow allowing the user to inquire about the purpose of the survey"""
-global___SubFlow = SubFlow
+Global___SubFlow: _TypeAlias = SubFlow  # noqa: Y015
 
-@typing.final
-class Survey(google.protobuf.message.Message):
+@_typing.final
+class Survey(_message.Message):
     """///// Core Messages ///////
 
     A survey containing questions and metadata for conducting user surveys
     """
 
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    DESCRIPTOR: _descriptor.Descriptor
 
     class _AgentStatus:
-        ValueType = typing.NewType("ValueType", builtins.int)
-        V: typing_extensions.TypeAlias = ValueType
+        ValueType = _typing.NewType("ValueType", _builtins.int)
+        V: _TypeAlias = ValueType  # noqa: Y015
 
-    class _AgentStatusEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[Survey._AgentStatus.ValueType], builtins.type):
-        DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
+    class _AgentStatusEnumTypeWrapper(_enum_type_wrapper._EnumTypeWrapper[Survey._AgentStatus.ValueType], _builtins.type):
+        DESCRIPTOR: _descriptor.EnumDescriptor
         TO_BE_INITIALIZED: Survey._AgentStatus.ValueType  # 0
         """Agent has not been initialized yet"""
         UPDATED: Survey._AgentStatus.ValueType  # 1
@@ -118,113 +118,116 @@ class Survey(google.protobuf.message.Message):
     OUTDATED: Survey.AgentStatus.ValueType  # 3
     """Agent is outdated and needs to be updated"""
 
-    SURVEY_ID_FIELD_NUMBER: builtins.int
-    DISPLAY_NAME_FIELD_NUMBER: builtins.int
-    LANGUAGE_CODE_FIELD_NUMBER: builtins.int
-    QUESTIONS_FIELD_NUMBER: builtins.int
-    SURVEY_INFO_FIELD_NUMBER: builtins.int
-    EXCLUDE_SUBFLOWS_FIELD_NUMBER: builtins.int
-    STATUS_FIELD_NUMBER: builtins.int
-    survey_id: builtins.str
+    SURVEY_ID_FIELD_NUMBER: _builtins.int
+    DISPLAY_NAME_FIELD_NUMBER: _builtins.int
+    LANGUAGE_CODE_FIELD_NUMBER: _builtins.int
+    QUESTIONS_FIELD_NUMBER: _builtins.int
+    SURVEY_INFO_FIELD_NUMBER: _builtins.int
+    EXCLUDE_SUBFLOWS_FIELD_NUMBER: _builtins.int
+    STATUS_FIELD_NUMBER: _builtins.int
+    survey_id: _builtins.str
     """The project identifier for this survey. Equal to the parent of the corresponding Agent.
     Format: <pre><code>projects/&lt;Project ID&gt;/agent</code></pre>
     Read-only in the Survey message (assigned by the back-end)
     """
-    display_name: builtins.str
+    display_name: _builtins.str
     """Required. The (human readable) name of this survey"""
-    language_code: builtins.str
+    language_code: _builtins.str
     """Required. The language of the agent created for the survey.
     This is also the only supported language of the agent.
     ISO 639-1 language code
     """
-    status: global___Survey.AgentStatus.ValueType
+    status: Global___Survey.AgentStatus.ValueType
     """Current status of the NLU Agent respecting to the Survey"""
-    @property
-    def questions(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___Question]:
+    @_builtins.property
+    def questions(self) -> _containers.RepeatedCompositeFieldContainer[Global___Question]:
         """Required. List of questions to be asked during the survey."""
 
-    @property
-    def survey_info(self) -> global___SurveyInfo:
+    @_builtins.property
+    def survey_info(self) -> Global___SurveyInfo:
         """Required. Information about the entity behind the survey, the purpose of the survey, legal stuff, etc."""
 
-    @property
-    def exclude_subflows(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[global___SubFlow.ValueType]:
+    @_builtins.property
+    def exclude_subflows(self) -> _containers.RepeatedScalarFieldContainer[Global___SubFlow.ValueType]:
         """Optional. List of subflows excluded for this survey."""
 
     def __init__(
         self,
         *,
-        survey_id: builtins.str = ...,
-        display_name: builtins.str = ...,
-        language_code: builtins.str = ...,
-        questions: collections.abc.Iterable[global___Question] | None = ...,
-        survey_info: global___SurveyInfo | None = ...,
-        exclude_subflows: collections.abc.Iterable[global___SubFlow.ValueType] | None = ...,
-        status: global___Survey.AgentStatus.ValueType = ...,
+        survey_id: _builtins.str = ...,
+        display_name: _builtins.str = ...,
+        language_code: _builtins.str = ...,
+        questions: _abc.Iterable[Global___Question] | None = ...,
+        survey_info: Global___SurveyInfo | None = ...,
+        exclude_subflows: _abc.Iterable[Global___SubFlow.ValueType] | None = ...,
+        status: Global___Survey.AgentStatus.ValueType = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing.Literal["survey_info", b"survey_info"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing.Literal["display_name", b"display_name", "exclude_subflows", b"exclude_subflows", "language_code", b"language_code", "questions", b"questions", "status", b"status", "survey_id", b"survey_id", "survey_info", b"survey_info"]) -> None: ...
+    _HasFieldArgType: _TypeAlias = _typing.Literal["survey_info", b"survey_info"]  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["display_name", b"display_name", "exclude_subflows", b"exclude_subflows", "language_code", b"language_code", "questions", b"questions", "status", b"status", "survey_id", b"survey_id", "survey_info", b"survey_info"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
 
-global___Survey = Survey
+Global___Survey: _TypeAlias = Survey  # noqa: Y015
 
-@typing.final
-class SurveyInfo(google.protobuf.message.Message):
+@_typing.final
+class SurveyInfo(_message.Message):
     """<p>Collect information about the entity behind the survey, the purpose of the survey, legal stuff, etc.</p>
     <p>This is needed to generate meaningful messages and training data for some of the auto-generated intents.</p>
     """
 
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    DESCRIPTOR: _descriptor.Descriptor
 
-    LEGAL_ENTITY_FIELD_NUMBER: builtins.int
-    POSTAL_ADDRESS_FIELD_NUMBER: builtins.int
-    EMAIL_ADDRESS_FIELD_NUMBER: builtins.int
-    PHONE_NUMBER_FIELD_NUMBER: builtins.int
-    PHONE_HOURS_FIELD_NUMBER: builtins.int
-    EXPECTED_DURATION_FIELD_NUMBER: builtins.int
-    PURPOSE_FIELD_NUMBER: builtins.int
-    TOPIC_FIELD_NUMBER: builtins.int
-    LEGAL_DISCLAIMER_FIELD_NUMBER: builtins.int
-    ANONYMOUS_FIELD_NUMBER: builtins.int
-    legal_entity: builtins.str
+    LEGAL_ENTITY_FIELD_NUMBER: _builtins.int
+    POSTAL_ADDRESS_FIELD_NUMBER: _builtins.int
+    EMAIL_ADDRESS_FIELD_NUMBER: _builtins.int
+    PHONE_NUMBER_FIELD_NUMBER: _builtins.int
+    PHONE_HOURS_FIELD_NUMBER: _builtins.int
+    EXPECTED_DURATION_FIELD_NUMBER: _builtins.int
+    PURPOSE_FIELD_NUMBER: _builtins.int
+    TOPIC_FIELD_NUMBER: _builtins.int
+    LEGAL_DISCLAIMER_FIELD_NUMBER: _builtins.int
+    ANONYMOUS_FIELD_NUMBER: _builtins.int
+    legal_entity: _builtins.str
     """Required unless SubFlow.LEGAL_ENTITY is deselected.
     The legal entity (company, research institute, etc.) on whose behalf the survey is performed
     """
-    postal_address: builtins.str
+    postal_address: _builtins.str
     """Required unless SubFlow.POSTAL_ADDRESS is deselected.
     The postal address to which callees can direct any requests.
     """
-    email_address: builtins.str
+    email_address: _builtins.str
     """Required unless SubFlow.EMAIL_ADDRESS is deselected.
     The email address to which callees can direct any requests.
     """
-    phone_number: builtins.str
+    phone_number: _builtins.str
     """Required unless SubFlow.PHONE_NUMBER is deselected.
     The phone number to which callees can direct any requests.
     """
-    phone_hours: builtins.str
+    phone_hours: _builtins.str
     """Required unless SubFlow.PHONE_HOURS is deselected.
     The phone hours during which callees can call (in pronounceable form).
     """
-    expected_duration: builtins.str
+    expected_duration: _builtins.str
     """Required unless SubFlow.EXPECTED_DURATION is deselected.
     The expected duration of the survey (in pronounceable form)
     """
-    purpose: builtins.str
+    purpose: _builtins.str
     """Required unless SubFlow.PURPOSE is deselected.
     An explanation regarding the purpose of the survey (in pronounceable form)
     """
-    topic: builtins.str
+    topic: _builtins.str
     """Required.
     A one-word explanation of the survey topic (in pronounceable form)
     """
-    legal_disclaimer: builtins.str
+    legal_disclaimer: _builtins.str
     """Required.
     A pronounceable explanation of the legal implications of participating in the survey.
     For example: &quot;Your answers during this survey will be stored anonymously for the next two years and then deleted.&quot;
     Should be formulated such that the agent can afterwards ask for the consent of the user.
     Example for how the agent could continue: &quot;Are you willing to participate in this survey?&quot;
     """
-    anonymous: builtins.bool
+    anonymous: _builtins.bool
     """Optional.
     Defaults to False. Allows the definition of a survey as anonymous or not.
     If the survey is not anonymous, the name of the people as well as their number will be recorded
@@ -232,107 +235,119 @@ class SurveyInfo(google.protobuf.message.Message):
     def __init__(
         self,
         *,
-        legal_entity: builtins.str = ...,
-        postal_address: builtins.str = ...,
-        email_address: builtins.str = ...,
-        phone_number: builtins.str = ...,
-        phone_hours: builtins.str = ...,
-        expected_duration: builtins.str = ...,
-        purpose: builtins.str = ...,
-        topic: builtins.str = ...,
-        legal_disclaimer: builtins.str = ...,
-        anonymous: builtins.bool = ...,
+        legal_entity: _builtins.str = ...,
+        postal_address: _builtins.str = ...,
+        email_address: _builtins.str = ...,
+        phone_number: _builtins.str = ...,
+        phone_hours: _builtins.str = ...,
+        expected_duration: _builtins.str = ...,
+        purpose: _builtins.str = ...,
+        topic: _builtins.str = ...,
+        legal_disclaimer: _builtins.str = ...,
+        anonymous: _builtins.bool = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing.Literal["anonymous", b"anonymous", "email_address", b"email_address", "expected_duration", b"expected_duration", "legal_disclaimer", b"legal_disclaimer", "legal_entity", b"legal_entity", "phone_hours", b"phone_hours", "phone_number", b"phone_number", "postal_address", b"postal_address", "purpose", b"purpose", "topic", b"topic"]) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["anonymous", b"anonymous", "email_address", b"email_address", "expected_duration", b"expected_duration", "legal_disclaimer", b"legal_disclaimer", "legal_entity", b"legal_entity", "phone_hours", b"phone_hours", "phone_number", b"phone_number", "postal_address", b"postal_address", "purpose", b"purpose", "topic", b"topic"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
 
-global___SurveyInfo = SurveyInfo
+Global___SurveyInfo: _TypeAlias = SurveyInfo  # noqa: Y015
 
-@typing.final
-class Question(google.protobuf.message.Message):
+@_typing.final
+class Question(_message.Message):
     """A question that can be one of several question types: open-ended, single choice, multiple choice, scale, or parameter-based questions"""
 
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    DESCRIPTOR: _descriptor.Descriptor
 
-    OPEN_QUESTION_FIELD_NUMBER: builtins.int
-    SINGLE_CHOICE_QUESTION_FIELD_NUMBER: builtins.int
-    MULTIPLE_CHOICE_QUESTION_FIELD_NUMBER: builtins.int
-    SCALE_QUESTION_FIELD_NUMBER: builtins.int
-    SINGLE_PARAMETER_QUESTION_FIELD_NUMBER: builtins.int
-    MULTIPLE_PARAMETER_QUESTION_FIELD_NUMBER: builtins.int
-    @property
-    def open_question(self) -> global___OpenQuestion:
+    OPEN_QUESTION_FIELD_NUMBER: _builtins.int
+    SINGLE_CHOICE_QUESTION_FIELD_NUMBER: _builtins.int
+    MULTIPLE_CHOICE_QUESTION_FIELD_NUMBER: _builtins.int
+    SCALE_QUESTION_FIELD_NUMBER: _builtins.int
+    SINGLE_PARAMETER_QUESTION_FIELD_NUMBER: _builtins.int
+    MULTIPLE_PARAMETER_QUESTION_FIELD_NUMBER: _builtins.int
+    @_builtins.property
+    def open_question(self) -> Global___OpenQuestion:
         """A question to which any kind of reply can be given and recorded"""
 
-    @property
-    def single_choice_question(self) -> global___SingleChoiceQuestion:
+    @_builtins.property
+    def single_choice_question(self) -> Global___SingleChoiceQuestion:
         """A question for which exactly one out of a predefined set of options is expected as answer"""
 
-    @property
-    def multiple_choice_question(self) -> global___MultipleChoiceQuestion:
+    @_builtins.property
+    def multiple_choice_question(self) -> Global___MultipleChoiceQuestion:
         """A question for which exactly one or more out of a predefined set of options are expected as answers"""
 
-    @property
-    def scale_question(self) -> global___ScaleQuestion:
+    @_builtins.property
+    def scale_question(self) -> Global___ScaleQuestion:
         """convenience wrapper around a SingleChoiceQuestion"""
 
-    @property
-    def single_parameter_question(self) -> global___SingleParameterQuestion:
+    @_builtins.property
+    def single_parameter_question(self) -> Global___SingleParameterQuestion:
         """A question for which one or more entities of a particular type are expected as answers"""
 
-    @property
-    def multiple_parameter_question(self) -> global___MultipleParameterQuestion:
+    @_builtins.property
+    def multiple_parameter_question(self) -> Global___MultipleParameterQuestion:
         """A question for which one or more entities of a particular type are expected as answers"""
 
     def __init__(
         self,
         *,
-        open_question: global___OpenQuestion | None = ...,
-        single_choice_question: global___SingleChoiceQuestion | None = ...,
-        multiple_choice_question: global___MultipleChoiceQuestion | None = ...,
-        scale_question: global___ScaleQuestion | None = ...,
-        single_parameter_question: global___SingleParameterQuestion | None = ...,
-        multiple_parameter_question: global___MultipleParameterQuestion | None = ...,
+        open_question: Global___OpenQuestion | None = ...,
+        single_choice_question: Global___SingleChoiceQuestion | None = ...,
+        multiple_choice_question: Global___MultipleChoiceQuestion | None = ...,
+        scale_question: Global___ScaleQuestion | None = ...,
+        single_parameter_question: Global___SingleParameterQuestion | None = ...,
+        multiple_parameter_question: Global___MultipleParameterQuestion | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing.Literal["multiple_choice_question", b"multiple_choice_question", "multiple_parameter_question", b"multiple_parameter_question", "open_question", b"open_question", "question", b"question", "scale_question", b"scale_question", "single_choice_question", b"single_choice_question", "single_parameter_question", b"single_parameter_question"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing.Literal["multiple_choice_question", b"multiple_choice_question", "multiple_parameter_question", b"multiple_parameter_question", "open_question", b"open_question", "question", b"question", "scale_question", b"scale_question", "single_choice_question", b"single_choice_question", "single_parameter_question", b"single_parameter_question"]) -> None: ...
-    def WhichOneof(self, oneof_group: typing.Literal["question", b"question"]) -> typing.Literal["open_question", "single_choice_question", "multiple_choice_question", "scale_question", "single_parameter_question", "multiple_parameter_question"] | None: ...
+    _HasFieldArgType: _TypeAlias = _typing.Literal["multiple_choice_question", b"multiple_choice_question", "multiple_parameter_question", b"multiple_parameter_question", "open_question", b"open_question", "question", b"question", "scale_question", b"scale_question", "single_choice_question", b"single_choice_question", "single_parameter_question", b"single_parameter_question"]  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["multiple_choice_question", b"multiple_choice_question", "multiple_parameter_question", b"multiple_parameter_question", "open_question", b"open_question", "question", b"question", "scale_question", b"scale_question", "single_choice_question", b"single_choice_question", "single_parameter_question", b"single_parameter_question"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    _WhichOneofReturnType_question: _TypeAlias = _typing.Literal["open_question", "single_choice_question", "multiple_choice_question", "scale_question", "single_parameter_question", "multiple_parameter_question"]  # noqa: Y015
+    _WhichOneofArgType_question: _TypeAlias = _typing.Literal["question", b"question"]  # noqa: Y015
+    def WhichOneof(self, oneof_group: _WhichOneofArgType_question) -> _WhichOneofReturnType_question | None: ...
 
-global___Question = Question
+Global___Question: _TypeAlias = Question  # noqa: Y015
 
-@typing.final
-class OpenQuestion(google.protobuf.message.Message):
+@_typing.final
+class OpenQuestion(_message.Message):
     """<p>A question to which any kind of reply can be given and recorded</p>
     <p>fixme: not working yet</p>
     """
 
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    DESCRIPTOR: _descriptor.Descriptor
 
-    QUESTION_TEXT_FIELD_NUMBER: builtins.int
-    question_text: builtins.str
+    QUESTION_TEXT_FIELD_NUMBER: _builtins.int
+    question_text: _builtins.str
     """The text which introduces the question (should be pronounceable)"""
     def __init__(
         self,
         *,
-        question_text: builtins.str = ...,
+        question_text: _builtins.str = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing.Literal["question_text", b"question_text"]) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["question_text", b"question_text"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
 
-global___OpenQuestion = OpenQuestion
+Global___OpenQuestion: _TypeAlias = OpenQuestion  # noqa: Y015
 
-@typing.final
-class SingleChoiceQuestion(google.protobuf.message.Message):
+@_typing.final
+class SingleChoiceQuestion(_message.Message):
     """<p>A question for which exactly one out of a predefined set of options is expected as answer</p>
     <p>Example: <code>SingleChoiceQuestion(question_text=&apos;Who is your favorite movie hero?&apos;, choices=[Choice(synonyms=[&apos;Bond&apos;, &apos;James Bond&apos;]), Choice(synonyms=[&apos;Batman&apos;]), Choice(synonyms=[&apos;Superman&apos;, &apos;Clark Kent&apos;])])</code></p>
     """
 
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    DESCRIPTOR: _descriptor.Descriptor
 
-    QUESTION_TEXT_FIELD_NUMBER: builtins.int
-    CHOICES_FIELD_NUMBER: builtins.int
-    question_text: builtins.str
+    QUESTION_TEXT_FIELD_NUMBER: _builtins.int
+    CHOICES_FIELD_NUMBER: _builtins.int
+    question_text: _builtins.str
     """The text which introduces the question (should be pronounceable)"""
-    @property
-    def choices(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___Choice]:
+    @_builtins.property
+    def choices(self) -> _containers.RepeatedCompositeFieldContainer[Global___Choice]:
         """List of choices which are accepted for this question
         Each Choice is represented by lists of synonyms.
         Note: needs to contain at least 2 choices
@@ -341,27 +356,31 @@ class SingleChoiceQuestion(google.protobuf.message.Message):
     def __init__(
         self,
         *,
-        question_text: builtins.str = ...,
-        choices: collections.abc.Iterable[global___Choice] | None = ...,
+        question_text: _builtins.str = ...,
+        choices: _abc.Iterable[Global___Choice] | None = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing.Literal["choices", b"choices", "question_text", b"question_text"]) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["choices", b"choices", "question_text", b"question_text"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
 
-global___SingleChoiceQuestion = SingleChoiceQuestion
+Global___SingleChoiceQuestion: _TypeAlias = SingleChoiceQuestion  # noqa: Y015
 
-@typing.final
-class MultipleChoiceQuestion(google.protobuf.message.Message):
+@_typing.final
+class MultipleChoiceQuestion(_message.Message):
     """<p>A question for which exactly one or more out of a predefined set of options are expected as answers</p>
     <p>Example: <code>MultipleChoiceQuestion(question_text=&apos;Which colors do you like?&apos;, choices=[Choice(synonyms=[&apos;red&apos;, &apos;reddisch&apos;]), Choice(synonyms=[&apos;blue&apos;, &apos;blueish&apos;]), Choice(synonyms=[&apos;yellow&apos;])])</code></p>
     """
 
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    DESCRIPTOR: _descriptor.Descriptor
 
-    QUESTION_TEXT_FIELD_NUMBER: builtins.int
-    CHOICES_FIELD_NUMBER: builtins.int
-    question_text: builtins.str
+    QUESTION_TEXT_FIELD_NUMBER: _builtins.int
+    CHOICES_FIELD_NUMBER: _builtins.int
+    question_text: _builtins.str
     """The text which introduces the question (should be pronounceable)"""
-    @property
-    def choices(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___Choice]:
+    @_builtins.property
+    def choices(self) -> _containers.RepeatedCompositeFieldContainer[Global___Choice]:
         """List of choices which are accepted for this question
         Each Choice is represented by lists of synonyms.
         Note: needs to contain at least 2 choices
@@ -370,135 +389,154 @@ class MultipleChoiceQuestion(google.protobuf.message.Message):
     def __init__(
         self,
         *,
-        question_text: builtins.str = ...,
-        choices: collections.abc.Iterable[global___Choice] | None = ...,
+        question_text: _builtins.str = ...,
+        choices: _abc.Iterable[Global___Choice] | None = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing.Literal["choices", b"choices", "question_text", b"question_text"]) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["choices", b"choices", "question_text", b"question_text"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
 
-global___MultipleChoiceQuestion = MultipleChoiceQuestion
+Global___MultipleChoiceQuestion: _TypeAlias = MultipleChoiceQuestion  # noqa: Y015
 
-@typing.final
-class ScaleQuestion(google.protobuf.message.Message):
+@_typing.final
+class ScaleQuestion(_message.Message):
     """A question for which an answer on a user-defined scale is expected"""
 
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    DESCRIPTOR: _descriptor.Descriptor
 
-    @typing.final
-    class ScaleValue(google.protobuf.message.Message):
+    @_typing.final
+    class ScaleValue(_message.Message):
         """Represents a value and label pair for scale question endpoints"""
 
-        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+        DESCRIPTOR: _descriptor.Descriptor
 
-        VALUE_FIELD_NUMBER: builtins.int
-        LABEL_FIELD_NUMBER: builtins.int
-        value: builtins.int
+        VALUE_FIELD_NUMBER: _builtins.int
+        LABEL_FIELD_NUMBER: _builtins.int
+        value: _builtins.int
         """Numeric value for this scale point"""
-        label: builtins.str
+        label: _builtins.str
         """Human-readable label for this scale point"""
         def __init__(
             self,
             *,
-            value: builtins.int = ...,
-            label: builtins.str = ...,
+            value: _builtins.int = ...,
+            label: _builtins.str = ...,
         ) -> None: ...
-        def ClearField(self, field_name: typing.Literal["label", b"label", "value", b"value"]) -> None: ...
+        _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+        def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+        _ClearFieldArgType: _TypeAlias = _typing.Literal["label", b"label", "value", b"value"]  # noqa: Y015
+        def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+        def WhichOneof(self, oneof_group: _Never) -> None: ...
 
-    QUESTION_TEXT_FIELD_NUMBER: builtins.int
-    MIN_VALUE_FIELD_NUMBER: builtins.int
-    MAX_VALUE_FIELD_NUMBER: builtins.int
-    question_text: builtins.str
+    QUESTION_TEXT_FIELD_NUMBER: _builtins.int
+    MIN_VALUE_FIELD_NUMBER: _builtins.int
+    MAX_VALUE_FIELD_NUMBER: _builtins.int
+    question_text: _builtins.str
     """The text which introduces the question (should be pronounceable)"""
-    @property
-    def min_value(self) -> global___ScaleQuestion.ScaleValue:
+    @_builtins.property
+    def min_value(self) -> Global___ScaleQuestion.ScaleValue:
         """Minimum value and label for the scale"""
 
-    @property
-    def max_value(self) -> global___ScaleQuestion.ScaleValue:
+    @_builtins.property
+    def max_value(self) -> Global___ScaleQuestion.ScaleValue:
         """Maximum value and label for the scale"""
 
     def __init__(
         self,
         *,
-        question_text: builtins.str = ...,
-        min_value: global___ScaleQuestion.ScaleValue | None = ...,
-        max_value: global___ScaleQuestion.ScaleValue | None = ...,
+        question_text: _builtins.str = ...,
+        min_value: Global___ScaleQuestion.ScaleValue | None = ...,
+        max_value: Global___ScaleQuestion.ScaleValue | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing.Literal["max_value", b"max_value", "min_value", b"min_value"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing.Literal["max_value", b"max_value", "min_value", b"min_value", "question_text", b"question_text"]) -> None: ...
+    _HasFieldArgType: _TypeAlias = _typing.Literal["max_value", b"max_value", "min_value", b"min_value"]  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["max_value", b"max_value", "min_value", b"min_value", "question_text", b"question_text"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
 
-global___ScaleQuestion = ScaleQuestion
+Global___ScaleQuestion: _TypeAlias = ScaleQuestion  # noqa: Y015
 
-@typing.final
-class SingleParameterQuestion(google.protobuf.message.Message):
+@_typing.final
+class SingleParameterQuestion(_message.Message):
     """<p>SingleParameterQuestion defines a question which prompts the user for one entity of a particular type</p>
     <p>Example: <code>SingleParameterQuestion(question_text=&apos;How old are you?&apos;, parameter_type=&apos;sys.number&apos;)</code></p>
     """
 
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    DESCRIPTOR: _descriptor.Descriptor
 
-    QUESTION_TEXT_FIELD_NUMBER: builtins.int
-    PARAMETER_TYPE_FIELD_NUMBER: builtins.int
-    question_text: builtins.str
+    QUESTION_TEXT_FIELD_NUMBER: _builtins.int
+    PARAMETER_TYPE_FIELD_NUMBER: _builtins.int
+    question_text: _builtins.str
     """The text which introduces the question (should be pronounceable)"""
-    parameter_type: builtins.str
+    parameter_type: _builtins.str
     """The display name of the entity (type) which is accepted as an answer to this question
     Note: the corresponding entity_type must exist (system entity type) and is not automatically created
     """
     def __init__(
         self,
         *,
-        question_text: builtins.str = ...,
-        parameter_type: builtins.str = ...,
+        question_text: _builtins.str = ...,
+        parameter_type: _builtins.str = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing.Literal["parameter_type", b"parameter_type", "question_text", b"question_text"]) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["parameter_type", b"parameter_type", "question_text", b"question_text"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
 
-global___SingleParameterQuestion = SingleParameterQuestion
+Global___SingleParameterQuestion: _TypeAlias = SingleParameterQuestion  # noqa: Y015
 
-@typing.final
-class MultipleParameterQuestion(google.protobuf.message.Message):
+@_typing.final
+class MultipleParameterQuestion(_message.Message):
     """<p>MultipleParameterQuestion defines a question which prompts the user for one or several entities of one particular type</p>
     <p>Example: <code>MultipleParameterQuestion(question_text=&apos;How old are your children?&apos;, parameter_type=&apos;sys.number&apos;)</code></p>
     """
 
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    DESCRIPTOR: _descriptor.Descriptor
 
-    QUESTION_TEXT_FIELD_NUMBER: builtins.int
-    PARAMETER_TYPE_FIELD_NUMBER: builtins.int
-    question_text: builtins.str
+    QUESTION_TEXT_FIELD_NUMBER: _builtins.int
+    PARAMETER_TYPE_FIELD_NUMBER: _builtins.int
+    question_text: _builtins.str
     """The text which introduces the question (should be pronounceable)"""
-    parameter_type: builtins.str
+    parameter_type: _builtins.str
     """The display name of the entity (type) which is accepted as an answer to this question
     Note: the corresponding entity_type must exist (system entity type) and is not automatically created
     """
     def __init__(
         self,
         *,
-        question_text: builtins.str = ...,
-        parameter_type: builtins.str = ...,
+        question_text: _builtins.str = ...,
+        parameter_type: _builtins.str = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing.Literal["parameter_type", b"parameter_type", "question_text", b"question_text"]) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["parameter_type", b"parameter_type", "question_text", b"question_text"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
 
-global___MultipleParameterQuestion = MultipleParameterQuestion
+Global___MultipleParameterQuestion: _TypeAlias = MultipleParameterQuestion  # noqa: Y015
 
-@typing.final
-class Choice(google.protobuf.message.Message):
+@_typing.final
+class Choice(_message.Message):
     """<p>The Choice message defines one &quot;option&quot; for the SingleChoiceQuestion and MultipleChoiceQuestion question types</p>
     <p>Example: <code>Choice(synonyms=[&quot;blue&quot;, &quot;blueish&quot;, &quot;pale blue&quot;, &quot;deep blue&quot;])</code></p>
     """
 
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    DESCRIPTOR: _descriptor.Descriptor
 
-    SYNONYMS_FIELD_NUMBER: builtins.int
-    FOLLOW_UP_QUESTION_FIELD_NUMBER: builtins.int
-    VALUE_FIELD_NUMBER: builtins.int
-    value: builtins.str
+    SYNONYMS_FIELD_NUMBER: _builtins.int
+    FOLLOW_UP_QUESTION_FIELD_NUMBER: _builtins.int
+    VALUE_FIELD_NUMBER: _builtins.int
+    value: _builtins.str
     """The &quot;canonical value&quot; (i.e. the entity value)"""
-    @property
-    def synonyms(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.str]:
+    @_builtins.property
+    def synonyms(self) -> _containers.RepeatedScalarFieldContainer[_builtins.str]:
         """The synonyms which are recognized as equivalent for identifying one option"""
 
-    @property
-    def follow_up_question(self) -> global___Question:
+    @_builtins.property
+    def follow_up_question(self) -> Global___Question:
         """Optional; Nested question if this specific choice gets chosen.
         Note: the follow-up question is only available for the SingleChoiceQuestion
         """
@@ -506,153 +544,171 @@ class Choice(google.protobuf.message.Message):
     def __init__(
         self,
         *,
-        synonyms: collections.abc.Iterable[builtins.str] | None = ...,
-        follow_up_question: global___Question | None = ...,
-        value: builtins.str = ...,
+        synonyms: _abc.Iterable[_builtins.str] | None = ...,
+        follow_up_question: Global___Question | None = ...,
+        value: _builtins.str = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing.Literal["follow_up_question", b"follow_up_question"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing.Literal["follow_up_question", b"follow_up_question", "synonyms", b"synonyms", "value", b"value"]) -> None: ...
+    _HasFieldArgType: _TypeAlias = _typing.Literal["follow_up_question", b"follow_up_question"]  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["follow_up_question", b"follow_up_question", "synonyms", b"synonyms", "value", b"value"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
 
-global___Choice = Choice
+Global___Choice: _TypeAlias = Choice  # noqa: Y015
 
-@typing.final
-class Answer(google.protobuf.message.Message):
+@_typing.final
+class Answer(_message.Message):
     """An answer to a survey question collected during a session"""
 
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    DESCRIPTOR: _descriptor.Descriptor
 
-    @typing.final
-    class UserInfo(google.protobuf.message.Message):
+    @_typing.final
+    class UserInfo(_message.Message):
         """User information for non-anonymous surveys"""
 
-        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+        DESCRIPTOR: _descriptor.Descriptor
 
-        FIRST_NAME_FIELD_NUMBER: builtins.int
-        LAST_NAME_FIELD_NUMBER: builtins.int
-        PHONE_NUMBER_FIELD_NUMBER: builtins.int
-        SESSION_ID_FIELD_NUMBER: builtins.int
-        USER_ID_FIELD_NUMBER: builtins.int
-        first_name: builtins.str
+        FIRST_NAME_FIELD_NUMBER: _builtins.int
+        LAST_NAME_FIELD_NUMBER: _builtins.int
+        PHONE_NUMBER_FIELD_NUMBER: _builtins.int
+        SESSION_ID_FIELD_NUMBER: _builtins.int
+        USER_ID_FIELD_NUMBER: _builtins.int
+        first_name: _builtins.str
         """First name of the User to be surveyed"""
-        last_name: builtins.str
+        last_name: _builtins.str
         """Last name of the User to be surveyed"""
-        phone_number: builtins.str
+        phone_number: _builtins.str
         """Phone number of the User to be surveyed"""
-        session_id: builtins.str
+        session_id: _builtins.str
         """the ID of the session on which the answer was collected"""
-        user_id: builtins.str
+        user_id: _builtins.str
         """Unique identifier of the User to be surveyed"""
         def __init__(
             self,
             *,
-            first_name: builtins.str = ...,
-            last_name: builtins.str = ...,
-            phone_number: builtins.str = ...,
-            session_id: builtins.str = ...,
-            user_id: builtins.str = ...,
+            first_name: _builtins.str = ...,
+            last_name: _builtins.str = ...,
+            phone_number: _builtins.str = ...,
+            session_id: _builtins.str = ...,
+            user_id: _builtins.str = ...,
         ) -> None: ...
-        def ClearField(self, field_name: typing.Literal["first_name", b"first_name", "last_name", b"last_name", "phone_number", b"phone_number", "session_id", b"session_id", "user_id", b"user_id"]) -> None: ...
+        _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+        def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+        _ClearFieldArgType: _TypeAlias = _typing.Literal["first_name", b"first_name", "last_name", b"last_name", "phone_number", b"phone_number", "session_id", b"session_id", "user_id", b"user_id"]  # noqa: Y015
+        def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+        def WhichOneof(self, oneof_group: _Never) -> None: ...
 
-    QUESTION_NR_FIELD_NUMBER: builtins.int
-    SESSION_ID_FIELD_NUMBER: builtins.int
-    ANSWER_TEXT_FIELD_NUMBER: builtins.int
-    ANSWER_PARAMETER_FIELD_NUMBER: builtins.int
-    ANSWER_PARAMETER_ORIGINAL_FIELD_NUMBER: builtins.int
-    ANONYMOUS_FIELD_NUMBER: builtins.int
-    USER_INFORMATION_FIELD_NUMBER: builtins.int
-    question_nr: builtins.int
+    QUESTION_NR_FIELD_NUMBER: _builtins.int
+    SESSION_ID_FIELD_NUMBER: _builtins.int
+    ANSWER_TEXT_FIELD_NUMBER: _builtins.int
+    ANSWER_PARAMETER_FIELD_NUMBER: _builtins.int
+    ANSWER_PARAMETER_ORIGINAL_FIELD_NUMBER: _builtins.int
+    ANONYMOUS_FIELD_NUMBER: _builtins.int
+    USER_INFORMATION_FIELD_NUMBER: _builtins.int
+    question_nr: _builtins.int
     """the number of the question to which this answer belongs"""
-    session_id: builtins.str
+    session_id: _builtins.str
     """the ID of the session on which the answer was collected"""
-    answer_text: builtins.str
+    answer_text: _builtins.str
     """Required; the full answer text"""
-    answer_parameter: builtins.str
+    answer_parameter: _builtins.str
     """fixme: better names and doc-strings below
     Optional; contains the normalized value of the selected option (parameter) extracted
     """
-    answer_parameter_original: builtins.str
+    answer_parameter_original: _builtins.str
     """Optional; contains the original text of the selected option (parameter) extracted"""
-    anonymous: builtins.bool
+    anonymous: _builtins.bool
     """True if the survey is anonymous, false otherwise"""
-    @property
-    def user_information(self) -> global___Answer.UserInfo:
+    @_builtins.property
+    def user_information(self) -> Global___Answer.UserInfo:
         """User information if the survey is not anonymous"""
 
     def __init__(
         self,
         *,
-        question_nr: builtins.int = ...,
-        session_id: builtins.str = ...,
-        answer_text: builtins.str = ...,
-        answer_parameter: builtins.str = ...,
-        answer_parameter_original: builtins.str = ...,
-        anonymous: builtins.bool = ...,
-        user_information: global___Answer.UserInfo | None = ...,
+        question_nr: _builtins.int = ...,
+        session_id: _builtins.str = ...,
+        answer_text: _builtins.str = ...,
+        answer_parameter: _builtins.str = ...,
+        answer_parameter_original: _builtins.str = ...,
+        anonymous: _builtins.bool = ...,
+        user_information: Global___Answer.UserInfo | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing.Literal["anonymous", b"anonymous", "is_anonymous", b"is_anonymous", "user_information", b"user_information"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing.Literal["anonymous", b"anonymous", "answer_parameter", b"answer_parameter", "answer_parameter_original", b"answer_parameter_original", "answer_text", b"answer_text", "is_anonymous", b"is_anonymous", "question_nr", b"question_nr", "session_id", b"session_id", "user_information", b"user_information"]) -> None: ...
-    def WhichOneof(self, oneof_group: typing.Literal["is_anonymous", b"is_anonymous"]) -> typing.Literal["anonymous", "user_information"] | None: ...
+    _HasFieldArgType: _TypeAlias = _typing.Literal["anonymous", b"anonymous", "is_anonymous", b"is_anonymous", "user_information", b"user_information"]  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["anonymous", b"anonymous", "answer_parameter", b"answer_parameter", "answer_parameter_original", b"answer_parameter_original", "answer_text", b"answer_text", "is_anonymous", b"is_anonymous", "question_nr", b"question_nr", "session_id", b"session_id", "user_information", b"user_information"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    _WhichOneofReturnType_is_anonymous: _TypeAlias = _typing.Literal["anonymous", "user_information"]  # noqa: Y015
+    _WhichOneofArgType_is_anonymous: _TypeAlias = _typing.Literal["is_anonymous", b"is_anonymous"]  # noqa: Y015
+    def WhichOneof(self, oneof_group: _WhichOneofArgType_is_anonymous) -> _WhichOneofReturnType_is_anonymous | None: ...
 
-global___Answer = Answer
+Global___Answer: _TypeAlias = Answer  # noqa: Y015
 
-@typing.final
-class CreateSurveyRequest(google.protobuf.message.Message):
+@_typing.final
+class CreateSurveyRequest(_message.Message):
     """///// Request / Response messages ///////
 
     Request message for creating a new survey
     """
 
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    DESCRIPTOR: _descriptor.Descriptor
 
-    SURVEY_FIELD_NUMBER: builtins.int
-    @property
-    def survey(self) -> global___Survey:
+    SURVEY_FIELD_NUMBER: _builtins.int
+    @_builtins.property
+    def survey(self) -> Global___Survey:
         """The survey to create"""
 
     def __init__(
         self,
         *,
-        survey: global___Survey | None = ...,
+        survey: Global___Survey | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing.Literal["survey", b"survey"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing.Literal["survey", b"survey"]) -> None: ...
+    _HasFieldArgType: _TypeAlias = _typing.Literal["survey", b"survey"]  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["survey", b"survey"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
 
-global___CreateSurveyRequest = CreateSurveyRequest
+Global___CreateSurveyRequest: _TypeAlias = CreateSurveyRequest  # noqa: Y015
 
-@typing.final
-class GetSurveyRequest(google.protobuf.message.Message):
+@_typing.final
+class GetSurveyRequest(_message.Message):
     """Request message for retrieving a survey"""
 
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    DESCRIPTOR: _descriptor.Descriptor
 
-    SURVEY_ID_FIELD_NUMBER: builtins.int
-    survey_id: builtins.str
+    SURVEY_ID_FIELD_NUMBER: _builtins.int
+    survey_id: _builtins.str
     """The project identifier for this survey. Equal to the parent of the corresponding Agent.
     Format: <pre><code>projects/&lt;Project ID&gt;/agent</code></pre>
     """
     def __init__(
         self,
         *,
-        survey_id: builtins.str = ...,
+        survey_id: _builtins.str = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing.Literal["survey_id", b"survey_id"]) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["survey_id", b"survey_id"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
 
-global___GetSurveyRequest = GetSurveyRequest
+Global___GetSurveyRequest: _TypeAlias = GetSurveyRequest  # noqa: Y015
 
-@typing.final
-class UpdateSurveyRequest(google.protobuf.message.Message):
+@_typing.final
+class UpdateSurveyRequest(_message.Message):
     """Request message for updating an existing survey"""
 
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    DESCRIPTOR: _descriptor.Descriptor
 
-    SURVEY_FIELD_NUMBER: builtins.int
-    UPDATE_MASK_FIELD_NUMBER: builtins.int
-    @property
-    def survey(self) -> global___Survey:
+    SURVEY_FIELD_NUMBER: _builtins.int
+    UPDATE_MASK_FIELD_NUMBER: _builtins.int
+    @_builtins.property
+    def survey(self) -> Global___Survey:
         """Updated survey. Note: the ID must refer to an existing survey which will be updated"""
 
-    @property
-    def update_mask(self) -> google.protobuf.field_mask_pb2.FieldMask:
+    @_builtins.property
+    def update_mask(self) -> _field_mask_pb2.FieldMask:
         """Optional. Field mask that defines which fields get updated. Default: all fields are updated.
         Example: <code>update_mask = FieldMask([&apos;survey.display_name&apos;, &apos;survey.questions&apos;])</code>
         """
@@ -660,122 +716,141 @@ class UpdateSurveyRequest(google.protobuf.message.Message):
     def __init__(
         self,
         *,
-        survey: global___Survey | None = ...,
-        update_mask: google.protobuf.field_mask_pb2.FieldMask | None = ...,
+        survey: Global___Survey | None = ...,
+        update_mask: _field_mask_pb2.FieldMask | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing.Literal["survey", b"survey", "update_mask", b"update_mask"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing.Literal["survey", b"survey", "update_mask", b"update_mask"]) -> None: ...
+    _HasFieldArgType: _TypeAlias = _typing.Literal["survey", b"survey", "update_mask", b"update_mask"]  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["survey", b"survey", "update_mask", b"update_mask"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
 
-global___UpdateSurveyRequest = UpdateSurveyRequest
+Global___UpdateSurveyRequest: _TypeAlias = UpdateSurveyRequest  # noqa: Y015
 
-@typing.final
-class DeleteSurveyRequest(google.protobuf.message.Message):
+@_typing.final
+class DeleteSurveyRequest(_message.Message):
     """Request message for deleting a survey"""
 
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    DESCRIPTOR: _descriptor.Descriptor
 
-    SURVEY_ID_FIELD_NUMBER: builtins.int
-    survey_id: builtins.str
+    SURVEY_ID_FIELD_NUMBER: _builtins.int
+    survey_id: _builtins.str
     """The project identifier for this survey. Equal to the parent of the corresponding Agent.
     Format: <pre><code>projects/&lt;Project ID&gt;/agent</code></pre>
     """
     def __init__(
         self,
         *,
-        survey_id: builtins.str = ...,
+        survey_id: _builtins.str = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing.Literal["survey_id", b"survey_id"]) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["survey_id", b"survey_id"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
 
-global___DeleteSurveyRequest = DeleteSurveyRequest
+Global___DeleteSurveyRequest: _TypeAlias = DeleteSurveyRequest  # noqa: Y015
 
-@typing.final
-class GetSurveyAnswersRequest(google.protobuf.message.Message):
+@_typing.final
+class GetSurveyAnswersRequest(_message.Message):
     """Request message for retrieving survey answers for a specific session or user"""
 
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    DESCRIPTOR: _descriptor.Descriptor
 
-    SURVEY_ID_FIELD_NUMBER: builtins.int
-    SESSION_ID_FIELD_NUMBER: builtins.int
-    USER_ID_FIELD_NUMBER: builtins.int
-    USER_PHONE_NUMBER_FIELD_NUMBER: builtins.int
-    survey_id: builtins.str
+    SURVEY_ID_FIELD_NUMBER: _builtins.int
+    SESSION_ID_FIELD_NUMBER: _builtins.int
+    USER_ID_FIELD_NUMBER: _builtins.int
+    USER_PHONE_NUMBER_FIELD_NUMBER: _builtins.int
+    survey_id: _builtins.str
     """The project identifier for this survey. Equal to the parent of the corresponding Agent.
     Format: <pre><code>projects/&lt;Project ID&gt;/agent</code></pre>
     """
-    session_id: builtins.str
+    session_id: _builtins.str
     """ID of one specific session on which survey answers were collected (contains survey_id)"""
-    user_id: builtins.str
+    user_id: _builtins.str
     """User Identifier. Note, if the survey is anonymous there will no identifier to filter on"""
-    user_phone_number: builtins.str
+    user_phone_number: _builtins.str
     """User phone number. Note, if the survey is anonymous there will no identifier to filter on"""
     def __init__(
         self,
         *,
-        survey_id: builtins.str = ...,
-        session_id: builtins.str = ...,
-        user_id: builtins.str = ...,
-        user_phone_number: builtins.str = ...,
+        survey_id: _builtins.str = ...,
+        session_id: _builtins.str = ...,
+        user_id: _builtins.str = ...,
+        user_phone_number: _builtins.str = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing.Literal["identifier", b"identifier", "session_id", b"session_id", "user_id", b"user_id", "user_phone_number", b"user_phone_number"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing.Literal["identifier", b"identifier", "session_id", b"session_id", "survey_id", b"survey_id", "user_id", b"user_id", "user_phone_number", b"user_phone_number"]) -> None: ...
-    def WhichOneof(self, oneof_group: typing.Literal["identifier", b"identifier"]) -> typing.Literal["session_id", "user_id", "user_phone_number"] | None: ...
+    _HasFieldArgType: _TypeAlias = _typing.Literal["identifier", b"identifier", "session_id", b"session_id", "user_id", b"user_id", "user_phone_number", b"user_phone_number"]  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["identifier", b"identifier", "session_id", b"session_id", "survey_id", b"survey_id", "user_id", b"user_id", "user_phone_number", b"user_phone_number"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    _WhichOneofReturnType_identifier: _TypeAlias = _typing.Literal["session_id", "user_id", "user_phone_number"]  # noqa: Y015
+    _WhichOneofArgType_identifier: _TypeAlias = _typing.Literal["identifier", b"identifier"]  # noqa: Y015
+    def WhichOneof(self, oneof_group: _WhichOneofArgType_identifier) -> _WhichOneofReturnType_identifier | None: ...
 
-global___GetSurveyAnswersRequest = GetSurveyAnswersRequest
+Global___GetSurveyAnswersRequest: _TypeAlias = GetSurveyAnswersRequest  # noqa: Y015
 
-@typing.final
-class GetAllSurveyAnswersRequest(google.protobuf.message.Message):
+@_typing.final
+class GetAllSurveyAnswersRequest(_message.Message):
     """Request message for retrieving all survey answers"""
 
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    DESCRIPTOR: _descriptor.Descriptor
 
-    SURVEY_ID_FIELD_NUMBER: builtins.int
-    survey_id: builtins.str
+    SURVEY_ID_FIELD_NUMBER: _builtins.int
+    survey_id: _builtins.str
     """The project identifier for this survey. Equal to the parent of the corresponding Agent.
     Format: <pre><code>projects/&lt;Project ID&gt;/agent</code></pre>
     """
     def __init__(
         self,
         *,
-        survey_id: builtins.str = ...,
+        survey_id: _builtins.str = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing.Literal["survey_id", b"survey_id"]) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["survey_id", b"survey_id"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
 
-global___GetAllSurveyAnswersRequest = GetAllSurveyAnswersRequest
+Global___GetAllSurveyAnswersRequest: _TypeAlias = GetAllSurveyAnswersRequest  # noqa: Y015
 
-@typing.final
-class SurveyAnswersResponse(google.protobuf.message.Message):
+@_typing.final
+class SurveyAnswersResponse(_message.Message):
     """Response message containing survey answers"""
 
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    DESCRIPTOR: _descriptor.Descriptor
 
-    SURVEY_ID_FIELD_NUMBER: builtins.int
-    ANSWERS_FIELD_NUMBER: builtins.int
-    survey_id: builtins.str
+    SURVEY_ID_FIELD_NUMBER: _builtins.int
+    ANSWERS_FIELD_NUMBER: _builtins.int
+    survey_id: _builtins.str
     """The project identifier for this survey. Equal to the parent of the corresponding Agent.
     Format: <pre><code>projects/&lt;Project ID&gt;/agent</code></pre>
     """
-    @property
-    def answers(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___Answer]:
+    @_builtins.property
+    def answers(self) -> _containers.RepeatedCompositeFieldContainer[Global___Answer]:
         """all requested answers"""
 
     def __init__(
         self,
         *,
-        survey_id: builtins.str = ...,
-        answers: collections.abc.Iterable[global___Answer] | None = ...,
+        survey_id: _builtins.str = ...,
+        answers: _abc.Iterable[Global___Answer] | None = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing.Literal["answers", b"answers", "survey_id", b"survey_id"]) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["answers", b"answers", "survey_id", b"survey_id"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
 
-global___SurveyAnswersResponse = SurveyAnswersResponse
+Global___SurveyAnswersResponse: _TypeAlias = SurveyAnswersResponse  # noqa: Y015
 
-@typing.final
-class ListSurveysRequest(google.protobuf.message.Message):
+@_typing.final
+class ListSurveysRequest(_message.Message):
     """Request message for listing surveys with pagination support"""
 
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    DESCRIPTOR: _descriptor.Descriptor
 
-    PAGE_TOKEN_FIELD_NUMBER: builtins.int
-    page_token: builtins.str
+    PAGE_TOKEN_FIELD_NUMBER: _builtins.int
+    page_token: _builtins.str
     """Optional. The next_page_token value returned from a previous list request.
     Example:
     <ul>
@@ -785,72 +860,88 @@ class ListSurveysRequest(google.protobuf.message.Message):
     def __init__(
         self,
         *,
-        page_token: builtins.str = ...,
+        page_token: _builtins.str = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing.Literal["page_token", b"page_token"]) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["page_token", b"page_token"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
 
-global___ListSurveysRequest = ListSurveysRequest
+Global___ListSurveysRequest: _TypeAlias = ListSurveysRequest  # noqa: Y015
 
-@typing.final
-class ListSurveysResponse(google.protobuf.message.Message):
+@_typing.final
+class ListSurveysResponse(_message.Message):
     """<p>The response message for <a href="index.html#google.cloud.dialogflow.v2.Intents.ListIntents">Intents.ListIntents</a>.</p>"""
 
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    DESCRIPTOR: _descriptor.Descriptor
 
-    SURVEYS_FIELD_NUMBER: builtins.int
-    NEXT_PAGE_TOKEN_FIELD_NUMBER: builtins.int
-    next_page_token: builtins.str
+    SURVEYS_FIELD_NUMBER: _builtins.int
+    NEXT_PAGE_TOKEN_FIELD_NUMBER: _builtins.int
+    next_page_token: _builtins.str
     """Token to retrieve the next page of results, or empty if there are no more results in the list."""
-    @property
-    def surveys(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___Survey]:
+    @_builtins.property
+    def surveys(self) -> _containers.RepeatedCompositeFieldContainer[Global___Survey]:
         """The list of surveys. There will be a maximum number of items returned based on the page_token field in the request."""
 
     def __init__(
         self,
         *,
-        surveys: collections.abc.Iterable[global___Survey] | None = ...,
-        next_page_token: builtins.str = ...,
+        surveys: _abc.Iterable[Global___Survey] | None = ...,
+        next_page_token: _builtins.str = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing.Literal["next_page_token", b"next_page_token", "surveys", b"surveys"]) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["next_page_token", b"next_page_token", "surveys", b"surveys"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
 
-global___ListSurveysResponse = ListSurveysResponse
+Global___ListSurveysResponse: _TypeAlias = ListSurveysResponse  # noqa: Y015
 
-@typing.final
-class AgentSurveyRequest(google.protobuf.message.Message):
+@_typing.final
+class AgentSurveyRequest(_message.Message):
     """Request message for agent-related survey operations"""
 
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    DESCRIPTOR: _descriptor.Descriptor
 
-    SURVEY_ID_FIELD_NUMBER: builtins.int
-    survey_id: builtins.str
+    SURVEY_ID_FIELD_NUMBER: _builtins.int
+    survey_id: _builtins.str
     """The project identifier for this survey. Equal to the parent of the corresponding Agent.
     Format: <pre><code>projects/&lt;Project ID&gt;/agent</code></pre>
     """
     def __init__(
         self,
         *,
-        survey_id: builtins.str = ...,
+        survey_id: _builtins.str = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing.Literal["survey_id", b"survey_id"]) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["survey_id", b"survey_id"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
 
-global___AgentSurveyRequest = AgentSurveyRequest
+Global___AgentSurveyRequest: _TypeAlias = AgentSurveyRequest  # noqa: Y015
 
-@typing.final
-class AgentSurveyResponse(google.protobuf.message.Message):
+@_typing.final
+class AgentSurveyResponse(_message.Message):
     """Response message for agent-related survey operations"""
 
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    DESCRIPTOR: _descriptor.Descriptor
 
-    PARENT_FIELD_NUMBER: builtins.int
-    parent: builtins.str
+    PARENT_FIELD_NUMBER: _builtins.int
+    parent: _builtins.str
     """The parent of an agent. Equal to the survey ID.
     Format: <pre><code>projects/&lt;Project ID&gt;/agent</code></pre>
     """
     def __init__(
         self,
         *,
-        parent: builtins.str = ...,
+        parent: _builtins.str = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing.Literal["parent", b"parent"]) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["parent", b"parent"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
 
-global___AgentSurveyResponse = AgentSurveyResponse
+Global___AgentSurveyResponse: _TypeAlias = AgentSurveyResponse  # noqa: Y015

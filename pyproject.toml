@@ -4,10 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ondewo-survey-client"
-version = "2.0.3"
+version = "2.1.0"
 description = "ONDEWO Survey (SURVEY) Client library for Python"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 authors = [
     { name = "ONDEWO GmbH", email = "office@ondewo.com" },
 ]
@@ -16,7 +16,6 @@ classifiers = [
     "Intended Audience :: Developers",
     "License :: OSI Approved :: Apache Software License",
     "Operating System :: OS Independent",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -26,16 +25,14 @@ dependencies = [
     "dataclasses-json",
     "google-api-core",
     "googleapis-common-protos",
-    "grpcio",
-    "grpcio-reflection",
-    "grpcio-tools",
+    "grpcio>=1.85.1",
     # Split by interpreter because ondewo-client-utils >=4.0.0 requires Python >=3.12 while this package still
-    # supports >=3.9. On 3.12+ the floor is 4.1.1, the release whose BaseClientConfig carries the mutual-TLS
+    # supports >=3.10. On 3.12+ the floor is 4.1.1, the release whose BaseClientConfig carries the mutual-TLS
     # grpc_client_cert / grpc_client_key fields that ClientConfig.__repr__ redacts. Older interpreters stay on
     # 3.2.0+, which has no client-key field, so there is nothing there to leak.
     "ondewo-client-utils>=4.1.1; python_version >= '3.12'",
     "ondewo-client-utils>=3.2.0; python_version < '3.12'",
-    "protobuf",
+    "protobuf>=7.35.1,<8",
     "requests",
 ]
 
@@ -75,7 +72,7 @@ include = ["ondewo", "ondewo.*"]
 # ---------------------------------------------------------------------------
 [tool.ruff]
 line-length = 120
-target-version = "py39"
+target-version = "py310"
 # Never lint/format the generated protobuf/gRPC stubs (the old .flake8 excluded
 # every ondewo/survey/*_pb2*.py / .pyi individually) or the API/proto-compiler
 # git submodules.

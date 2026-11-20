@@ -10,59 +10,72 @@ Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. (editesyntax = "proto3";
 """
 
-import builtins
-import collections.abc
-import google.protobuf.descriptor
-import google.protobuf.internal.containers
-import google.protobuf.message
-import google.protobuf.struct_pb2
-import typing
+from collections import abc as _abc
+from google.protobuf import descriptor as _descriptor
+from google.protobuf import message as _message
+from google.protobuf import struct_pb2 as _struct_pb2
+from google.protobuf.internal import containers as _containers
+import builtins as _builtins
+import sys
+import typing as _typing
 
-DESCRIPTOR: google.protobuf.descriptor.FileDescriptor
+if sys.version_info >= (3, 11):
+    from typing import TypeAlias as _TypeAlias, Never as _Never
+else:
+    from typing_extensions import TypeAlias as _TypeAlias, Never as _Never
 
-@typing.final
-class CreateFHIRSurveyRequest(google.protobuf.message.Message):
+DESCRIPTOR: _descriptor.FileDescriptor
+
+@_typing.final
+class CreateFHIRSurveyRequest(_message.Message):
     """Request message for creating a survey from FHIR format"""
 
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    DESCRIPTOR: _descriptor.Descriptor
 
-    FHIR_QUESTIONNAIRE_FIELD_NUMBER: builtins.int
-    @property
-    def fhir_questionnaire(self) -> google.protobuf.struct_pb2.Struct:
+    FHIR_QUESTIONNAIRE_FIELD_NUMBER: _builtins.int
+    @_builtins.property
+    def fhir_questionnaire(self) -> _struct_pb2.Struct:
         """FHIR questionnaire on a gRPC Struct format"""
 
     def __init__(
         self,
         *,
-        fhir_questionnaire: google.protobuf.struct_pb2.Struct | None = ...,
+        fhir_questionnaire: _struct_pb2.Struct | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing.Literal["fhir_questionnaire", b"fhir_questionnaire"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing.Literal["fhir_questionnaire", b"fhir_questionnaire"]) -> None: ...
+    _HasFieldArgType: _TypeAlias = _typing.Literal["fhir_questionnaire", b"fhir_questionnaire"]  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["fhir_questionnaire", b"fhir_questionnaire"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
 
-global___CreateFHIRSurveyRequest = CreateFHIRSurveyRequest
+Global___CreateFHIRSurveyRequest: _TypeAlias = CreateFHIRSurveyRequest  # noqa: Y015
 
-@typing.final
-class SurveyFHIRAnswersResponse(google.protobuf.message.Message):
+@_typing.final
+class SurveyFHIRAnswersResponse(_message.Message):
     """Response message containing survey answers in FHIR format"""
 
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    DESCRIPTOR: _descriptor.Descriptor
 
-    SURVEY_ID_FIELD_NUMBER: builtins.int
-    FHIR_QUESTIONNAIRE_RESPONSES_FIELD_NUMBER: builtins.int
-    survey_id: builtins.str
+    SURVEY_ID_FIELD_NUMBER: _builtins.int
+    FHIR_QUESTIONNAIRE_RESPONSES_FIELD_NUMBER: _builtins.int
+    survey_id: _builtins.str
     """The project identifier for this survey. Equal to the parent of the corresponding Agent.
     Format: <pre><code>projects/&lt;Project ID&gt;/agent</code></pre>
     """
-    @property
-    def fhir_questionnaire_responses(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[google.protobuf.struct_pb2.Struct]:
+    @_builtins.property
+    def fhir_questionnaire_responses(self) -> _containers.RepeatedCompositeFieldContainer[_struct_pb2.Struct]:
         """all requested answers"""
 
     def __init__(
         self,
         *,
-        survey_id: builtins.str = ...,
-        fhir_questionnaire_responses: collections.abc.Iterable[google.protobuf.struct_pb2.Struct] | None = ...,
+        survey_id: _builtins.str = ...,
+        fhir_questionnaire_responses: _abc.Iterable[_struct_pb2.Struct] | None = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing.Literal["fhir_questionnaire_responses", b"fhir_questionnaire_responses", "survey_id", b"survey_id"]) -> None: ...
+    _HasFieldArgType: _TypeAlias = _Never  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> _builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = _typing.Literal["fhir_questionnaire_responses", b"fhir_questionnaire_responses", "survey_id", b"survey_id"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    def WhichOneof(self, oneof_group: _Never) -> None: ...
 
-global___SurveyFHIRAnswersResponse = SurveyFHIRAnswersResponse
+Global___SurveyFHIRAnswersResponse: _TypeAlias = SurveyFHIRAnswersResponse  # noqa: Y015
