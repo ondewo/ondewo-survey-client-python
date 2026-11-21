@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ondewo-survey-client"
-version = "2.1.1"
+version = "2.1.2"
 description = "ONDEWO Survey (SURVEY) Client library for Python"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -34,11 +34,13 @@ dependencies = [
     "ondewo-client-utils>=3.2.0; python_version < '3.12'",
     "protobuf>=7.35.1,<8",
     "requests",
+    # utils/keycloak.py logs through loguru at runtime; declared only in the dev extra, a wheel installed on its
+    # own raised ModuleNotFoundError on `import ondewo...client` (2.1.1, ondewo-t2s-release PR-221 #4).
+    "loguru",
 ]
 
 [project.optional-dependencies]
 dev = [
-    "loguru",
     "mypy",
     "mypy-protobuf",
     "pre-commit",

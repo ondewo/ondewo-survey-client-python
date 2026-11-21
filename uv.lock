@@ -958,13 +958,14 @@ wheels = [
 
 [[package]]
 name = "ondewo-survey-client"
-version = "2.1.1"
+version = "2.1.2"
 source = { editable = "." }
 dependencies = [
     { name = "dataclasses-json" },
     { name = "google-api-core" },
     { name = "googleapis-common-protos" },
     { name = "grpcio" },
+    { name = "loguru" },
     { name = "ondewo-client-utils", version = "3.2.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
     { name = "ondewo-client-utils", version = "4.1.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
     { name = "protobuf" },
@@ -973,7 +974,6 @@ dependencies = [
 
 [package.optional-dependencies]
 dev = [
-    { name = "loguru" },
     { name = "mypy" },
     { name = "mypy-protobuf" },
     { name = "pre-commit" },
@@ -992,7 +992,7 @@ requires-dist = [
     { name = "google-api-core" },
     { name = "googleapis-common-protos" },
     { name = "grpcio", specifier = ">=1.85.1" },
-    { name = "loguru", marker = "extra == 'dev'" },
+    { name = "loguru" },
     { name = "mypy", marker = "extra == 'dev'" },
     { name = "mypy-protobuf", marker = "extra == 'dev'" },
     { name = "ondewo-client-utils", marker = "python_full_version < '3.12'", specifier = ">=3.2.0" },
